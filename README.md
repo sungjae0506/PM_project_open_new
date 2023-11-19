@@ -73,6 +73,25 @@ Todo (요약)
 5. main.cpp 에서 레이아웃 설정 및 callback 함수 바인딩
 </pre>
 
+Todo (한성재)
+<pre>
+1. gameManager 클래스에서 마우스, 키보드, idle 바인딩 (Deadline: 11/19)
+2. gameManager 클래스에서 state machine 만들기 (Deadline: 11/19)
+3. gameManager 클래스에서 draw(), move() 구현 (Deadline: 11/19)
+4. player 클래스 move() 구현 (Deadline: 11/19)
+5. bubble 클래스 move() 구현 (Deadline: 11/22)
+6. enemy 클래스 move() 구현 (Deadline: 11/22)
+7. main.cpp 에서 레이아웃 설정 및 callback 함수 바인딩 (Deadline: 11/22)
+</pre>
+
+Todo (허유민)
+<pre>
+1. player 클래스 draw() 구현 (Deadline: 11/23)
+2. bubble 클래스 draw() 구현 (Deadline: 11/23)
+3. enemy 클래스 draw() 구현 (Deadline: 11/23)
+4. sound 처리  (Deadline: ??)
+</pre>
+
 함수 및 클래스 사용법
 <pre>
 1. Range
