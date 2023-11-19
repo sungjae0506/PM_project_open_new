@@ -55,9 +55,11 @@ C:.
 </pre>
 
 요약
+<pre>
 asset: 이미지, 사운드 로딩 (웬만해선 건드릴 필요 없음)
 game: 게임 관리
 main: main.cpp와 callback 함수
 not_used: 말 그대로 필요없는 것
 UI: 윈도우, 페이지, 캔버스, 텍스트, 버튼 등을 정의 (이것도 웬만해선 건드릴 필요 없음)
 util: object, range를 정의 (이것도 웬만해선 건드릴 필요 없음)
+</pre>
