@@ -15,6 +15,12 @@ class Page
 public:
 	string pageName;
 	Range range;
+	Point mousePos;
+
+	vector<void(*)(KeyboardEvent, string, Point)> keyboardFuncs;
+	vector<void(*)(MouseEvent, string, Point)> mouseFuncs;
+	vector<void(*)(IdleEvent)> idleFuncs;
+	vector<void(*)(Point)> drawFuncs;
 
 	vector<Canvas> canvases;
 	vector<Image> images;
@@ -33,6 +39,11 @@ public:
 	void idleEvent(IdleEvent e);
 	void resizeEvent(int w, int h);
 	void draw(Point mousePos = Point(0, 0));
+
+	Page& addKeyboardFunc(void (*keyboardFunc)(KeyboardEvent, string, Point));
+	Page& addMouseFunc(void (*mouseFunc)(MouseEvent, string, Point));
+	Page& addIdleFunc(void (*idleFunc)(IdleEvent));
+	Page& addDrawFunc(void (*drawFunc)(Point));
 
 	Page& addCanvas(const Canvas &c);
 	Page& addCanvas(vector<Canvas> cs);

@@ -6,7 +6,7 @@
 using namespace std;
 
 const double EPSILON = 1e-4;
-const double COLLISION_EPSILON = 2.5;
+const double COLLISION_EPSILON = 1.5;
 const double PI = 3.14159265358979;
 
 enum CollisionType { None, Sliding, Crossing, In };

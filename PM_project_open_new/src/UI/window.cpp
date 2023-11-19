@@ -12,7 +12,7 @@ static Transform mouseTransform;
 static double FPS = 30.0;
 static clock_t startClock = clock(), endClock;
 
-static double idlePerSecond = 60.0;
+static double idlePerSecond = 240.0;
 static clock_t idleStartClock = clock(), idleEndClock;
 
 static vector<Page> pages;

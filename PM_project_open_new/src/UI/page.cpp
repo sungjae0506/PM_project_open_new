@@ -19,12 +19,16 @@ Page& Page::operator() (string name, const Range r)
 
 void Page::keyboardEvent(KeyboardEvent e, string key, Point p)
 {
+	for (auto func : keyboardFuncs)
+		func(e, key, p);
 	for (auto& i : canvases)
 		i.keyboardEvent(e, key, p);
 }
 
 void Page::mouseEvent(MouseEvent e, string button, Point p)
 {
+	for (auto func : mouseFuncs)
+		func(e, button, p);
 	for (auto& i : canvases)
 		if (i.range.contain(p))
 			i.mouseEvent(e, button, p);
@@ -35,8 +39,20 @@ void Page::mouseEvent(MouseEvent e, string button, Point p)
 
 void Page::idleEvent(IdleEvent e)
 {
-	for (auto& i : canvases)
-		i.idleEvent(e);
+	if (e == IdleBegin || e == IdleRunning)
+	{
+		for (auto func : idleFuncs)
+			func(e);
+		for (auto& i : canvases)
+			i.idleEvent(e);
+	}
+	else if (e == IdleEnd)
+	{
+		for (auto& i : canvases)
+			i.idleEvent(e);
+		for (auto func : idleFuncs)
+			func(e);
+	}
 }
 
 void Page::resizeEvent(int w, int h)
@@ -53,7 +69,7 @@ void Page::draw(Point mousePos)
 		scissor = Transform(range, Range(0, 0, windowWidth, windowHeight))(i.range);
 		glScissor(scissor.point0.x, scissor.point0.y, scissor.point1.x - scissor.point0.x, scissor.point1.y - scissor.point0.y);
 		glEnable(GL_SCISSOR_TEST);
-		i.draw();
+		i.draw(mousePos);
 		glDisable(GL_SCISSOR_TEST);
 	}
 	for (auto& i : images)
@@ -75,6 +91,32 @@ void Page::draw(Point mousePos)
 		else
 			i.draw();
 	}
+	for (auto func : drawFuncs)
+		func(mousePos);
+}
+
+Page& Page::addDrawFunc(void (*drawFunc)(Point))
+{
+	drawFuncs.push_back(drawFunc);
+	return *this;
+}
+
+Page& Page::addKeyboardFunc(void (*keyboardFunc)(KeyboardEvent, string, Point))
+{
+	keyboardFuncs.push_back(keyboardFunc);
+	return *this;
+}
+
+Page& Page::addMouseFunc(void (*mouseFunc)(MouseEvent, string, Point))
+{
+	mouseFuncs.push_back(mouseFunc);
+	return *this;
+}
+
+Page& Page::addIdleFunc(void (*idleFunc)(IdleEvent))
+{
+	idleFuncs.push_back(idleFunc);
+	return *this;
 }
 
 Page& Page::addCanvas(const Canvas& c)

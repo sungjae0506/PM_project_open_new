@@ -9,21 +9,31 @@
 #include "../UI/window.h"
 #include "../UI/canvas.h"
 
+#include "callback.h"
+
 using namespace std;
-#define WIDTH 600
-#define HEIGHT 600
+#define WIDTH 1600
+#define HEIGHT 900
 
 Window window;
-Page gamePage("gamePage", Range(0, 0, 320, 320));
+Page gamePage("gamePage", Range(0, 0, 1600, 900));
 
 int main(int argc, char** argv) 
 {
-	window("Bubble Bobble", &argc, argv, 300, 300, WIDTH, HEIGHT);
+	window("Bubble Bobble", &argc, argv, 50, 50, WIDTH, HEIGHT);
 	
-	gamePage.
-	addCanvas
+	gamePage
+	.addCanvas
 	(
-		Canvas(Range(0, 0, 320, 320), Range(0, 0, 320, 320))
+		Canvas(Range(250, 0, 1350, 900), Range(0, 20, 320, 280))
+		.addDrawFunc
+		(
+			gameMapDraw
+		)
+	)
+	.addText
+	(
+		Text("wow!", "#FFFFFF", "", 32.0, Range(0, 0, 320, 40))
 	);
 
 	window
