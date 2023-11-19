@@ -94,3 +94,27 @@ void Map::readMap(string file)
 	}
 	platform = vectorToLines(tileVector, Range(0, 0, 320, 320));
 }
+
+void Map::setTexture(Image _tile1, Image _tile2) {
+	tile1 = _tile1; tile2 = _tile2;
+}
+
+void Map::draw() {
+	for (size_t i = 0; i < tileVector.size(); ++i) {
+		for (size_t j = 0; j < tileVector[i].size(); ++j) {
+
+			Point p = indexToPoint(i, j, tileVector.size(), tileVector[i].size(), Range(0, 0, 320, 320));
+
+			if (tileVector[i][j] == 1) {
+
+				if (j == 0 || j == tileVector[i].size() - 1) {
+
+					(tile2 + p).draw();
+				}
+				else {
+					(tile1 + p).draw();
+				}
+			}
+		}
+	}
+}
