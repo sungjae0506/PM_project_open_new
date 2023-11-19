@@ -1,6 +1,7 @@
 # PM_project_open_new
 
 파일 구조 (src)
+<pre>
 C:.
 ├─asset
 │      image.cpp
@@ -51,6 +52,7 @@ C:.
         object.h
         range.cpp
         range.h
+</pre>
 
 요약
 asset: 이미지, 사운드 로딩 (웬만해선 건드릴 필요 없음)
