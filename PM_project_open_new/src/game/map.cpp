@@ -1,5 +1,4 @@
 #include "map.h"
-#include "../util/object.h"
 
 Point indexToPoint(int i, int j, int h, int w, const Range& r)
 {
@@ -76,11 +75,36 @@ Map::Map()
 {
 }
 
+Map::Map(const Map& map)
+{
+	tileVector.resize(map.tileVector.size());
+	for (int i = 0; i < map.tileVector.size(); ++i)
+		tileVector[i] = map.tileVector[i];
+
+	tile1 = map.tile1;
+	tile2 = map.tile2;
+	
+	platform = map.platform;
+	wall = map.wall;
+}
+
 void Map::readMap(string file)
 {
 	fstream f(file);
 	string s;
 	int h, w;
+
+	Range r(0, 0, 320, 320);
+	
+	//////////////////////////////////
+	f >> s;
+	tile1(s, Range(0, 0, 10, 10));
+	f >> s;
+	tile2(s, Range(0, 0, 20, 20));
+	f >> s;
+	background(s, Range(0, 0, 320, 320));
+	//////////////////////////////////
+
 	f >> h >> w;
 	tileVector.resize(h);
 	for (int i = 0; i < h; ++i)
@@ -92,5 +116,36 @@ void Map::readMap(string file)
 			if (s[j] == '#')
 				tileVector[i][j] = 1;
 	}
-	platform = vectorToLines(tileVector, Range(0, 0, 320, 320));
+	platform = vectorToLines(tileVector, r);
+	wall.addLine(Line(Point(r.point0.x, r.point0.y), Point(r.point0.x, r.point1.y * 1.5), Point(1, 0)));
+	wall.addLine(Line(Point(r.point1.x, r.point0.y), Point(r.point1.x, r.point1.y * 1.5), Point(-1, 0)));
+}
+
+void Map::setTexture(Image _tile1, Image _tile2)
+{
+	tile1 = _tile1;
+	tile2 = _tile2;
+}
+
+void Map::draw()
+{
+	for (size_t i = 0; i < tileVector.size(); ++i)
+	{
+		for (size_t j = 0; j < tileVector[0].size(); ++j)
+		{
+			Point p = indexToPoint(i + 1, j, tileVector.size(), tileVector[0].size(), Range(0, 0, 320, 320));
+			
+			if (tileVector[i][j] == 1)
+			{
+				if (i % 2 == 1 && (j == 0 || j == tileVector[i].size() - 2))
+				{
+					(tile2 + p).draw();
+				}
+				if (2 <= j && j < tileVector[i].size() - 2)
+				{
+					(tile1 + p).draw();
+				}
+			}
+		}
+	}
 }

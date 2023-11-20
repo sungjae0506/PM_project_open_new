@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="character.txt" />
     <Text Include="map.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\game\bubble.cpp" />
     <ClCompile Include="src\game\enemy.cpp" />
+    <ClCompile Include="src\game\character.cpp" />
     <ClCompile Include="src\game\game_manager.cpp" />
     <ClCompile Include="src\not_used\background.cpp" />
     <ClCompile Include="src\not_used\test.cpp" />
@@ -32,6 +34,7 @@
     <ClCompile Include="src\asset\image.cpp" />
     <ClCompile Include="src\main\main.cpp" />
     <ClCompile Include="src\game\map.cpp" />
+    <ClCompile Include="src\util\json.cpp" />
     <ClCompile Include="src\util\object.cpp" />
     <ClCompile Include="src\UI\canvas.cpp" />
     <ClCompile Include="src\UI\page.cpp" />
@@ -45,6 +48,8 @@
   <ItemGroup>
     <ClInclude Include="src\game\bubble.h" />
     <ClInclude Include="src\game\enemy.h" />
+    <ClInclude Include="src\game\character.h" />
+    <ClInclude Include="src\game\game_const.h" />
     <ClInclude Include="src\game\game_manager.h" />
     <ClInclude Include="src\not_used\background.h" />
     <ClInclude Include="src\UI\button.h" />
@@ -56,12 +61,16 @@
     <ClInclude Include="src\UI\event.h" />
     <ClInclude Include="src\UI\page.h" />
     <ClInclude Include="src\game\player.h" />
+    <ClInclude Include="src\util\json.h" />
     <ClInclude Include="src\util\object.h" />
     <ClInclude Include="src\util\range.h" />
     <ClInclude Include="src\asset\sound_loader.h" />
     <ClInclude Include="src\UI\text.h" />
     <ClInclude Include="src\asset\texture_loader.h" />
     <ClInclude Include="src\UI\window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="jsontest.json" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

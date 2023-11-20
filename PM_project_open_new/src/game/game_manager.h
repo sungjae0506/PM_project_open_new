@@ -1,42 +1,49 @@
 #pragma once
 #include <vector>
+#include <string>
+#include "../UI/event.h"
 #include "player.h"
 #include "bubble.h"
 #include "enemy.h"
 #include "map.h"
+#include "character.h"
+#include "game_const.h"
 
 class GameManager
 {
 public:
-	int tick;
-	string state;
+	int mainTick;
+	int internalTick;
+	string state; // MapRunning, MapChanging, Stop
 
 	int currentStage;
-	vector<string> mapPath;
 	vector<Map> maps;
-	Map currentMap;
+	vector<Character> characters;
 
-	vector<Entity*> players;
-	vector<Entity*> bubbles;
-	vector<Entity*> enemies;
+	Map currentMap;
+	vector<Player> players;
+	vector<Bubble> bubbles;
+	vector<Enemy> enemies;
+
+	int playerNum;
 
 	void clear();
-	void addPlayer(Entity* player);
+	
+	void changeState();
 
-	void stateChange();
+	void addMap(string path);
+	void addCharacter(string path);
 
-	void clearMapPath(void);
-	void addMapPath(string path);
-	void loadMap(void);
+	void load(int n);
 
 	void move();
 
+	void drawEntity();
 	void drawMap();
-	void drawMapChange();
+	void drawMap(double stage);
 
-	void keyboardEvent();
-	void idleEvent();
-	void draw();
+	void keyboardEvent(KeyboardEvent e, string key, Point p);
+	void idleEvent(IdleEvent e);
+	void draw(Point mousePos);
 
-	
 };

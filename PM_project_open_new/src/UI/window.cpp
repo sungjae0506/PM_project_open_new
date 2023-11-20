@@ -9,10 +9,10 @@ static int windowWidth = 0;
 static int windowHeight = 0;
 static Transform mouseTransform;
 
-static double FPS = 30.0;
+static double FPS = 60.0;
 static clock_t startClock = clock(), endClock;
 
-static double idlePerSecond = 240.0;
+static double idlePerSecond = 200.0;
 static clock_t idleStartClock = clock(), idleEndClock;
 
 static vector<Page> pages;
@@ -54,7 +54,7 @@ void windowIdle() {
 	}
 
 	idleEndClock = clock();
-	if (idleEndClock - idleStartClock > 1000.0 / idlePerSecond)
+	if (idleEndClock - idleStartClock >= 1000.0 / idlePerSecond)
 	{
 		idleStartClock = idleEndClock;
 		currentPage.idleEvent(IdleRunning);

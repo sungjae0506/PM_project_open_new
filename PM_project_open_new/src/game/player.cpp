@@ -2,6 +2,10 @@
 
 Player::Player()
 {
+	hitBox.addLine(Line(Point(-10, 10), Point(10, 10), Point(0, 1)));  // ╩С
+	hitBox.addLine(Line(Point(-10, -10), Point(10, -10), Point(0, -1))); // го
+	hitBox.addLine(Line(Point(-10, -10), Point(-10, 10), Point(-1, 0))); // аб
+	hitBox.addLine(Line(Point(10, -10), Point(10, 10), Point(1, 0)));  // ©Л
 }
 Player::Player(Point _pos)
 {
@@ -10,4 +14,134 @@ Player::Player(Point _pos)
 	hitBox.addLine(Line(Point(-10, -10), Point(10, -10), Point(0, -1))); // го
 	hitBox.addLine(Line(Point(-10, -10), Point(-10, 10), Point(-1, 0))); // аб
 	hitBox.addLine(Line(Point(10, -10),  Point(10, 10),  Point(1, 0)));  // ©Л
+}
+
+void Player::setPos(const Point& p) {
+	pos = p;
+}
+void Player::setVel(const Point& p)
+{
+	vel = p;
+}
+void Player::setAcc(const Point& p)
+{
+	acc = p;
+}
+
+void Player::setName(string s)
+{
+	name = s;
+}
+void Player::setState(string s)
+{
+	state = s;
+}
+
+
+
+void Player::draw(void)
+{
+	// test
+	auto tmp = (hitBox + pos);
+	tmp.print();
+
+	//(Image("image/snu.png", Range(-10, -10, 10, 10)) + pos).draw();
+}
+void Player::move(void)
+{
+	pos += vel / idlePerSecond;
+	vel += acc / idlePerSecond;
+	if (vel.y < -playerFallingVelLimit)
+		vel.y = -playerFallingVelLimit;
+}
+
+Point Player::getPos(void)
+{
+	return pos;
+}
+
+void Player::setKeyboardState(int i, bool b)
+{
+	keyboardState[i] = b;
+}
+
+void Player::updateKeyboardState(void)
+{
+	if (keyboardState[2] == true && keyboardState[3] == false)
+	{
+		dir = "LEFT";
+		vel = Point(-playerHorizontalVel, vel.y);
+	}
+	else if (keyboardState[2] == false && keyboardState[3] == true)
+	{
+		dir = "RIGHT";
+		vel = Point(playerHorizontalVel, vel.y);
+	}
+	else
+	{
+		vel = Point(0.0, vel.y);
+	}
+
+	if (keyboardState[0] == true && collisionState[1] == true)
+	{
+		vel = Point(vel.x, playerJumpVel);
+	}
+}
+
+void Player::collisionHandling(Map mp)
+{
+	bool isCol = true;
+	Lines platform = mp.platform;
+	Lines wall = mp.wall;
+	auto res1 = (hitBox + pos).collisionDetection(platform);
+	auto res2 = (hitBox + pos).collisionDetection(wall);
+
+	for (int i = 0; i < 4; ++i)
+		collisionState[i] = false;
+
+	for (int i = 1; i < 4; ++i)
+	{
+		isCol = true;
+		if (res1[i].size() == 0)
+			isCol = false;
+		for (auto& j : res1[i])
+			if (j.first != Sliding)
+				isCol = false;
+		if (isCol)
+			collisionState[i] = true;
+
+		if (res2[i].size() == 0)
+			isCol = false;
+		for (auto& j : res2[i])
+			if (j.first != Sliding)
+				isCol = false;
+		if (isCol)
+			collisionState[i] = true;
+	}
+
+	for (int i = 1; i < 4; ++i)
+	{
+		if (vel * hitBox.line[i].norm < EPSILON || collisionState[i] == false)
+			continue;
+
+		for (auto& j : res1[i])
+		{
+			if (hitBox.line[i].norm * j.second.norm < -1.0 + EPSILON)
+			{
+				pos += (hitBox + pos).line[i].norm * ((hitBox + pos).line[i].norm * (((j.second.point0 + j.second.point1) / 2.0) - (((hitBox + pos).line[i].point0 + (hitBox + pos).line[i].point1) / 2.0)));
+				vel -= hitBox.line[i].norm * (hitBox.line[i].norm * vel);
+				break;
+			}
+		}
+
+		for (auto &j : res2[i])
+		{
+			if (hitBox.line[i].norm * j.second.norm < -1.0 + EPSILON)
+			{
+				pos += (hitBox + pos).line[i].norm * ((hitBox + pos).line[i].norm * (((j.second.point0 + j.second.point1) / 2.0) - (((hitBox + pos).line[i].point0 + (hitBox + pos).line[i].point1) / 2.0)));
+				vel -= hitBox.line[i].norm * (hitBox.line[i].norm * vel);
+				break;
+			}	
+		}
+	}
 }

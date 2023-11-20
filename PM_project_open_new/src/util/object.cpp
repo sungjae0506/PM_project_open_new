@@ -150,7 +150,7 @@ Line& Line::operator=(const Line& l)
 }
 Line Line::operator+(const Point& p) const
 {
-	return Line(point0 + p, point0 + p, norm);
+	return Line(point0 + p, point1 + p, norm);
 }
 Line& Line::operator+=(const Point& p)
 {
@@ -227,7 +227,7 @@ Lines& Lines::operator=(const Lines& ls)
 }
 Lines Lines::operator+(const Point& p) const
 {
-	Lines ls;
+	Lines ls(*this);
 	for (auto& i : ls.line)
 		i += p;
 	return ls;

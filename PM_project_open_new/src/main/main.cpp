@@ -18,17 +18,30 @@ using namespace std;
 Window window;
 Page gamePage("gamePage", Range(0, 0, 1600, 900));
 
-int main(int argc, char** argv) 
+
+int main(int argc, char** argv)
 {
 	window("Bubble Bobble", &argc, argv, 50, 50, WIDTH, HEIGHT);
 	
 	gamePage
+	.addIdleFunc
+	(
+		gamePageIdle
+	)
 	.addCanvas
 	(
 		Canvas(Range(250, 0, 1350, 900), Range(0, 20, 320, 280))
 		.addDrawFunc
 		(
-			gameMapDraw
+			gameManagerDraw
+		)
+		.addIdleFunc
+		(
+			gameManagerIdle
+		)
+		.addKeyboardFunc
+		(
+			gameManagerKeyboard
 		)
 	)
 	.addText

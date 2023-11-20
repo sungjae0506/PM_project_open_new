@@ -2,9 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include "../game/map.h"
 #include "../util/object.h"
 #include "../asset/image.h"
+
 using namespace std;
 
 
@@ -15,10 +15,14 @@ class Map
 {
 public:
 	vector<vector<int>> tileVector;
+	Image tile1, tile2;
+	Image background;
 	Lines platform;
 	Lines wall;
-	Image tile1, tile2;
+
 	Map();
+	Map(const Map& map);
+
 	void readMap(string file);
 	void setTexture(Image _tile1, Image _tile2);
 	void draw();
@@ -29,5 +33,4 @@ public:
 	// 이미지 그리기:   snu.draw();
 	// 이미지 평행이동: snu + Point(80, 80);
 	// 평행이동 후 그리기: (snu + Point(80, 80)).draw()
-
 };
