@@ -184,9 +184,10 @@ CollisionType Line::collisionDetection(const Line& l) const
 		return None;
 	if (((l.point0 - point0) * para < COLLISION_EPSILON && (l.point1 - point0) * para < COLLISION_EPSILON) || ((l.point0 - point1) * para > -COLLISION_EPSILON && (l.point1 - point1) * para > -COLLISION_EPSILON))
 		return None;
-	if (abs((l.point0 - point0) * norm) < COLLISION_EPSILON && abs((l.point0 - point0) * norm) < COLLISION_EPSILON)
+	if (abs((l.point0 - point0) * norm) < COLLISION_EPSILON && abs((l.point1 - point0) * norm) < COLLISION_EPSILON) // ?? l.point0°¡ 2°³
 		return Sliding;
-	if (((l.point0 - point0) * norm) * ((l.point1 - point0) * norm) < 0.0)
+	//if (((l.point0 - point0) * norm) * ((l.point1 - point0) * norm) < 0.0)
+	if ((((l.point0 - point0) * norm) < -COLLISION_EPSILON && ((l.point1 - point0) * norm) > COLLISION_EPSILON) || (((l.point0 - point0) * norm) > COLLISION_EPSILON && ((l.point1 - point0) * norm) < -COLLISION_EPSILON))
 		return Crossing;
 	return None;
 }

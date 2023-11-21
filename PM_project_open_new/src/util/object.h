@@ -3,6 +3,7 @@
 #include <vector>
 #include <math.h>
 #include <algorithm>
+#include <iostream>
 using namespace std;
 
 const double EPSILON = 1e-4;

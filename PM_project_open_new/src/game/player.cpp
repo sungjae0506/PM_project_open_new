@@ -53,6 +53,8 @@ void Player::move(void)
 	vel += acc / idlePerSecond;
 	if (vel.y < -playerFallingVelLimit)
 		vel.y = -playerFallingVelLimit;
+	if (pos.y < 0.0)
+		pos.y = 320.0;
 }
 
 Point Player::getPos(void)
@@ -67,22 +69,23 @@ void Player::setKeyboardState(int i, bool b)
 
 void Player::updateKeyboardState(void)
 {
-	if (keyboardState[2] == true && keyboardState[3] == false)
-	{
-		dir = "LEFT";
-		vel = Point(-playerHorizontalVel, vel.y);
-	}
-	else if (keyboardState[2] == false && keyboardState[3] == true)
+	
+	if (keyboardState[2] == false && keyboardState[3] == true)
 	{
 		dir = "RIGHT";
 		vel = Point(playerHorizontalVel, vel.y);
+	}
+	else if (keyboardState[2] == true && keyboardState[3] == false)
+	{
+		dir = "LEFT";
+		vel = Point(-playerHorizontalVel, vel.y);
 	}
 	else
 	{
 		vel = Point(0.0, vel.y);
 	}
 
-	if (keyboardState[0] == true && collisionState[1] == true)
+	if (keyboardState[0] == true && collisionState[1] == true && vel.y < EPSILON)
 	{
 		vel = Point(vel.x, playerJumpVel);
 	}
@@ -95,6 +98,24 @@ void Player::collisionHandling(Map mp)
 	Lines wall = mp.wall;
 	auto res1 = (hitBox + pos).collisionDetection(platform);
 	auto res2 = (hitBox + pos).collisionDetection(wall);
+
+	/**for (int i = 2; i < 4; ++i)
+	{
+		for (auto& j : res1[i])
+		{
+			if (j.first == None)
+			{
+				cout << "None ";
+			}
+			else if (j.first == Sliding)
+			{
+				cout << "Sl";
+			}
+			
+		}
+		cout << endl;
+	}
+	cout << endl;*/
 
 	for (int i = 0; i < 4; ++i)
 		collisionState[i] = false;

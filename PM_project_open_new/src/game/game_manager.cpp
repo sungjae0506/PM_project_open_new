@@ -101,8 +101,8 @@ void GameManager::drawEntity()
 
 void GameManager::drawMap()
 {
-	currentMap.draw();
-	//currentMap.platform.print();
+	//currentMap.draw();
+	currentMap.platform.print();
 }
 
 void GameManager::drawMap(double stage)
@@ -166,6 +166,10 @@ void GameManager::idleEvent(IdleEvent e)
 	}
 	if (state == "MapRunning")
 	{
+		players[0].updateKeyboardState();
+		if (playerNum == 2)
+			players[1].updateKeyboardState();
+
 		move();
 	}
 	if (state == "MapChanging")
