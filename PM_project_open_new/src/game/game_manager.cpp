@@ -93,10 +93,10 @@ void GameManager::move()
 
 }
 
-void GameManager::drawEntity()
+void GameManager::drawEntity(int& internalTick)
 {
 	for (auto& i : players)
-		i.draw();
+		i.draw(internalTick);
 }
 
 void GameManager::drawMap()
@@ -188,7 +188,7 @@ void GameManager::draw(Point mousePos)
 	if (state == "MapStarting" || state == "MapRunning")
 	{
 		drawMap();
-		drawEntity();
+		drawEntity(internalTick);
 	}
 	if (state == "MapChanging")
 	{

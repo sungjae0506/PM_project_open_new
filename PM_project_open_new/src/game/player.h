@@ -11,7 +11,7 @@ public:
 
 	Lines hitBox;
 
-	vector<Image> images;
+	vector<Image> images; //[좌1, 좌2, 우1, 우2, 점프, 스페이스바]
 
 	vector<bool> collisionState{ false, false, false, false }; // 상 하 좌 우
 	vector<bool> keyboardState{ false, false, false, false, false }; // 상 하 좌 우 스페이스
@@ -28,7 +28,7 @@ public:
 	virtual void setName(string s);
 	virtual void setState(string s);
 
-	virtual void draw(void);
+	virtual void draw(int& internalTick);
 	virtual void move(void);
 
 	Point getPos(void);

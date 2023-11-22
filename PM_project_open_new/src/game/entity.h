@@ -24,7 +24,7 @@ public:
 	virtual void setName(string s) = 0;
 	virtual void setState(string s) = 0;
 
-	virtual void draw(void) = 0;
+	virtual void draw(int& a) = 0;
 	virtual void move(void) = 0;
 
 	//virtual void changeState(void) = 0;
