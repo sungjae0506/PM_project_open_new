@@ -9,7 +9,7 @@ void Enemy::setImages(vector<Image>& images) {
 
 }
 
-void Enemy::draw(bool isBubbleTouched) {
+void Enemy::draw(bool isBubbleTouched, int& internalTick) {
 
 };
 

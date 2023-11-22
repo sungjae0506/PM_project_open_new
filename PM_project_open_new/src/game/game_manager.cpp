@@ -97,6 +97,13 @@ void GameManager::drawEntity(int& internalTick)
 {
 	for (auto& i : players)
 		i.draw(internalTick);
+	
+	for (auto& b : bubbles)
+		b.draw(internalTick);
+	/*
+	for (auto& e : enemies)
+		e.draw(internalTick); //bool isBubbleTouched
+	*/
 }
 
 void GameManager::drawMap()

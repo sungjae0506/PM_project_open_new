@@ -56,7 +56,7 @@ void Player::draw(int& internalTick)
 		bool walk = false;
 		start = internalTick;
 
-		while (keyboardState[0] || keyboardState[1] || keyboardState[2] || keyboardState[3]) {
+		if (keyboardState[0] || keyboardState[2] || keyboardState[3]) {
 			
 			end = internalTick;
 			
@@ -75,6 +75,9 @@ void Player::draw(int& internalTick)
 			}
 
 			start = internalTick;
+		}
+		else {
+			images[6].draw();
 		}
 	}
 }
