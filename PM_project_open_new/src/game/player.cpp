@@ -45,13 +45,47 @@ void Player::setName(string s)
 
 
 
-void Player::draw(void)
+void Player::draw(int& internalTick)
 {
 	// test
 	auto tmp = (hitBox + pos);
 	tmp.print();
 
 	//(Image("image/snu.png", Range(-10, -10, 10, 10)) + pos).draw();
+	
+	if (keyboardState[4]) {
+		images[5].draw();
+	}
+
+	else {
+		int start, end;
+		bool walk = false;
+		start = internalTick;
+
+		if (keyboardState[0] || keyboardState[2] || keyboardState[3]) {
+			
+			end = internalTick;
+			
+			if ((end - start) > 3) {
+				walk != walk;
+			}
+
+			if (dir == "LEFT") {
+				images[walk ? 0 : 1].draw();
+			}
+			else if (dir == "RIGHT") {
+				images[walk ? 2 : 3].draw();
+			}
+			else if (keyboardState[0]) {
+				images[4].draw();
+			}
+
+			start = internalTick;
+		}
+		else {
+			images[6].draw();
+		}
+	}
 }
 void Player::move(void)
 {

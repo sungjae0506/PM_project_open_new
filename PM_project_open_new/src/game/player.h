@@ -16,7 +16,7 @@ public:
 	int height;
 	Lines hitBox;
 
-	vector<Image> images;
+	vector<Image> images; //[좌1, 좌2, 우1, 우2, 점프, 스페이스바, 정지]
 
 	bool enemyCollisionState;
 	vector<bool> mapCollisionState{ false, false, false, false }; // 상 하 좌 우
@@ -35,7 +35,7 @@ public:
 
 	virtual void setName(string s);
 
-	virtual void draw(void);
+	virtual void draw(int& internalTick);
 	virtual void move(void);
 
 	Point getPos(void);

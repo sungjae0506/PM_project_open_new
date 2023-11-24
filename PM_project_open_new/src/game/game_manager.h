@@ -44,7 +44,7 @@ public:
 
 	void move();
 
-	void drawEntity();
+	void drawEntity(int& internalTick);
 	void drawMap();
 	void drawMap(double stage);
 
