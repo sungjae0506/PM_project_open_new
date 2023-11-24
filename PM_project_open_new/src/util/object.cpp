@@ -182,13 +182,29 @@ CollisionType Line::collisionDetection(const Line& l) const
 {
 	if (norm * l.norm > EPSILON)
 		return None;
-	if (((l.point0 - point0) * para < COLLISION_EPSILON && (l.point1 - point0) * para < COLLISION_EPSILON) || ((l.point0 - point1) * para > -COLLISION_EPSILON && (l.point1 - point1) * para > -COLLISION_EPSILON))
+	//if (((l.point0 - point0) * para < COLLISION_EPSILON && (l.point1 - point0) * para < COLLISION_EPSILON) || ((l.point0 - point1) * para > -COLLISION_EPSILON && (l.point1 - point1) * para > -COLLISION_EPSILON))
+	//	return None;
+	if (((l.point0 - point0) * para < COLLISION_EPSILON * 0.1 && (l.point1 - point0) * para < COLLISION_EPSILON * 0.1) || ((l.point0 - point1) * para > -COLLISION_EPSILON * 0.1 && (l.point1 - point1) * para > -COLLISION_EPSILON * 0.1))
 		return None;
 	if (abs((l.point0 - point0) * norm) < COLLISION_EPSILON && abs((l.point1 - point0) * norm) < COLLISION_EPSILON) // ?? l.point0°¡ 2°³
 		return Sliding;
 	//if (((l.point0 - point0) * norm) * ((l.point1 - point0) * norm) < 0.0)
-	if ((((l.point0 - point0) * norm) < -COLLISION_EPSILON && ((l.point1 - point0) * norm) > COLLISION_EPSILON) || (((l.point0 - point0) * norm) > COLLISION_EPSILON && ((l.point1 - point0) * norm) < -COLLISION_EPSILON))
-		return Crossing;
+	//if ((((l.point0 - point0) * norm) < -COLLISION_EPSILON && ((l.point1 - point0) * norm) > COLLISION_EPSILON) || (((l.point0 - point0) * norm) > COLLISION_EPSILON && ((l.point1 - point0) * norm) < -COLLISION_EPSILON))
+	//	return Crossing;
+	
+	if ((((l.point0 - point0) * norm) < -COLLISION_EPSILON && ((l.point1 - point0) * norm) >= 0.0) || (((l.point0 - point0) * norm) >= 0.0 && ((l.point1 - point0) * norm) < -COLLISION_EPSILON))
+	{
+		float a, b, p, q, s;
+		a = abs((l.point0 - point0) * norm);
+		b = abs((l.point1 - point0) * norm);
+		p = (l.point0 - point0) * para;
+		q = (l.point1 - point0) * para;
+		s = (a * p + b * q) / (a + b);
+		if (COLLISION_EPSILON <= s && s <= abs(point1 - point0) - COLLISION_EPSILON)
+			return Crossing;
+	}
+	if (((l.point0 - point0) * norm) < 0.0 && ((l.point1 - point0) * norm) < 0.0 && ((((l.point0 - point0) * norm) >= -COLLISION_EPSILON) || (((l.point1 - point0) * norm) >= -COLLISION_EPSILON)))
+		return In;
 	return None;
 }
 

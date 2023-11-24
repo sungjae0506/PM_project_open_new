@@ -8,13 +8,14 @@
 #include "map.h"
 #include "character.h"
 #include "game_const.h"
+#include "../util/light.h"
 
 class GameManager
 {
 public:
 	int mainTick;
 	int internalTick;
-	string state; // MapRunning, MapChanging, Stop
+	string state; // MapStarting, MapRunning, MapChanging, Stop(internalTick¿Ã ¡§¡ˆµ )
 
 	int currentStage;
 	vector<Map> maps;
@@ -25,11 +26,16 @@ public:
 	vector<Bubble> bubbles;
 	vector<Enemy> enemies;
 
+	
+
 	int playerNum;
 
 	void clear();
 	
+	void setState(string s);
+	string getState(void);
 	void changeState();
+	void incTick(void);
 
 	void addMap(string path);
 	void addCharacter(string path);

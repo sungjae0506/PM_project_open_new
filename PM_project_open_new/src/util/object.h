@@ -54,6 +54,8 @@ public:
 	void print(void) const;
 };
 
+
+
 class Line
 {
 public:
@@ -92,3 +94,7 @@ public:
 
 	void print(void) const;
 };
+
+double dist(const Point& p0, const Point& p1);
+double dist(const Circle& c, const Point& p);
+double dist(const Line& l, const Point& p);

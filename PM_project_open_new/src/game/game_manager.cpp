@@ -15,26 +15,45 @@ void GameManager::clear()
 	internalTick = 0;
 }
 
+void GameManager::setState(string s)
+{
+	internalTick = 0;
+	state = s;
+}
+
+string GameManager::getState(void)
+{
+	return state;
+}
+
 void GameManager::changeState() // state machine 구현 예정
 {
-	if (state == "MapStarting")
+	if (getState() == "MapStarting")
 	{
 		if (internalTick >= 100)
 		{
-			state = "MapRunning";
-			internalTick = 0;
+			setState("MapRunning");
 		}
 	}
+	else if (getState() == "MapRunning")
+	{
 
-	if (state == "MapChanging")
+	}
+	else if (getState() == "MapChanging")
 	{
 		if (internalTick >= 100)
 		{
-			state = "MapRunning";
-			internalTick = 0;
+			setState("MapRunning");
 		}
 	}
 
+}
+
+void GameManager::incTick(void)
+{
+	++mainTick;
+	if (getState() != "Stop")
+		++internalTick;
 }
 
 // ////////////////////////////////////////////////////////////// 
@@ -77,7 +96,7 @@ void GameManager::load(int n)
 		players[1].setAcc(gravity);
 	}
 
-	state = "MapStarting";
+	setState("MapStarting");
 }
 
 // //////////////////////////////////////////////////////////////
@@ -87,22 +106,61 @@ void GameManager::move()
 {
 	for (auto& i : players)
 	{
+		i.updateKeyboardState();
+		i.move();
+		i.collisionHandling(currentMap); 
+
+	}
+	for (auto& i : bubbles)
+	{
 		i.move();
 		i.collisionHandling(currentMap);
 	}
+	for (auto& i : enemies)
+	{
+		//i.move();
+		//i.collisionHandling(currentMap);
+	}
+	//cout << players[0].getBubbleState() << " " << bubbles.size() << endl;
+	for (auto& i : players)
+	{
+		if (i.getBubbleState() == "ShootBubble")
+		{			
+			bubbles.push_back(i.shootBubble(currentMap));
+		}
+	}
 
+	for (auto &i: players)
+		i.incTick();
+	for (auto& i : bubbles)
+		i.incTick();
+	//for (auto& i : enemies)
+	//	i.incTick();
+
+	for (auto& i : players)
+		i.changeState();
+	for (auto& i : bubbles)
+		i.changeState();
+	//for (auto& i : enemies)
+	//	i.changeState();
 }
 
 void GameManager::drawEntity()
 {
 	for (auto& i : players)
 		i.draw();
+
+	for (auto& i : bubbles)
+		i.draw();
+
 }
 
 void GameManager::drawMap()
 {
-	//currentMap.draw();
-	currentMap.platform.print();
+	currentMap.draw();
+	//currentMap.platform.print();
+	//currentMap.wall.print();
+	
 }
 
 void GameManager::drawMap(double stage)
@@ -151,8 +209,7 @@ void GameManager::keyboardEvent(KeyboardEvent e, string key, Point p)
 
 void GameManager::idleEvent(IdleEvent e)
 {
-	//cout << state << endl;
-	if (state == "MapStarting")
+	if (getState() == "MapStarting")
 	{
 		if (playerNum == 1)
 		{
@@ -164,23 +221,17 @@ void GameManager::idleEvent(IdleEvent e)
 			players[1].setPos(((1.0 - internalTick / 100.0) * player2Start) + ((internalTick / 100.0) * characters[0].players[1].getPos()));
 		}
 	}
-	if (state == "MapRunning")
+	if (getState() == "MapRunning")
 	{
-		players[0].updateKeyboardState();
-		if (playerNum == 2)
-			players[1].updateKeyboardState();
-
 		move();
 	}
-	if (state == "MapChanging")
+	if (getState() == "MapChanging")
 	{
 
 	}
 
+	incTick();
 	changeState();
-	++mainTick;
-	if (state != "Stop")
-		++internalTick;
 }
 
 void GameManager::draw(Point mousePos)
@@ -192,6 +243,6 @@ void GameManager::draw(Point mousePos)
 	}
 	if (state == "MapChanging")
 	{
-		
+		drawEntity();
 	}
 }

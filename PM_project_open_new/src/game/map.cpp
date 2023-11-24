@@ -117,8 +117,8 @@ void Map::readMap(string file)
 				tileVector[i][j] = 1;
 	}
 	platform = vectorToLines(tileVector, r);
-	wall.addLine(Line(Point(r.point0.x, r.point0.y), Point(r.point0.x, r.point1.y * 1.5), Point(1, 0)));
-	wall.addLine(Line(Point(r.point1.x, r.point0.y), Point(r.point1.x, r.point1.y * 1.5), Point(-1, 0)));
+	wall.addLine(Line(Point(r.point0.x + 20, r.point0.y), Point(r.point0.x + 20, r.point1.y), Point(1, 0)));
+	wall.addLine(Line(Point(r.point1.x - 20, r.point0.y), Point(r.point1.x - 20, r.point1.y), Point(-1, 0)));
 }
 
 void Map::setTexture(Image _tile1, Image _tile2)
