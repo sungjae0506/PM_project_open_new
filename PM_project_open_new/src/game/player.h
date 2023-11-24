@@ -35,7 +35,7 @@ public:
 
 	virtual void setName(string s);
 
-	virtual void draw(int& internalTick);
+	virtual void draw(void);
 	virtual void move(void);
 
 	Point getPos(void);
@@ -43,6 +43,8 @@ public:
 	void setKeyboardState(int i, bool b);
 	void updateKeyboardState(void);
 	void collisionHandling(const Map &mp);
+
+	bool collisionDetection(const Bubble& b);
 
 	virtual void setState(string s);
 	virtual string getState(void);

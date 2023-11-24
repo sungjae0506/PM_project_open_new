@@ -2,8 +2,11 @@
 
 Bubble::Bubble()
 {
-	hitBox.center(0.0, 0.0);
-	hitBox.radius = r1;
+	hitBox1.center(0.0, 0.0);
+	hitBox2.center(0.0, 0.0);
+	hitBox1.radius = r1;
+	hitBox2.radius = r2;
+
 	mainTick = 0;
 	internalTick = 0;
 	mapCollisionState = false;
@@ -12,8 +15,12 @@ Bubble::Bubble()
 Bubble::Bubble(Point _pos, Point _dir)
 {
 	pos = _pos;
-	hitBox.center(0.0, 0.0);
-	hitBox.radius = r1;
+
+	hitBox1.center(0.0, 0.0);
+	hitBox2.center(0.0, 0.0);
+	hitBox1.radius = r1;
+	hitBox2.radius = r2;
+
 	mainTick = 0;
 	internalTick = 0;
 	mapCollisionState = false;
@@ -37,42 +44,37 @@ void Bubble::setName(string s)
 	name = s;
 }
 
+void Bubble::setImages(vector<Image>& images)
+{
+
+}
+
 void Bubble::draw(void)
 {
-	/*float emission[4] = {mtl.getEmission()[0], mtl.getEmission()[1] , mtl.getEmission()[2] , mtl.getEmission()[3]};
-	float ambient[4] = { mtl.getAmbient()[0], mtl.getAmbient()[1] , mtl.getAmbient()[2] , mtl.getAmbient()[3] };
-	float diffuse[4] = { mtl.getDiffuse()[0], mtl.getDiffuse()[1] , mtl.getDiffuse()[2] , mtl.getDiffuse()[3] };
-	float specular[4] = { mtl.getSpecular()[0], mtl.getSpecular()[1] , mtl.getSpecular()[2] , mtl.getSpecular()[3] };
-	float shininess[1] = { mtl.getShininess() };
+	string st = getState();
+	if (st == "Pop" || st == "Killed")
+		return;
 
-	glShadeModel(GL_SMOOTH);
-	glMaterialfv(GL_FRONT, GL_EMISSION, emission);
-	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
+	double size;
+	if (st == "Horizontal")
+	{
+		size = hitBox1.radius * (internalTick / 60.0 + 0.5);
+	}
+	else
+	{
+		size = hitBox2.radius;
+	}
 
+	glColor3f(0.0, 1.0, 0.0);
 	glPushMatrix();
 	glTranslatef(pos.x, pos.y, 0.0);
-	printf("%lf %lf %lf\n", pos.x, pos.y, r1);
-	cout << emission[0] << " " << emission[1] << " " << emission[2] << " " << emission[3] << endl;
-	if (state == "Horizontal")
-	{
-		glutSolidSphere(r1, 100.0, 100.0);
-	}
-	glPopMatrix();*/
-
-	double size = 10.0;
-	glColor3f(0.0, 1.0, 0.0);
-	glBegin(GL_QUADS);
-	glVertex2f(pos.x - size / 2, pos.y - size / 2);
-	glVertex2f(pos.x + size / 2, pos.y - size / 2);
-	glVertex2f(pos.x + size / 2, pos.y + size / 2);
-	glVertex2f(pos.x - size / 2, pos.y + size / 2);
-	glEnd();
+	glutSolidSphere(size, 20, 20);
+	glPopMatrix();
 }
+
 void Bubble::move(void)
 {
+	string st = getState();
 	if (getState() == "Vertical")
 	{
 		vel(0, bubbleVerticalVel);
@@ -100,16 +102,50 @@ string Bubble::getState(void)
 
 void Bubble::changeState(void)
 {
-	if (getState() == "Horizontal")
+	string st = getState();
+	if (st == "Horizontal")
 	{
-		if (mapCollisionState || internalTick >= 20)
+		if (mapCollisionState || internalTick >= 30)
 		{
 			setState("Vertical");
 		}
+		else if (enemyCollisionState)
+		{
+			setState("ContainEnemy");
+		}
 	}
-	else if (getState() == "Vertical")
+	else if (st == "Vertical")
 	{
-
+		if (playerCollisionState || internalTick >= 3000)
+		{
+			setState("Pop");
+		}
+	}
+	else if (st == "Pop")
+	{
+		if (internalTick >= 20)
+		{
+			setState("Killed");
+		}
+	}
+	else if (st == "ContainEnemy")
+	{
+		if (internalTick >= 5000)
+		{
+			setState("MakeEnemy");
+		}
+		else if (playerCollisionState)
+		{
+			setState("KillEnemy");
+		}
+	}
+	else if (st == "MakeEnemy")
+	{
+		setState("Pop");
+	}
+	else if (st == "KillEnemy")
+	{
+		setState("Pop");
 	}
 }
 
@@ -127,7 +163,7 @@ void Bubble::collisionHandling(const Map &mp)
 	{
 		Lines wall = mp.wall;
 
-		auto res = wall.collisionDetection(hitBox + pos);
+		auto res = wall.collisionDetection(hitBox2 + pos);
 
 		mapCollisionState = false;
 

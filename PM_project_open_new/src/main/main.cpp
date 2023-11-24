@@ -21,15 +21,6 @@ Page gamePage("gamePage", Range(0, 0, 1600, 900));
 
 int main(int argc, char** argv)
 {
-	Light light(160.0, 160.0, 160.0, GL_LIGHT0);
-
-	light.setAmbient(1, 1, 1, 1);
-	light.setDiffuse(1, 1, 1, 1);
-	light.setSpecular(1, 1, 1, 1);
-
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_LIGHTING);
-	glEnable(light.getID());
 
 
 	window("Bubble Bobble", &argc, argv, 50, 50, WIDTH, HEIGHT);

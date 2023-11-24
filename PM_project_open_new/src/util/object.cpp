@@ -290,3 +290,17 @@ void Lines::print(void) const
 	for (auto &l : line)
 		l.print();
 }
+
+double dist(const Point& p0, const Point& p1)
+{
+	return abs(p1 - p0);
+}
+double dist(const Circle& c, const Point& p)
+{
+	return max(abs(p - c.center) - c.radius, 0.0);
+}
+
+double dist(const Line& l, const Point& p)
+{
+	return max((p - l.point0) * l.norm, 0.0);
+}

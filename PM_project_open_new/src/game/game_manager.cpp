@@ -109,6 +109,14 @@ void GameManager::move()
 		i.updateKeyboardState();
 		i.move();
 		i.collisionHandling(currentMap); 
+		for (int j = 0; j < bubbles.size(); ++j)
+		{
+			if (i.collisionDetection(bubbles[j]))
+			{
+				printf("pop!\n");
+				bubbleQueue.push(j);
+			}
+		}
 
 	}
 	for (auto& i : bubbles)
@@ -125,7 +133,8 @@ void GameManager::move()
 	for (auto& i : players)
 	{
 		if (i.getBubbleState() == "ShootBubble")
-		{			
+		{	
+			printf("%d\n", bubbles.size());
 			bubbles.push_back(i.shootBubble(currentMap));
 		}
 	}
@@ -145,7 +154,7 @@ void GameManager::move()
 	//	i.changeState();
 }
 
-void GameManager::drawEntity(int& internalTick)
+void GameManager::drawEntity(void)
 {
 	for (auto& i : players)
 		i.draw();
@@ -239,7 +248,7 @@ void GameManager::draw(Point mousePos)
 	if (state == "MapStarting" || state == "MapRunning")
 	{
 		drawMap();
-		drawEntity(internalTick);
+		drawEntity();
 	}
 	if (state == "MapChanging")
 	{

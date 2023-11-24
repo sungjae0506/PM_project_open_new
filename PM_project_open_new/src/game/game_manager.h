@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <queue>
 #include <string>
 #include "../UI/event.h"
 #include "player.h"
@@ -8,7 +9,6 @@
 #include "map.h"
 #include "character.h"
 #include "game_const.h"
-#include "../util/light.h"
 
 class GameManager
 {
@@ -26,7 +26,7 @@ public:
 	vector<Bubble> bubbles;
 	vector<Enemy> enemies;
 
-	
+	queue<int> bubbleQueue;
 
 	int playerNum;
 
@@ -44,7 +44,7 @@ public:
 
 	void move();
 
-	void drawEntity(int& internalTick);
+	void drawEntity(void);
 	void drawMap();
 	void drawMap(double stage);
 

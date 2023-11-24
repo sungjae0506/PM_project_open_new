@@ -9,6 +9,7 @@ public:
 	Enemy();
 
 	void setImages(vector<Image>& images);
-	void draw(bool isBubbleTouched, int& internalTick);
+	//void draw(bool isBubbleTouched, int& internalTick);
+	void draw(void);
 
 };

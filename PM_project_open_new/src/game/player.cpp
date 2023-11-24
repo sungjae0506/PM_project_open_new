@@ -45,7 +45,7 @@ void Player::setName(string s)
 
 
 
-void Player::draw(int& internalTick)
+void Player::draw(void)
 {
 	// test
 	auto tmp = (hitBox + pos);
@@ -53,7 +53,7 @@ void Player::draw(int& internalTick)
 
 	//(Image("image/snu.png", Range(-10, -10, 10, 10)) + pos).draw();
 	
-	if (keyboardState[4]) {
+	/*if (keyboardState[4]) {
 		images[5].draw();
 	}
 
@@ -85,7 +85,7 @@ void Player::draw(int& internalTick)
 		else {
 			images[6].draw();
 		}
-	}
+	}*/
 }
 void Player::move(void)
 {
@@ -221,6 +221,15 @@ void Player::collisionHandling(const Map &mp)
 	//printf("%d %d %d %d\n", (int)collisionState[0], (int)collisionState[1], (int)collisionState[2], (int)collisionState[3]);
 }
 
+bool Player::collisionDetection(const Bubble& b)
+{
+	auto res = hitBox.collisionDetection(b.hitBox2);
+	for (auto i : res)
+		if (i != None)
+			return true;
+	return false;
+}
+
 void Player::setState(string s)
 {
 	state = s;
@@ -280,28 +289,39 @@ void Player::setBubble(Bubble b)
 
 Bubble Player::shootBubble(const Map &mp)
 {
-	// bubble test
-
-	bubble.mtl.setAmbient(0, 1, 0, 0.5);
-	bubble.mtl.setDiffuse(0, 1, 0, 0.5);
-	bubble.mtl.setEmission(0, 1, 0, 0.5);
-	bubble.mtl.setSpecular(0, 1, 0, 0.5);
-	bubble.mtl.setShininess(10);
 
 	//////////////
 
+
 	if (dir == "LEFT")
 	{
-		//if (pos.x < )
-
-
-		bubble.setPos(pos + Point(-width / 2 - bubble.r1 - 1.5 * COLLISION_EPSILON, 0));
-		bubble.setVel(Point(-bubbleHorizontalVel, 0));
+		if (dist(mp.wall.line[0], pos) < (width / 2 + bubble.r2 * 2))
+		{
+			bubble.setState("Pop");
+			bubble.setPos(pos + (bubble.r2 - dist(mp.wall.line[0], pos)) * mp.wall.line[0].norm);
+			bubble.setVel(Point(0, 0));
+		}
+		else
+		{
+			bubble.setState("Horizontal");
+			bubble.setPos(pos + Point(-width / 2 - bubble.r1 - 1.5 * COLLISION_EPSILON, 0));
+			bubble.setVel(Point(-bubbleHorizontalVel, 0));
+		}
 	}
 	else if (dir == "RIGHT")
 	{
-		bubble.setPos(pos + Point(width / 2 + bubble.r1 + 1.5 * COLLISION_EPSILON, 0));
-		bubble.setVel(Point(bubbleHorizontalVel, 0));
+		if (dist(mp.wall.line[1], pos) < (width / 2 + bubble.r2 * 2))
+		{
+			bubble.setState("Pop");
+			bubble.setPos(pos + (bubble.r2 - dist(mp.wall.line[1], pos)) * mp.wall.line[1].norm);
+			bubble.setVel(Point(0, 0));
+		}
+		else
+		{
+			bubble.setState("Horizontal");
+			bubble.setPos(pos + Point(width / 2 + bubble.r1 + 1.5 * COLLISION_EPSILON, 0));
+			bubble.setVel(Point(bubbleHorizontalVel, 0));
+		}
 	}
 	return bubble;
 }
