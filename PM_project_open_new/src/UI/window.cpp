@@ -54,7 +54,7 @@ void windowIdle() {
 	}
 
 	idleEndClock = clock();
-	if (idleEndClock - idleStartClock >= 1000.0 / idlePerSecond)
+	if (idleEndClock - idleStartClock >= (int)(1000.0 / idlePerSecond))
 	{
 		idleStartClock = idleEndClock;
 		currentPage.idleEvent(IdleRunning);

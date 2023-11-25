@@ -26,7 +26,7 @@ public:
 	virtual void move(void) = 0;
 
 	virtual void setState(string s) = 0;
-	virtual string getState(void) = 0;
+	virtual string getState(void) const = 0;
 	virtual void changeState(void) = 0;
 	virtual void incTick(void) = 0;
 	

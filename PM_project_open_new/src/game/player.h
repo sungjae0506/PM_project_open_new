@@ -42,12 +42,12 @@ public:
 
 	void setKeyboardState(int i, bool b);
 	void updateKeyboardState(void);
-	void collisionHandling(const Map &mp);
 
-	bool collisionDetection(const Bubble& b);
+	void collisionHandling(const Map &mp);
+	bool collisionDetection(Bubble& b);
 
 	virtual void setState(string s);
-	virtual string getState(void);
+	virtual string getState(void) const;
 	virtual void changeState(void);
 	virtual void incTick(void);
 

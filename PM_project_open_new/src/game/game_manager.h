@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <queue>
+#include <set>
 #include <string>
 #include "../UI/event.h"
 #include "player.h"
@@ -9,6 +10,7 @@
 #include "map.h"
 #include "character.h"
 #include "game_const.h"
+#include <ctime>
 
 class GameManager
 {
@@ -26,7 +28,11 @@ public:
 	vector<Bubble> bubbles;
 	vector<Enemy> enemies;
 
-	queue<int> bubbleQueue;
+	const int bubbleMax = 240;
+	queue<int> bubbleResourceQueue;
+	vector<bool> bubblePopVector;
+	queue<int> bubblePopQueue;
+	vector<vector<bool>> bubbleAdjVector;
 
 	int playerNum;
 

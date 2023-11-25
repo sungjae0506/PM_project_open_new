@@ -221,12 +221,16 @@ void Player::collisionHandling(const Map &mp)
 	//printf("%d %d %d %d\n", (int)collisionState[0], (int)collisionState[1], (int)collisionState[2], (int)collisionState[3]);
 }
 
-bool Player::collisionDetection(const Bubble& b)
+bool Player::collisionDetection(Bubble& b)
 {
-	auto res = hitBox.collisionDetection(b.hitBox2);
-	for (auto i : res)
-		if (i != None)
-			return true;
+	string st = b.getState();
+	if (st == "Vertical" || st == "ContainEnemy")
+	{
+		auto res = (hitBox + pos).collisionDetection((b.hitBox2 + b.getPos()));
+		for (auto i : res)
+			if (i != None)
+				return true;
+	}
 	return false;
 }
 
@@ -237,7 +241,7 @@ void Player::setState(string s)
 }
 
 
-string Player::getState(void)
+string Player::getState(void) const
 {
 	return state;
 }

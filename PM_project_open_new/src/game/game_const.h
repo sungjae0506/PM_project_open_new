@@ -10,6 +10,7 @@ const double playerFallingVelLimit = 160.0;
 
 const double bubbleHorizontalVel = 480.0;
 const double bubbleVerticalVel = 40.0;
+const double bubbleCollisionConst = 100.0;
 
 
 const Point player1Start(80.0, 160.0);

@@ -11,6 +11,13 @@ void GameManager::clear()
 	bubbles.clear();
 	enemies.clear();
 
+	while (!bubbleResourceQueue.empty())
+		bubbleResourceQueue.pop();
+	bubblePopVector.clear();
+	while (!bubblePopQueue.empty())
+		bubblePopQueue.pop();
+	bubbleAdjVector.clear();
+
 	mainTick = 0;
 	internalTick = 0;
 }
@@ -81,6 +88,20 @@ void GameManager::load(int n)
 	currentStage = 0;
 	currentMap = maps[0];
 
+	bubbles.resize(bubbleMax);
+	for (int i = 0; i < bubbleMax; ++i)
+		bubbles[i].setState("Killed");
+	for (int i = 0; i < bubbleMax; ++i)
+		bubbleResourceQueue.push(i);
+	bubblePopVector.resize(bubbleMax);
+	bubbleAdjVector.resize(bubbleMax);
+	for (int i = 0; i < bubbleMax; ++i)
+	{
+		bubbleAdjVector[i].resize(bubbleMax);
+		for (int j = 0; j < bubbleMax; ++j)
+			bubbleAdjVector[i][j] = false;
+	}
+
 	if (n == 1)
 	{
 		players.resize(1);
@@ -104,6 +125,16 @@ void GameManager::load(int n)
 
 void GameManager::move()
 {
+	int temp;
+
+	for (int i = 0; i < bubbleMax; ++i)
+		bubblePopVector[i] = false;
+	while (!bubblePopQueue.empty())
+		bubblePopQueue.pop();
+	for (int i = 0; i < bubbleMax; ++i)
+		if (bubbles[i].getState() == "Killed")
+			bubbleResourceQueue.push(i);
+
 	for (auto& i : players)
 	{
 		i.updateKeyboardState();
@@ -113,29 +144,73 @@ void GameManager::move()
 		{
 			if (i.collisionDetection(bubbles[j]))
 			{
-				printf("pop!\n");
-				bubbleQueue.push(j);
+				bubblePopVector[j] = true;
 			}
 		}
-
 	}
 	for (auto& i : bubbles)
 	{
 		i.move();
 		i.collisionHandling(currentMap);
+		i.playerCollisionState = false;
 	}
+	
+	for (int i = 0; i < bubbleMax - 1; ++i)
+	{
+		for (int j = i + 1; j < bubbleMax; ++j)
+		{
+			bubbleAdjVector[i][j] = bubbleAdjVector[j][i] = bubbles[i].collisionDetection(bubbles[j]);
+		}
+	}
+	for (int i = 0; i < bubbleMax - 1; ++i)
+	{
+		for (int j = i + 1; j < bubbleMax; ++j)
+		{
+			if (bubbleAdjVector[i][j])
+			{
+				bubbles[i].collisionHandling(bubbles[j]);
+			}
+		}
+	}
+	for (int i = 0; i < bubbleMax; ++i)
+	{
+		if (bubblePopVector[i])
+		{
+			bubblePopQueue.push(i);
+		}
+	}
+	while (!bubblePopQueue.empty())
+	{
+		temp = bubblePopQueue.front();
+		bubblePopQueue.pop();
+		bubblePopVector[temp] = true;
+		bubbles[temp].playerCollisionState = true;
+		for (int i = 0; i < bubbleMax; ++i)
+		{
+			if (bubbleAdjVector[temp][i] && bubblePopVector[i] == false)
+			{
+				bubblePopQueue.push(i);
+			}
+		}
+	}
+	
 	for (auto& i : enemies)
 	{
 		//i.move();
 		//i.collisionHandling(currentMap);
 	}
 	//cout << players[0].getBubbleState() << " " << bubbles.size() << endl;
+
 	for (auto& i : players)
 	{
 		if (i.getBubbleState() == "ShootBubble")
 		{	
-			printf("%d\n", bubbles.size());
-			bubbles.push_back(i.shootBubble(currentMap));
+			printf("%d %d\n", bubbles.size(), bubbleResourceQueue.front());
+			if (!bubbleResourceQueue.empty())
+			{
+				bubbles[bubbleResourceQueue.front()] = (i.shootBubble(currentMap));
+				bubbleResourceQueue.pop();
+			}
 		}
 	}
 
@@ -216,8 +291,20 @@ void GameManager::keyboardEvent(KeyboardEvent e, string key, Point p)
 	
 }
 
+int testClock, testTick, prevClock, prevTick;
+
 void GameManager::idleEvent(IdleEvent e)
 {
+	testClock = clock() / 1000;
+	testTick = mainTick;
+
+	if (testClock != prevClock)
+	{
+		printf("%d Tick\n", testTick - prevTick);
+		prevClock = testClock;
+		prevTick = testTick;
+	}
+
 	if (getState() == "MapStarting")
 	{
 		if (playerNum == 1)

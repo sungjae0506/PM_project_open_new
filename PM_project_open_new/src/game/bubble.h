@@ -30,12 +30,14 @@ public:
 	virtual void draw(void);
 	virtual void move(void);
 
-	Point getPos(void);
+	Point getPos(void) const ;
 
 	virtual void setState(string s);
-	virtual string getState(void);
+	virtual string getState(void) const;
 	virtual void changeState(void);
 	virtual void incTick(void);
 
 	void collisionHandling(const Map& mp);
+	bool collisionDetection(const Bubble& b);
+	void collisionHandling(Bubble& b);
 };

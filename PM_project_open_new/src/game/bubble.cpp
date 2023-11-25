@@ -75,16 +75,18 @@ void Bubble::draw(void)
 void Bubble::move(void)
 {
 	string st = getState();
-	if (getState() == "Vertical")
+	if (st == "Vertical")
 	{
 		vel(0, bubbleVerticalVel);
 	}
-
-	pos += vel / idlePerSecond;
-	vel += acc / idlePerSecond;
+	if (st != "Pop" && st != "Killed")
+	{
+		pos += vel / idlePerSecond;
+		vel += acc / idlePerSecond;
+	}
 }
 
-Point Bubble::getPos(void)
+Point Bubble::getPos(void) const
 {
 	return pos;
 }
@@ -95,7 +97,7 @@ void Bubble::setState(string s)
 	internalTick = 0;
 }
 
-string Bubble::getState(void)
+string Bubble::getState(void) const
 {
 	return state;
 }
@@ -177,5 +179,23 @@ void Bubble::collisionHandling(const Map &mp)
 				pos += wall.line[i].norm * (r2 - (wall.line[i].norm * (pos - wall.line[i].point0)));
 			}
 		}
+	}
+}
+
+bool Bubble::collisionDetection(const Bubble& b)
+{
+	return ((hitBox2 + pos).collisionDetection(b.hitBox2 + b.pos) != None);
+}
+
+void Bubble::collisionHandling(Bubble& b)
+{
+	auto dir = b.pos - pos;
+	double dist = abs(b.pos - pos);
+
+	if (abs(dir) > COLLISION_EPSILON && dist <= (2 * r2) * 0.8)
+	{
+		auto delta = (bubbleCollisionConst * dir / dist) / dist / dist;
+		pos -= delta;
+		b.pos += delta;
 	}
 }
