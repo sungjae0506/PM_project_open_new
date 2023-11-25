@@ -109,6 +109,10 @@ void Map::readMap(string file)
 	tileVector.resize(h);
 	for (int i = 0; i < h; ++i)
 		tileVector[i].resize(w);
+	airCurrentVector.resize(h);
+	for (int i = 0; i < h; ++i)
+		airCurrentVector[i].resize(w);
+
 	for (int i = 0; i < h; ++i)
 	{
 		f >> s;
@@ -116,6 +120,14 @@ void Map::readMap(string file)
 			if (s[j] == '#')
 				tileVector[i][j] = 1;
 	}
+	//////////////////////////////////
+	for (int i = 0; i < h; ++i)
+	{
+		f >> s;
+		for (int j = 0; j < w; ++j)
+			airCurrentVector[i][j] = s[j];
+	}
+	//////////////////////////////////
 	platform = vectorToLines(tileVector, r);
 	wall.addLine(Line(Point(r.point0.x + 20, r.point0.y), Point(r.point0.x + 20, r.point1.y), Point(1, 0)));
 	wall.addLine(Line(Point(r.point1.x - 20, r.point0.y), Point(r.point1.x - 20, r.point1.y), Point(-1, 0)));

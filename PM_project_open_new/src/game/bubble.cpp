@@ -81,6 +81,11 @@ void Bubble::draw(void)
 void Bubble::move(void)
 {
 	string st = getState();
+	if (st == "Killed")
+	{
+		pos(0, 0);
+		return;
+	}
 	if (st == "Vertical")
 	{
 		vel(0, bubbleVerticalVel);
@@ -203,5 +208,32 @@ void Bubble::collisionHandling(Bubble& b)
 		auto delta = (bubbleCollisionConst * dir / dist) / dist / dist;
 		pos -= delta;
 		b.pos += delta;
+	}
+}
+
+void Bubble::airCurrentHandling(const Map& mp)
+{
+	string st = getState();
+	if (st == "Vertical" || st == "ContainEnemy")
+	{
+		int i, j;
+		char c;
+		i = (int)(pos.y / 10);
+		j = 31 - (int)(pos.x / 10);
+		if (i < 0)
+			i = 0;
+		if (i >= 32)
+			i = 31;
+		if (j < 0)
+			j = 0;
+		if (j >= 32)
+			j = 31;
+		c = mp.airCurrentVector[i][j];
+		switch (c)
+		{
+		case 'D':
+			vel(0, -bubbleVerticalVel);
+			break;
+		}
 	}
 }

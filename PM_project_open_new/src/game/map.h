@@ -15,6 +15,7 @@ class Map
 {
 public:
 	vector<vector<int>> tileVector;
+	vector<vector<char>> airCurrentVector;
 	Image tile1, tile2;
 	Image background;
 	Lines platform;

@@ -40,4 +40,5 @@ public:
 	void collisionHandling(const Map& mp);
 	bool collisionDetection(const Bubble& b);
 	void collisionHandling(Bubble& b);
+	void airCurrentHandling(const Map& mp);
 };

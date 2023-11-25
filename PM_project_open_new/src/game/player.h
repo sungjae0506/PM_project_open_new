@@ -44,7 +44,7 @@ public:
 	void updateKeyboardState(void);
 
 	void collisionHandling(const Map &mp);
-	bool collisionDetection(Bubble& b);
+	bool collisionDetection(const Bubble& b);
 
 	virtual void setState(string s);
 	virtual string getState(void) const;
