@@ -88,9 +88,9 @@ void Bubble::move(void)
 	}
 	if (st == "Vertical")
 	{
-		vel(0, bubbleVerticalVel);
+	//	vel(0, bubbleVerticalVel);
 	}
-	if (st != "Pop" && st != "Killed")
+	if (st != "Pop")
 	{
 		pos += vel / idlePerSecond;
 		vel += acc / idlePerSecond;
@@ -216,24 +216,37 @@ void Bubble::airCurrentHandling(const Map& mp)
 	string st = getState();
 	if (st == "Vertical" || st == "ContainEnemy")
 	{
-		int i, j;
-		char c;
-		i = (int)(pos.y / 10);
-		j = 31 - (int)(pos.x / 10);
-		if (i < 0)
-			i = 0;
-		if (i >= 32)
-			i = 31;
-		if (j < 0)
-			j = 0;
-		if (j >= 32)
-			j = 31;
-		c = mp.airCurrentVector[i][j];
-		switch (c)
+		if (!airCurrentRange.contain(pos))
 		{
-		case 'D':
-			vel(0, -bubbleVerticalVel);
-			break;
+			int px = (int)(pos.x / 10), py = (int)(pos.y / 10), i, j;
+			airCurrentRange = Range(-10, -10, 10, 10) + Point(px * 10 + 5, py * 10 + 5);
+			i = 31 - py;
+			j = px;
+			if (i < 0)
+				i = 0;
+			if (i >= 32)
+				i = 31;
+			if (j < 0)
+				j = 0;
+			if (j >= 32)
+				j = 31;
+
+			//printf("%d %d %d %d\n", i, j, mp.airCurrentVector.size(), mp.airCurrentVector[0].size());
+			switch (mp.airCurrentVector[i][j])
+			{
+			case 'D':
+				vel(0, -bubbleVerticalVel);
+				break;
+			case 'L':
+				vel(-bubbleVerticalVel, 0);
+				break;
+			case 'R':
+				vel(bubbleVerticalVel, 0);
+				break;
+			default:
+				vel(0, bubbleVerticalVel);
+				break;
+			}
 		}
 	}
 }

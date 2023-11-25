@@ -150,6 +150,7 @@ void GameManager::move()
 	}
 	for (auto& i : bubbles)
 	{
+		i.airCurrentHandling(currentMap);
 		i.move();
 		i.collisionHandling(currentMap);
 		i.playerCollisionState = false;

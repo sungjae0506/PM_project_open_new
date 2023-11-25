@@ -18,6 +18,8 @@ public:
 	double r1 = 5.0;
 	double r2 = 10.0;
 
+	Range airCurrentRange;
+
 	Bubble();
 	Bubble(Point pos, Point dir);
 

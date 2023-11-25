@@ -81,6 +81,10 @@ Map::Map(const Map& map)
 	for (int i = 0; i < map.tileVector.size(); ++i)
 		tileVector[i] = map.tileVector[i];
 
+	airCurrentVector.resize(map.airCurrentVector.size());
+	for (int i = 0; i < map.airCurrentVector.size(); ++i)
+		airCurrentVector[i] = map.airCurrentVector[i];
+
 	tile1 = map.tile1;
 	tile2 = map.tile2;
 	
@@ -109,6 +113,7 @@ void Map::readMap(string file)
 	tileVector.resize(h);
 	for (int i = 0; i < h; ++i)
 		tileVector[i].resize(w);
+
 	airCurrentVector.resize(h);
 	for (int i = 0; i < h; ++i)
 		airCurrentVector[i].resize(w);
