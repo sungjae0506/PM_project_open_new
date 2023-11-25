@@ -52,8 +52,14 @@ void Bubble::setImages(vector<Image>& images)
 void Bubble::draw(void)
 {
 	string st = getState();
-	if (st == "Pop" || st == "Killed")
+	if (st == "Killed")
 		return;
+
+	if (st == "Pop")
+	{
+		Image("image/pop.png", Range(-10, -10, 10, 10) + pos).draw();
+		return;
+	}
 
 	double size;
 	if (st == "Horizontal")

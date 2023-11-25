@@ -2,8 +2,8 @@
 
 #include <GL/GL.h>
 
-const string fontWhite = "image/font4.png";
-const string fontBlack = "image/font5_black.png";
+const string fontWhite = "image/font_white.png";
+const string fontBlack = "image/font_black.png";
 
 const double lineSpacing = 100.0;
 const double letterSpacing = 100.0;
