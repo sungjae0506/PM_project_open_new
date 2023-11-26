@@ -109,6 +109,11 @@ Point Player::getPos(void)
 	return pos;
 }
 
+Point Player::getVel(void)
+{
+	return vel;
+}
+
 void Player::setKeyboardState(int i, bool b)
 {
 	keyboardState[i] = b;

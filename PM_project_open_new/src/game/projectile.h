@@ -1,30 +1,22 @@
 #pragma once
+#pragma once
 #include "entity.h"
 #include "map.h"
 #include "game_const.h"
-#include "enemy.h"
 
-class Bubble : Entity
+class Projectile : Entity
 {
 public:
-	Circle hitBox1; // 수평으로 갈 때 :r = 5.0, 수직으로 갈 때 : r = 10.0;
-	Circle hitBox2;
+	Circle hitBox; // r = 8.0
 
 	bool mapCollisionState = false;
 	bool playerCollisionState = false;
 	bool enemyCollisionState = false;
-	Enemy enemy;
+	
+	double r = 8.0;
 
-	double r1 = 5.0;
-	double r2 = 10.0;
-
-	Range bubbleCurrentRange;
-	Point bubbleCurrentVel;
-	Line platform;
-	Lines wall;
-
-	Bubble();
-	Bubble(Point pos, Point dir);
+	Projectile();
+	Projectile(Point pos, Point dir);
 
 	virtual void setPos(const Point& p);
 	virtual void setVel(const Point& p);
@@ -44,7 +36,4 @@ public:
 	virtual void incTick(void);
 
 	void collisionHandling(const Map& mp);
-	bool collisionDetection(const Bubble& b);
-	void collisionHandling(Bubble& b);
-	void airCurrentHandling(const Map& mp);
 };

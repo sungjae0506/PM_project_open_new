@@ -5,7 +5,7 @@ Point indexToPoint(int i, int j, int h, int w, const Range& r)
 	return Point(r.point0.x + (j * (r.point1.x - r.point0.x) / w), r.point1.y - (i * (r.point1.y - r.point0.y)) / h);
 }
 
-Lines vectorToLines(vector<vector<int>>& arr, const Range &r)
+Lines vectorToLines(vector<vector<bool>>& arr, const Range &r)
 {
 	Lines lines;
 	int h = arr.size();
@@ -81,67 +81,32 @@ Map::Map(const Map& map)
 	for (int i = 0; i < map.tileVector.size(); ++i)
 		tileVector[i] = map.tileVector[i];
 
-	airCurrentVector.resize(map.airCurrentVector.size());
-	for (int i = 0; i < map.airCurrentVector.size(); ++i)
-		airCurrentVector[i] = map.airCurrentVector[i];
+	bubbleCurrentVector.resize(map.bubbleCurrentVector.size());
+	for (int i = 0; i < map.bubbleCurrentVector.size(); ++i)
+		bubbleCurrentVector[i] = map.bubbleCurrentVector[i];
 
-	tile1 = map.tile1;
-	tile2 = map.tile2;
+	tile.resize(2);
+
+	tile[0] = map.tile[0];
+	tile[1] = map.tile[1];
+	
+	background.resize(1);
+	background[0] = map.background[0];
+
+	
 	
 	platform = map.platform;
 	wall = map.wall;
 }
 
-void Map::readMap(string file)
+void Map::setTile(const vector<Image>& i)
 {
-	fstream f(file);
-	string s;
-	int h, w;
-
-	Range r(0, 0, 320, 320);
-	
-	//////////////////////////////////
-	f >> s;
-	tile1(s, Range(0, 0, 10, 10));
-	f >> s;
-	tile2(s, Range(0, 0, 20, 20));
-	f >> s;
-	background(s, Range(0, 0, 320, 320));
-	//////////////////////////////////
-
-	f >> h >> w;
-	tileVector.resize(h);
-	for (int i = 0; i < h; ++i)
-		tileVector[i].resize(w);
-
-	airCurrentVector.resize(h);
-	for (int i = 0; i < h; ++i)
-		airCurrentVector[i].resize(w);
-
-	for (int i = 0; i < h; ++i)
-	{
-		f >> s;
-		for (int j = 0; j < w; ++j)
-			if (s[j] == '#')
-				tileVector[i][j] = 1;
-	}
-	//////////////////////////////////
-	for (int i = 0; i < h; ++i)
-	{
-		f >> s;
-		for (int j = 0; j < w; ++j)
-			airCurrentVector[i][j] = s[j];
-	}
-	//////////////////////////////////
-	platform = vectorToLines(tileVector, r);
-	wall.addLine(Line(Point(r.point0.x + 20, r.point0.y), Point(r.point0.x + 20, r.point1.y), Point(1, 0)));
-	wall.addLine(Line(Point(r.point1.x - 20, r.point0.y), Point(r.point1.x - 20, r.point1.y), Point(-1, 0)));
+	tile = i;
 }
 
-void Map::setTexture(Image _tile1, Image _tile2)
+void Map::setBackground(const vector<Image>& i)
 {
-	tile1 = _tile1;
-	tile2 = _tile2;
+	background = i;
 }
 
 void Map::draw()
@@ -156,11 +121,11 @@ void Map::draw()
 			{
 				if (i % 2 == 1 && (j == 0 || j == tileVector[i].size() - 2))
 				{
-					(tile2 + p).draw();
+					(tile[1] + p).draw();
 				}
 				if (2 <= j && j < tileVector[i].size() - 2)
 				{
-					(tile1 + p).draw();
+					(tile[0] + p).draw();
 				}
 			}
 		}

@@ -12,9 +12,7 @@ void gamePageIdle(IdleEvent e)
 		
 		gameManager.clear();
 		
-		gameManager.addMap("map.txt");
-		
-		gameManager.addCharacter("character.txt");
+		gameManager.readMap("stage1.json");
 		
 		gameManager.load(1);
 		printf("ok");

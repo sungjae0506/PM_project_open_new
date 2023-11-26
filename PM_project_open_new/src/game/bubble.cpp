@@ -26,9 +26,10 @@ Bubble::Bubble(Point _pos, Point _dir)
 	hitBox1.radius = r1;
 	hitBox2.radius = r2;
 
-	platform.point0 = Point(-r2, r2 + COLLISION_EPSILON);
-	platform.point1 = Point(r2, r2 + COLLISION_EPSILON);
-	platform.norm = Point(0, 1);
+	platform = Line(Point(-r2, r2 + COLLISION_EPSILON), Point(r2, r2 + COLLISION_EPSILON), Point(0, 1));
+
+	wall.addLine(Line(Point(-r2 - COLLISION_EPSILON, -r2 / 2), Point(-r2 - COLLISION_EPSILON, r2 / 2), Point(-1, 0)));
+	wall.addLine(Line(Point(r2 + COLLISION_EPSILON, -r2 / 2), Point(r2 + COLLISION_EPSILON, r2 / 2), Point(1, 0)));
 
 	mainTick = 0;
 	internalTick = 0;
@@ -97,7 +98,7 @@ void Bubble::move(void)
 	}
 	if (st == "Vertical")
 	{
-		vel = airCurrentVel;
+		vel = bubbleCurrentVel;
 	}
 	if (st != "Pop")
 	{
@@ -245,10 +246,10 @@ void Bubble::airCurrentHandling(const Map& mp)
 	string st = getState();
 	if (st == "Vertical" || st == "ContainEnemy")
 	{
-		if (!airCurrentRange.contain(pos))
+		if (!bubbleCurrentRange.contain(pos))
 		{
 			int px = (int)(pos.x / 10), py = (int)(pos.y / 10), i, j;
-			airCurrentRange = Range(-10, -10, 10, 10) + Point(px * 10 + 5, py * 10 + 5);
+			bubbleCurrentRange = Range(-10, -10, 10, 10) + Point(px * 10 + 5, py * 10 + 5);
 			i = 31 - py;
 			j = px;
 			if (i < 0)
@@ -259,19 +260,19 @@ void Bubble::airCurrentHandling(const Map& mp)
 				j = 0;
 			if (j >= 32)
 				j = 31;
-			switch (mp.airCurrentVector[i][j])
+			switch (mp.bubbleCurrentVector[i][j])
 			{
 			case 'D':
-				airCurrentVel(0, -bubbleVerticalVel);
+				bubbleCurrentVel(0, -bubbleVerticalVel);
 				break;
 			case 'L':
-				airCurrentVel(-bubbleVerticalVel, 0);
+				bubbleCurrentVel(-bubbleVerticalVel, 0);
 				break;
 			case 'R':
-				airCurrentVel(bubbleVerticalVel, 0);
+				bubbleCurrentVel(bubbleVerticalVel, 0);
 				break;
 			default:
-				airCurrentVel(0, bubbleVerticalVel);
+				bubbleCurrentVel(0, bubbleVerticalVel);
 				break;
 			}
 		}

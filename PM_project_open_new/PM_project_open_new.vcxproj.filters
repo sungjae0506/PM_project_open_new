@@ -15,8 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="character.txt" />
-    <Text Include="map.txt" />
+    <Text Include="src\not_used\character.txt" />
+    <Text Include="src\not_used\map.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\not_used\background.cpp">
@@ -76,13 +76,19 @@
     <ClCompile Include="src\not_used\test.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\util\json.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="src\game\character.cpp">
+    <ClCompile Include="src\not_used\character.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="src\util\color4f.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\projectile.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\asset\image_manager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\initial_setting.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -144,10 +150,7 @@
     <ClInclude Include="src\game\enemy.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="src\util\json.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game\character.h">
+    <ClInclude Include="src\not_used\character.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="src\game\game_const.h">
@@ -156,9 +159,23 @@
     <ClInclude Include="src\util\color4f.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="src\game\projectile.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\json.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="src\asset\image_manager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\initial_setting.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="jsontest.json" />
+    <None Include="stage1.json" />
     <None Include="fmod.dll" />
+    <None Include="image_data.json" />
+    <None Include="highscore.json" />
   </ItemGroup>
 </Project>

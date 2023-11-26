@@ -9,7 +9,7 @@ class Player : Entity
 {
 public:
 	// state: "None", "Collision", "Transparent", "MapChanging", "Killed"
-	string bubbleState; // "BubbleAvailable", "BubbleUnavailable", "MakeBubble"
+	string bubbleState; // "BubbleAvailable", "BubbleUnavailable", "ShootBubble"
 	int bubbleTick;
 
 	string pushState; // "None", "PushWall"
@@ -46,6 +46,7 @@ public:
 	virtual void move(void);
 
 	Point getPos(void);
+	Point getVel(void);
 
 	void setKeyboardState(int i, bool b);
 	void updateKeyboardState(void);

@@ -1,3 +1,5 @@
+/*
+
 #pragma once
 #include <vector>
 #include "entity.h"
@@ -17,3 +19,4 @@ public:
 
 	void readCharacter(string path);
 };
+*/

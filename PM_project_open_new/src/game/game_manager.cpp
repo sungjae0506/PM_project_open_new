@@ -1,12 +1,12 @@
 #include "game_manager.h"
 
+ImageManager imageManager("image_data.json");
+
 void GameManager::clear()
 {
 	playerNum = 0;
 
 	maps.clear();
-	characters.clear();
-
 	players.clear();
 	bubbles.clear();
 	enemies.clear();
@@ -65,21 +65,6 @@ void GameManager::incTick(void)
 
 // ////////////////////////////////////////////////////////////// 
 
-void GameManager::addMap(string path)
-{
-	Map temp;
-	
-	temp.readMap(path);
-	maps.push_back(temp);
-}
-
-void GameManager::addCharacter(string path)
-{
-	Character temp;
-	temp.readCharacter(path);
-	characters.push_back(temp);
-}
-
 void GameManager::load(int n)
 {
 	playerNum = n;
@@ -95,6 +80,7 @@ void GameManager::load(int n)
 		bubbleResourceQueue.push(i);
 	bubblePopVector.resize(bubbleMax);
 	bubbleAdjVector.resize(bubbleMax);
+
 	for (int i = 0; i < bubbleMax; ++i)
 	{
 		bubbleAdjVector[i].resize(bubbleMax);
@@ -322,12 +308,15 @@ void GameManager::idleEvent(IdleEvent e)
 	{
 		if (playerNum == 1)
 		{
-			players[0].setPos(((1.0 - internalTick / 100.0) * player1Start) + ((internalTick / 100.0) * characters[0].players[0].getPos()));
+			//players[0].setPos(((1.0 - internalTick / 100.0) * player1Start) + ((internalTick / 100.0) * characters[0].players[0].getPos()));
+			players[0].setPos(((1.0 - internalTick / 100.0) * player1Start) + ((internalTick / 100.0) * initialSettings[0].playerPos[0]));
 		}
 		if (playerNum == 2)
 		{
-			players[0].setPos(((1.0 - internalTick / 100.0) * player1Start) + ((internalTick / 100.0) * characters[0].players[0].getPos()));
-			players[1].setPos(((1.0 - internalTick / 100.0) * player2Start) + ((internalTick / 100.0) * characters[0].players[1].getPos()));
+			//players[0].setPos(((1.0 - internalTick / 100.0) * player1Start) + ((internalTick / 100.0) * characters[0].players[0].getPos()));
+			//players[1].setPos(((1.0 - internalTick / 100.0) * player2Start) + ((internalTick / 100.0) * characters[0].players[1].getPos()));
+			players[0].setPos(((1.0 - internalTick / 100.0) * player1Start) + ((internalTick / 100.0) * initialSettings[0].playerPos[0]));
+			players[1].setPos(((1.0 - internalTick / 100.0) * player2Start) + ((internalTick / 100.0) * initialSettings[0].playerPos[1]));
 		}
 	}
 	if (getState() == "MapRunning")
@@ -354,4 +343,70 @@ void GameManager::draw(Point mousePos)
 	{
 		drawEntity();
 	}
+}
+
+void GameManager::readMap(string path)
+{
+	fstream f(path);
+	json jsonData = json::parse(f);
+	InitialSetting tempInitialSetting;
+	Map tempMap;
+
+	vector<vector<bool>> tempTile;
+	vector<vector<char>> tempBubbleCurrent;
+	string tempString;
+
+	auto themeData = jsonData["theme"];
+	auto playerData = jsonData["player"];
+	auto enemyData = jsonData["enemy"];
+	auto tileData = jsonData["tile"];
+	auto bubbleCurrentData = jsonData["bubble_current"];
+
+	
+	for (auto i : playerData)
+	{
+		tempInitialSetting.addPlayerPos(Point(i["pos"][0].get<double>(), i["pos"][1].get<double>()));
+	}
+	for (auto i : enemyData)
+	{
+		tempInitialSetting.addEnemyPos(Point(i["pos"][0].get<double>(), i["pos"][1].get<double>()));
+		tempInitialSetting.addEnemyName(i["name"].get<string>());
+	}
+
+	tempTile.resize(32);
+	for (int i = 0; i < 32; ++i)
+		tempTile[i].resize(32);
+
+	for (int i = 0; i < 32; ++i)
+	{
+		tempString = tileData[i].get<string>();
+		for (int j = 0; j < 32; ++j)
+			tempTile[i][j] = (tempString[j] == '#');
+	}
+
+	tempBubbleCurrent.resize(32);
+	for (int i = 0; i < 32; ++i)
+		tempBubbleCurrent[i].resize(32);
+
+	for (int i = 0; i < 32; ++i)
+	{
+		tempString = bubbleCurrentData[i].get<string>();
+		for (int j = 0; j < 32; ++j)
+			tempBubbleCurrent[i][j] = tempString[j];
+	}
+
+	tempMap.tileVector = tempTile;
+	tempMap.bubbleCurrentVector = tempBubbleCurrent;
+	tempMap.setTile(imageManager.getImages(themeData["tile"].get<string>()));
+	tempMap.setBackground(imageManager.getImages(themeData["background"].get<string>()));
+	
+	Range r(0, 0, 320, 320);
+	tempMap.platform = vectorToLines(tempTile, r);
+	tempMap.wall.addLine(Line(Point(r.point0.x + 20, r.point0.y), Point(r.point0.x + 20, r.point1.y), Point(1, 0)));
+	tempMap.wall.addLine(Line(Point(r.point1.x - 20, r.point0.y), Point(r.point1.x - 20, r.point1.y), Point(-1, 0)));
+
+	initialSettings.push_back(tempInitialSetting);
+
+	maps.push_back(tempMap);
+
 }

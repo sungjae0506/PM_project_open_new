@@ -8,9 +8,13 @@
 #include "bubble.h"
 #include "enemy.h"
 #include "map.h"
-#include "character.h"
 #include "game_const.h"
+#include "../util/json.hpp"
 #include <ctime>
+#include "initial_setting.h"
+#include "../asset/image_manager.h"
+
+using json = nlohmann::json;
 
 class GameManager
 {
@@ -21,7 +25,7 @@ public:
 
 	int currentStage;
 	vector<Map> maps;
-	vector<Character> characters;
+	vector<InitialSetting> initialSettings;
 
 	Map currentMap;
 	vector<Player> players;
@@ -43,9 +47,6 @@ public:
 	void changeState();
 	void incTick(void);
 
-	void addMap(string path);
-	void addCharacter(string path);
-
 	void load(int n);
 
 	void move();
@@ -58,4 +59,5 @@ public:
 	void idleEvent(IdleEvent e);
 	void draw(Point mousePos);
 
+	void readMap(string path);
 };

@@ -19,14 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="character.txt" />
-    <Text Include="map.txt" />
+    <Text Include="src\not_used\character.txt" />
+    <Text Include="src\not_used\map.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\asset\image_manager.cpp" />
     <ClCompile Include="src\game\bubble.cpp" />
     <ClCompile Include="src\game\enemy.cpp" />
-    <ClCompile Include="src\game\character.cpp" />
+    <ClCompile Include="src\not_used\character.cpp" />
     <ClCompile Include="src\game\game_manager.cpp" />
+    <ClCompile Include="src\game\initial_setting.cpp" />
+    <ClCompile Include="src\game\projectile.cpp" />
     <ClCompile Include="src\not_used\background.cpp" />
     <ClCompile Include="src\not_used\test.cpp" />
     <ClCompile Include="src\UI\button.cpp" />
@@ -35,7 +38,6 @@
     <ClCompile Include="src\main\main.cpp" />
     <ClCompile Include="src\game\map.cpp" />
     <ClCompile Include="src\util\color4f.cpp" />
-    <ClCompile Include="src\util\json.cpp" />
     <ClCompile Include="src\util\object.cpp" />
     <ClCompile Include="src\UI\canvas.cpp" />
     <ClCompile Include="src\UI\page.cpp" />
@@ -47,11 +49,14 @@
     <ClCompile Include="src\UI\window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\asset\image_manager.h" />
     <ClInclude Include="src\game\bubble.h" />
     <ClInclude Include="src\game\enemy.h" />
-    <ClInclude Include="src\game\character.h" />
+    <ClInclude Include="src\not_used\character.h" />
     <ClInclude Include="src\game\game_const.h" />
     <ClInclude Include="src\game\game_manager.h" />
+    <ClInclude Include="src\game\initial_setting.h" />
+    <ClInclude Include="src\game\projectile.h" />
     <ClInclude Include="src\not_used\background.h" />
     <ClInclude Include="src\UI\button.h" />
     <ClInclude Include="src\main\callback.h" />
@@ -63,7 +68,7 @@
     <ClInclude Include="src\UI\page.h" />
     <ClInclude Include="src\game\player.h" />
     <ClInclude Include="src\util\color4f.h" />
-    <ClInclude Include="src\util\json.h" />
+    <ClInclude Include="src\util\json.hpp" />
     <ClInclude Include="src\util\object.h" />
     <ClInclude Include="src\util\range.h" />
     <ClInclude Include="src\asset\sound_loader.h" />
@@ -73,7 +78,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="fmod.dll" />
-    <None Include="jsontest.json" />
+    <None Include="highscore.json" />
+    <None Include="image_data.json" />
+    <None Include="stage1.json" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

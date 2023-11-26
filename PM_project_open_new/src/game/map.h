@@ -9,23 +9,24 @@ using namespace std;
 
 
 Point indexToPoint(int i, int j, int h, int w, const Range& r);
-Lines vectorToLines(vector<vector<int>>& arr, const Range& r);
+Lines vectorToLines(vector<vector<bool>>& arr, const Range& r);
 
 class Map
 {
 public:
-	vector<vector<int>> tileVector;
-	vector<vector<char>> airCurrentVector;
-	Image tile1, tile2;
-	Image background;
+	vector<vector<bool>> tileVector;
+	vector<vector<char>> bubbleCurrentVector;
+	
+	vector<Image> tile;
+	vector<Image> background;
 	Lines platform;
 	Lines wall;
 
 	Map();
 	Map(const Map& map);
 
-	void readMap(string file);
-	void setTexture(Image _tile1, Image _tile2);
+	void setTile(const vector<Image>& i);
+	void setBackground(const vector<Image>& i);
 	void draw();
 
 	// 이미지 클래스 사용 예시
