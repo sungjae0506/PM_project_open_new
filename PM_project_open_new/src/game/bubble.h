@@ -19,6 +19,8 @@ public:
 	double r2 = 10.0;
 
 	Range airCurrentRange;
+	Line platform;
+	Lines wall;
 
 	Bubble();
 	Bubble(Point pos, Point dir);

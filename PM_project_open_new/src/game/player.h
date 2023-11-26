@@ -12,6 +12,9 @@ public:
 	string bubbleState; // "BubbleAvailable", "BubbleUnavailable", "MakeBubble"
 	int bubbleTick;
 
+	string pushState; // "None", "PushWall"
+	int pushTick;
+
 	int width;
 	int height;
 	Lines hitBox;
@@ -25,6 +28,10 @@ public:
 	string dir;
 
 	Bubble bubble;
+	bool onBubble = false;
+
+	bool pushWall;
+	Point pushWallDir;
 
 	Player();
 	Player(Point pos);
@@ -45,6 +52,7 @@ public:
 
 	void collisionHandling(const Map &mp);
 	bool collisionDetection(const Bubble& b);
+	bool bubbleJumpDetection(const Bubble& b);
 
 	virtual void setState(string s);
 	virtual string getState(void) const;
@@ -53,6 +61,9 @@ public:
 
 	void setBubbleState(string s);
 	string getBubbleState(void);
+
+	void setPushState(string s);
+	string getPushState(void);
 
 	void setBubble(Bubble b);
 	Bubble shootBubble(const Map& mp);

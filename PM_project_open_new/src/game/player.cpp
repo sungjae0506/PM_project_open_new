@@ -11,6 +11,7 @@ Player::Player()
 	dir = "RIGHT";
 	setState("None");
 	setBubbleState("BubbleAvailable");
+	setPushState("None");
 }
 Player::Player(Point _pos)
 {
@@ -24,6 +25,7 @@ Player::Player(Point _pos)
 	dir = "RIGHT";
 	setState("None");
 	setBubbleState("BubbleAvailable");
+	setPushState("None");
 }
 
 void Player::setPos(const Point& p) {
@@ -95,6 +97,11 @@ void Player::move(void)
 		vel.y = -playerFallingVelLimit;
 	if (pos.y < 0.0)
 		pos.y = 320.0;
+
+	if (getPushState() == "PushWall")
+	{
+		pos += pushWallDir * (pushWallDist / pushWallTick);
+	}
 }
 
 Point Player::getPos(void)
@@ -125,7 +132,7 @@ void Player::updateKeyboardState(void)
 		vel = Point(0.0, vel.y);
 	}
 
-	if (keyboardState[0] == true && mapCollisionState[1] == true && vel.y < EPSILON)
+	if (keyboardState[0] == true && (mapCollisionState[1] == true || onBubble) && vel.y < EPSILON)
 	{
 		vel = Point(vel.x, playerJumpVel);
 	}
@@ -234,6 +241,11 @@ bool Player::collisionDetection(const Bubble& b)
 	return false;
 }
 
+bool Player::bubbleJumpDetection(const Bubble& b)
+{
+	return ((hitBox.line[1] + pos).collisionDetection(b.platform + b.getPos()) == Sliding);
+}
+
 void Player::setState(string s)
 {
 	state = s;
@@ -266,6 +278,25 @@ void Player::changeState(void)
 			setBubbleState("BubbleAvailable");
 		}
 	}
+
+	if (getPushState() == "None")
+	{
+		if (pushWall && !(pushWallDir.x < -EPSILON && mapCollisionState[2]) && !(pushWallDir.x > EPSILON && mapCollisionState[3]))
+		{
+			setPushState("PushWall");
+		}
+	}
+	else if (getPushState() == "PushWall")
+	{
+		if (pushTick >= pushWallTick || (pushWallDir.x < -EPSILON && mapCollisionState[2]) || (pushWallDir.x > EPSILON && mapCollisionState[3]))
+		{
+			setPushState("None");
+		}
+		if (pushWall)
+		{
+			setPushState("PushWall");
+		}
+	}
 }
 
 void Player::incTick(void)
@@ -274,6 +305,7 @@ void Player::incTick(void)
 	if (state != "Stop")
 		++internalTick;
 	++bubbleTick;
+	++pushTick;
 }
 
 void Player::setBubbleState(string s)
@@ -286,6 +318,17 @@ string Player::getBubbleState(void)
 	return bubbleState;
 }
 
+void Player::setPushState(string s)
+{
+	pushState = s;
+	pushTick = 0;
+}
+
+string Player::getPushState(void)
+{
+	return pushState;
+}
+
 void Player::setBubble(Bubble b)
 {
 	//bubble = b;
@@ -293,17 +336,37 @@ void Player::setBubble(Bubble b)
 
 Bubble Player::shootBubble(const Map &mp)
 {
-
-	//////////////
+	Line closestLine;
+	double minDist = 1e9, tempDist;
 
 
 	if (dir == "LEFT")
 	{
-		if (dist(mp.wall.line[0], pos) < (width / 2 + bubble.r2 * 2))
+		closestLine = mp.wall.line[0];
+		minDist = dist(mp.wall.line[0], pos);
+
+		for (auto& i : mp.platform.line)
+		{
+			tempDist = dist(i, pos);
+			if (i.norm * Point(1, 0) > EPSILON && tempDist > width / 2 - COLLISION_EPSILON && tempDist < minDist)
+			{
+				if (!((i.point0.y < pos.y - height / 2 + COLLISION_EPSILON && i.point1.y < pos.y - height / 2 + COLLISION_EPSILON) || (i.point0.y > pos.y + height / 2 - COLLISION_EPSILON  && i.point1.y > pos.y + height / 2 - COLLISION_EPSILON)))
+				{
+					closestLine = i;
+					minDist = tempDist;
+				}
+			}
+		}
+
+		if (minDist < (width / 2 + bubble.r2 * 2) + COLLISION_EPSILON)
 		{
 			bubble.setState("Pop");
-			bubble.setPos(pos + (bubble.r2 - dist(mp.wall.line[0], pos)) * mp.wall.line[0].norm);
+			bubble.setPos(pos + (bubble.r2 - minDist) * closestLine.norm);
 			bubble.setVel(Point(0, 0));
+			//pos += Point(4, 0);
+
+			pushWall = true;
+			pushWallDir = Point(1, 0);
 		}
 		else
 		{
@@ -314,17 +377,38 @@ Bubble Player::shootBubble(const Map &mp)
 	}
 	else if (dir == "RIGHT")
 	{
-		if (dist(mp.wall.line[1], pos) < (width / 2 + bubble.r2 * 2))
+		closestLine = mp.wall.line[1];
+		minDist = dist(mp.wall.line[1], pos);
+
+		for (auto& i : mp.platform.line)
+		{
+			tempDist = dist(i, pos);
+			if (i.norm * Point(-1, 0) > EPSILON && tempDist > width / 2 - COLLISION_EPSILON && tempDist < minDist)
+			{
+				if (!((i.point0.y < pos.y - height / 2 + COLLISION_EPSILON && i.point1.y < pos.y - height / 2 + COLLISION_EPSILON) || (i.point0.y > pos.y + height / 2 - COLLISION_EPSILON && i.point1.y > pos.y + height / 2 - COLLISION_EPSILON)))
+				{
+					closestLine = i;
+					minDist = tempDist;
+				}
+			}
+		}
+
+		if (minDist < (width / 2 + bubble.r2 * 2) + COLLISION_EPSILON)
 		{
 			bubble.setState("Pop");
-			bubble.setPos(pos + (bubble.r2 - dist(mp.wall.line[1], pos)) * mp.wall.line[1].norm);
+			bubble.setPos(pos + (bubble.r2 - minDist) * closestLine.norm);
 			bubble.setVel(Point(0, 0));
+			//pos += Point(-4, 0);
+			
+			pushWall = true;
+			pushWallDir = Point(-1, 0);
 		}
 		else
 		{
 			bubble.setState("Horizontal");
 			bubble.setPos(pos + Point(width / 2 + bubble.r1 + 1.5 * COLLISION_EPSILON, 0));
 			bubble.setVel(Point(bubbleHorizontalVel, 0));
+			
 		}
 	}
 	return bubble;

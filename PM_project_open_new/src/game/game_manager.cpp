@@ -137,14 +137,20 @@ void GameManager::move()
 
 	for (auto& i : players)
 	{
+		
 		i.updateKeyboardState();
 		i.move();
 		i.collisionHandling(currentMap); 
+		i.onBubble = false;
 		for (int j = 0; j < bubbles.size(); ++j)
 		{
 			if (i.collisionDetection(bubbles[j]))
 			{
 				bubblePopVector[j] = true;
+			}
+			if (i.bubbleJumpDetection(bubbles[j]))
+			{
+				i.onBubble = true;
 			}
 		}
 	}
@@ -204,11 +210,13 @@ void GameManager::move()
 
 	for (auto& i : players)
 	{
+		i.pushWall = false;
 		if (i.getBubbleState() == "ShootBubble")
 		{	
 			printf("%d %d\n", bubbles.size(), bubbleResourceQueue.front());
 			if (!bubbleResourceQueue.empty())
 			{
+				
 				bubbles[bubbleResourceQueue.front()] = (i.shootBubble(currentMap));
 				bubbleResourceQueue.pop();
 			}

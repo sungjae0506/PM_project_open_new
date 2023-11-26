@@ -7,6 +7,11 @@ Bubble::Bubble()
 	hitBox1.radius = r1;
 	hitBox2.radius = r2;
 
+	platform = Line(Point(-r2, r2 + COLLISION_EPSILON), Point(r2, r2 + COLLISION_EPSILON), Point(0, 1));
+
+	wall.addLine(Line(Point(-r2 - COLLISION_EPSILON, -r2 / 2), Point(-r2 - COLLISION_EPSILON, r2 / 2), Point(-1, 0)));
+	wall.addLine(Line(Point(r2 + COLLISION_EPSILON, -r2 / 2), Point(r2 + COLLISION_EPSILON, r2 / 2), Point(1, 0)));
+
 	mainTick = 0;
 	internalTick = 0;
 	mapCollisionState = false;
@@ -20,6 +25,10 @@ Bubble::Bubble(Point _pos, Point _dir)
 	hitBox2.center(0.0, 0.0);
 	hitBox1.radius = r1;
 	hitBox2.radius = r2;
+
+	platform.point0 = Point(-r2, r2 + COLLISION_EPSILON);
+	platform.point1 = Point(r2, r2 + COLLISION_EPSILON);
+	platform.norm = Point(0, 1);
 
 	mainTick = 0;
 	internalTick = 0;
@@ -174,20 +183,32 @@ void Bubble::collisionHandling(const Map &mp)
 	//cout << getState() << endl;
 	if (getState() == "Horizontal")
 	{
-		Lines wall = mp.wall;
-
-		auto res = wall.collisionDetection(hitBox2 + pos);
+		auto res1 = mp.wall.collisionDetection(hitBox1 + pos);
+		auto res2 = mp.platform.collisionDetection(hitBox1 + pos);
 
 		mapCollisionState = false;
 
-		for (int i = 0; i < res.size(); ++i)
+		for (int i = 0; i < res1.size(); ++i)
 		{
 			
-			if (res[i] == Sliding || res[i] == Crossing || res[i] == In)
+			if ((res1[i] == Sliding || res1[i] == Crossing || res1[i] == In) && mp.wall.line[i].norm * vel < -EPSILON)
 			{
 				
 				mapCollisionState = true;
-				pos += wall.line[i].norm * (r2 - (wall.line[i].norm * (pos - wall.line[i].point0)));
+				pos += mp.wall.line[i].norm * (r2 - (mp.wall.line[i].norm * (pos - mp.wall.line[i].point0)));
+				return;
+			}
+		}
+
+		for (int i = 0; i < res2.size(); ++i)
+		{
+
+			if ((res2[i] == Sliding || res2[i] == Crossing || res2[i] == In) && mp.platform.line[i].norm * vel < -EPSILON)
+			{
+
+				mapCollisionState = true;
+				pos += mp.platform.line[i].norm * (r2 - (mp.platform.line[i].norm * (pos - mp.platform.line[i].point0)));
+				return;
 			}
 		}
 	}
@@ -230,8 +251,6 @@ void Bubble::airCurrentHandling(const Map& mp)
 				j = 0;
 			if (j >= 32)
 				j = 31;
-
-			//printf("%d %d %d %d\n", i, j, mp.airCurrentVector.size(), mp.airCurrentVector[0].size());
 			switch (mp.airCurrentVector[i][j])
 			{
 			case 'D':
