@@ -140,6 +140,10 @@ void GameManager::move()
 		
 		i.updateKeyboardState();
 		i.move();
+		for (auto& j : bubbles)
+		{
+			i.bubblePushHandling(j);
+		}
 		i.collisionHandling(currentMap); 
 		i.onBubble = false;
 		for (int j = 0; j < bubbles.size(); ++j)

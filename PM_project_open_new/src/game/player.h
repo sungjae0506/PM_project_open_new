@@ -53,6 +53,7 @@ public:
 	void collisionHandling(const Map &mp);
 	bool collisionDetection(const Bubble& b);
 	bool bubbleJumpDetection(const Bubble& b);
+	void bubblePushHandling(Bubble& b);
 
 	virtual void setState(string s);
 	virtual string getState(void) const;

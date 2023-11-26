@@ -97,7 +97,7 @@ void Bubble::move(void)
 	}
 	if (st == "Vertical")
 	{
-	//	vel(0, bubbleVerticalVel);
+		vel = airCurrentVel;
 	}
 	if (st != "Pop")
 	{
@@ -109,6 +109,11 @@ void Bubble::move(void)
 Point Bubble::getPos(void) const
 {
 	return pos;
+}
+
+Point Bubble::getVel(void) const
+{
+	return vel;
 }
 
 void Bubble::setState(string s)
@@ -229,6 +234,9 @@ void Bubble::collisionHandling(Bubble& b)
 		auto delta = (bubbleCollisionConst * dir / dist) / dist / dist;
 		pos -= delta;
 		b.pos += delta;
+		
+		vel -= delta * idlePerSecond * 0.985;
+		b.vel += delta * idlePerSecond * 0.985;
 	}
 }
 
@@ -254,16 +262,16 @@ void Bubble::airCurrentHandling(const Map& mp)
 			switch (mp.airCurrentVector[i][j])
 			{
 			case 'D':
-				vel(0, -bubbleVerticalVel);
+				airCurrentVel(0, -bubbleVerticalVel);
 				break;
 			case 'L':
-				vel(-bubbleVerticalVel, 0);
+				airCurrentVel(-bubbleVerticalVel, 0);
 				break;
 			case 'R':
-				vel(bubbleVerticalVel, 0);
+				airCurrentVel(bubbleVerticalVel, 0);
 				break;
 			default:
-				vel(0, bubbleVerticalVel);
+				airCurrentVel(0, bubbleVerticalVel);
 				break;
 			}
 		}

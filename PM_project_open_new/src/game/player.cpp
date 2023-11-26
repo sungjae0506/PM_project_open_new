@@ -246,6 +246,36 @@ bool Player::bubbleJumpDetection(const Bubble& b)
 	return ((hitBox.line[1] + pos).collisionDetection(b.platform + b.getPos()) == Sliding);
 }
 
+void Player::bubblePushHandling(Bubble& b)
+{
+	Point deltaVel, delta;
+	if (abs(vel.y) < 5.0 && (b.getState() == "Vertical" || b.getState() == "ContaionEnemy"))
+	{
+		//printf("can push!");
+		auto res = (hitBox + pos).collisionDetection(b.wall + b.getPos());
+		if (dir == "LEFT" && res[2].size() != 0)
+		{
+			if (res[2][0].first == Sliding && (pos.y - 5.0 - COLLISION_EPSILON * 0.1 <= b.getPos().y&& b.getPos().y <= pos.y + 5.0 + COLLISION_EPSILON * 0.1))
+			{
+				deltaVel = b.getVel() - vel;
+				delta = (deltaVel * Point(-1, 0)) * Point(-1, 0) / idlePerSecond;
+				pos += delta * 0.235;
+				b.setPos(b.getPos() - delta * 0.735);
+			}
+		}
+		if (dir == "RIGHT" && res[3].size() != 0)
+		{
+			if (res[3][0].first == Sliding && (pos.y - 5.0 - COLLISION_EPSILON * 0.1 <= b.getPos().y && b.getPos().y <= pos.y + 5.0 + COLLISION_EPSILON * 0.1))
+			{
+				deltaVel = b.getVel() - vel;
+				delta = (deltaVel * Point(1, 0)) * Point(1, 0) / idlePerSecond;
+				pos += delta * 0.235;
+				b.setPos(b.getPos() - delta * 0.735);
+			}
+		}
+	}
+}
+
 void Player::setState(string s)
 {
 	state = s;

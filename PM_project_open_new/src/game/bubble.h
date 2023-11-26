@@ -19,6 +19,7 @@ public:
 	double r2 = 10.0;
 
 	Range airCurrentRange;
+	Point airCurrentVel;
 	Line platform;
 	Lines wall;
 
@@ -34,7 +35,8 @@ public:
 	virtual void draw(void);
 	virtual void move(void);
 
-	Point getPos(void) const ;
+	Point getPos(void) const;
+	Point getVel(void) const;
 
 	virtual void setState(string s);
 	virtual string getState(void) const;
