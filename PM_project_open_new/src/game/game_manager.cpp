@@ -289,7 +289,18 @@ void GameManager::drawMap()
 
 void GameManager::drawMap(double stage)
 {
-
+	if (stage <= 1.0)
+	{
+		maps[0].draw();
+		return;
+	}
+	int prevStage = (int)(stage) - 1;
+	glPushMatrix();
+	glTranslatef(0, 320.0 * ((stage - 1) - prevStage), 0);
+	maps[prevStage].draw();
+	glTranslatef(0, -320.0, 0);
+	maps[prevStage + 1].draw();
+	glPopMatrix();
 }
 
 void GameManager::keyboardEvent(KeyboardEvent e, string key, Point p)
@@ -351,6 +362,13 @@ void GameManager::idleEvent(IdleEvent e)
 	{
 		++currentStage;
 		currentMap = maps[currentStage - 1];
+
+		for (auto& i : players)
+		{
+			for (int j = 0; j < 5; ++j)
+				i.keyboardState[j] = 0;
+			i.setVel(Point(0, 0));
+		}
 
 		prevSetting.clear();
 
@@ -419,9 +437,14 @@ void GameManager::draw(Point mousePos)
 		drawMap();
 		drawEntity();
 	}
-	if (state == "MapChanging")
+	if (state == "MapLoading")
 	{
 		drawMap();
+		drawEntity();
+	}
+	if (state == "MapChanging")
+	{
+		drawMap((currentStage - 1) + internalTick / (idlePerSecond * mapChangingTime));
 		drawEntity();
 	}
 }
