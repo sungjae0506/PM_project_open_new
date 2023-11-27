@@ -96,9 +96,22 @@ void Bubble::move(void)
 		pos(0, 0);
 		return;
 	}
-	if (st == "Vertical")
+	else if (st == "Vertical")
 	{
 		vel = bubbleCurrentVel;
+	}
+	else if (st == "ContainEnemy")
+	{
+		vel = bubbleCurrentVel;
+		enemyPtr->setPos(pos);
+	}
+	else if (st == "MakeEnemy")
+	{
+		enemyPtr->bubbleTimeout = true;
+	}
+	else if (st == "KillEnemy")
+	{
+		enemyPtr->bubblePop = true;
 	}
 	if (st != "Pop")
 	{
@@ -158,7 +171,7 @@ void Bubble::changeState(void)
 	}
 	else if (st == "ContainEnemy")
 	{
-		if (internalTick >= 5000)
+		if (internalTick >= 3000)
 		{
 			setState("MakeEnemy");
 		}
@@ -241,7 +254,25 @@ void Bubble::collisionHandling(Bubble& b)
 	}
 }
 
-void Bubble::airCurrentHandling(const Map& mp)
+void Bubble::collisionHandling(Enemy& e)
+{
+	if (getState() != "Horizontal" || enemyCollisionState == true || e.getState() == "InBubble")
+		return;
+	auto res = (e.hitBox + e.getPos()).collisionDetection(hitBox2 + pos);
+	for (auto& i : res)
+	{
+		if (i != None)
+		{
+			pos = e.getPos();
+			enemyCollisionState = true;
+			e.bubbleCollisionState = true;
+			enemyPtr = &e;
+			break;
+		}
+	}
+}
+
+void Bubble::bubbleCurrentHandling(const Map& mp)
 {
 	string st = getState();
 	if (st == "Vertical" || st == "ContainEnemy")

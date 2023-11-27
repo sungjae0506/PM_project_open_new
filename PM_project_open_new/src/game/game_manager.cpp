@@ -35,25 +35,36 @@ string GameManager::getState(void)
 
 void GameManager::changeState() // state machine 구현 예정
 {
-	if (getState() == "MapStarting")
+	string st = getState();
+	if (st == "MapLoading")
 	{
-		if (internalTick >= 100)
+		setState("MapChanging");
+	}
+	else if (st == "MapChanging")
+	{
+		if (internalTick >= (int)(idlePerSecond * mapChangingTime))
 		{
 			setState("MapRunning");
 		}
 	}
-	else if (getState() == "MapRunning")
+	else if (st == "MapRunning")
 	{
-
-	}
-	else if (getState() == "MapChanging")
-	{
-		if (internalTick >= 100)
+		if (enemyCnt == 0)
 		{
-			setState("MapRunning");
+			if (currentStage == maps.size())
+			{
+				setState("GameEnding");
+			}
+			else
+			{
+				setState("MapLoading");
+			}
+		}
+		if (playerCnt == 0)
+		{
+			setState("GameOver");
 		}
 	}
-
 }
 
 void GameManager::incTick(void)
@@ -65,22 +76,32 @@ void GameManager::incTick(void)
 
 // ////////////////////////////////////////////////////////////// 
 
-void GameManager::load(int n)
+void GameManager::begin(int n)
 {
 	playerNum = n;
 	mainTick = 0;
 	internalTick = 0;
 	currentStage = 0;
-	currentMap = maps[0];
+
+	enemies.clear();
 
 	bubbles.resize(bubbleMax);
 	for (int i = 0; i < bubbleMax; ++i)
+	{
+		bubbles[i] = Bubble();
 		bubbles[i].setState("Killed");
+	}
+
+	while (!bubbleResourceQueue.empty())
+		bubbleResourceQueue.pop();
 	for (int i = 0; i < bubbleMax; ++i)
 		bubbleResourceQueue.push(i);
-	bubblePopVector.resize(bubbleMax);
-	bubbleAdjVector.resize(bubbleMax);
 
+	bubblePopVector.resize(bubbleMax);
+	for (int i = 0; i < bubbleMax; ++i)
+		bubblePopVector[i] = false;
+
+	bubbleAdjVector.resize(bubbleMax);
 	for (int i = 0; i < bubbleMax; ++i)
 	{
 		bubbleAdjVector[i].resize(bubbleMax);
@@ -103,7 +124,7 @@ void GameManager::load(int n)
 		players[1].setAcc(gravity);
 	}
 
-	setState("MapStarting");
+	setState("MapLoading");
 }
 
 // //////////////////////////////////////////////////////////////
@@ -120,6 +141,12 @@ void GameManager::move()
 	for (int i = 0; i < bubbleMax; ++i)
 		if (bubbles[i].getState() == "Killed")
 			bubbleResourceQueue.push(i);
+	for (auto& i : enemies)
+	{
+		i.bubbleCollisionState = false;
+		i.bubblePop = false;
+		i.bubbleTimeout = false;
+	}
 
 	for (auto& i : players)
 	{
@@ -146,11 +173,17 @@ void GameManager::move()
 	}
 	for (auto& i : bubbles)
 	{
-		i.airCurrentHandling(currentMap);
+		i.bubbleCurrentHandling(currentMap);
 		i.move();
 		i.collisionHandling(currentMap);
+		i.enemyCollisionState = false;
 		i.playerCollisionState = false;
+		for (auto& j : enemies)
+		{
+			i.collisionHandling(j);
+		}
 	}
+
 	
 	for (int i = 0; i < bubbleMax - 1; ++i)
 	{
@@ -193,8 +226,8 @@ void GameManager::move()
 	
 	for (auto& i : enemies)
 	{
-		//i.move();
-		//i.collisionHandling(currentMap);
+		i.move();
+		i.collisionHandling(currentMap);
 	}
 	//cout << players[0].getBubbleState() << " " << bubbles.size() << endl;
 
@@ -212,28 +245,36 @@ void GameManager::move()
 			}
 		}
 	}
+	
+	enemyCnt = 0;
+	for (auto& i : enemies)
+	{
+		if (i.getState() != "Killed")
+			++enemyCnt;
+	}
 
 	for (auto &i: players)
 		i.incTick();
 	for (auto& i : bubbles)
 		i.incTick();
-	//for (auto& i : enemies)
-	//	i.incTick();
+	for (auto& i : enemies)
+		i.incTick();
 
 	for (auto& i : players)
 		i.changeState();
 	for (auto& i : bubbles)
 		i.changeState();
-	//for (auto& i : enemies)
-	//	i.changeState();
+	for (auto& i : enemies)
+		i.changeState();
 }
 
 void GameManager::drawEntity(void)
 {
 	for (auto& i : players)
 		i.draw();
-
 	for (auto& i : bubbles)
+		i.draw();
+	for (auto& i : enemies)
 		i.draw();
 
 }
@@ -304,43 +345,83 @@ void GameManager::idleEvent(IdleEvent e)
 		prevTick = testTick;
 	}
 
-	if (getState() == "MapStarting")
+	string st = getState();
+
+	if (st == "MapLoading")
 	{
+		++currentStage;
+		currentMap = maps[currentStage - 1];
+
+		prevSetting.clear();
+
 		if (playerNum == 1)
 		{
-			//players[0].setPos(((1.0 - internalTick / 100.0) * player1Start) + ((internalTick / 100.0) * characters[0].players[0].getPos()));
-			players[0].setPos(((1.0 - internalTick / 100.0) * player1Start) + ((internalTick / 100.0) * initialSettings[0].playerPos[0]));
+			prevSetting.addPlayerPos(players[0].getPos());
 		}
-		if (playerNum == 2)
+		else if (playerNum == 2)
 		{
-			//players[0].setPos(((1.0 - internalTick / 100.0) * player1Start) + ((internalTick / 100.0) * characters[0].players[0].getPos()));
-			//players[1].setPos(((1.0 - internalTick / 100.0) * player2Start) + ((internalTick / 100.0) * characters[0].players[1].getPos()));
-			players[0].setPos(((1.0 - internalTick / 100.0) * player1Start) + ((internalTick / 100.0) * initialSettings[0].playerPos[0]));
-			players[1].setPos(((1.0 - internalTick / 100.0) * player2Start) + ((internalTick / 100.0) * initialSettings[0].playerPos[1]));
+			prevSetting.addPlayerPos(players[0].getPos());
+			prevSetting.addPlayerPos(players[1].getPos());
 		}
+	
+		for (int i = 0; i < bubbleMax; ++i)
+		{
+			bubbles[i] = Bubble();
+			bubbles[i].setState("Killed");
+		}
+		while (!bubbleResourceQueue.empty())
+			bubbleResourceQueue.pop();
+		for (int i = 0; i < bubbleMax; ++i)
+			bubbleResourceQueue.push(i);
+		for (int i = 0; i < bubbleMax; ++i)
+			bubblePopVector[i] = false;
+		for (int i = 0; i < bubbleMax; ++i)
+			for (int j = 0; j < bubbleMax; ++j)
+				bubbleAdjVector[i][j] = false;
+
+		enemies.clear();
+		for (int i = 0; i < initialSettings[currentStage - 1].enemyPos.size(); ++i)
+		{
+			auto tempEnemy = Enemy();
+			tempEnemy.setPos(Point(initialSettings[currentStage - 1].enemyPos[i].x, 320.0));
+			prevSetting.addEnemyPos(tempEnemy.getPos());
+			tempEnemy.setName(initialSettings[currentStage - 1].enemyName[i]);
+			// 이미지도 추가 필요
+			enemies.push_back(tempEnemy);
+		}
+		enemyCnt = enemies.size();
 	}
-	if (getState() == "MapRunning")
+	else if (getState() == "MapChanging")
+	{
+		for (int i = 0; i < players.size(); ++i)
+		{
+			players[i].setPos(((1.0 - (internalTick + 1) / (idlePerSecond * mapChangingTime)) * prevSetting.playerPos[i]) + (((internalTick + 1) / (idlePerSecond * mapChangingTime)) * initialSettings[currentStage - 1].playerPos[i]));
+		}
+		for (int i = 0; i < enemies.size(); ++i)
+		{
+			enemies[i].setPos(((1.0 - (internalTick + 1) / (idlePerSecond * mapChangingTime)) * prevSetting.enemyPos[i]) + (((internalTick + 1) / (idlePerSecond * mapChangingTime)) * initialSettings[currentStage - 1].enemyPos[i]));
+		}
+
+	}
+	else if (getState() == "MapRunning")
 	{
 		move();
 	}
-	if (getState() == "MapChanging")
-	{
-
-	}
-
+	
 	incTick();
 	changeState();
 }
 
 void GameManager::draw(Point mousePos)
 {
-	if (state == "MapStarting" || state == "MapRunning")
+	if (state == "MapRunning")
 	{
 		drawMap();
 		drawEntity();
 	}
 	if (state == "MapChanging")
 	{
+		drawMap();
 		drawEntity();
 	}
 }

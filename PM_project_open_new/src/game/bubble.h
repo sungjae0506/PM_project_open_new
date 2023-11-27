@@ -13,7 +13,8 @@ public:
 	bool mapCollisionState = false;
 	bool playerCollisionState = false;
 	bool enemyCollisionState = false;
-	Enemy enemy;
+	
+	Enemy* enemyPtr;
 
 	double r1 = 5.0;
 	double r2 = 10.0;
@@ -46,5 +47,7 @@ public:
 	void collisionHandling(const Map& mp);
 	bool collisionDetection(const Bubble& b);
 	void collisionHandling(Bubble& b);
-	void airCurrentHandling(const Map& mp);
+	void collisionHandling(Enemy& e);
+	void bubbleCurrentHandling(const Map& mp);
+
 };

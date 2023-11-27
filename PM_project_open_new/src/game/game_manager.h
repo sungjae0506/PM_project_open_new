@@ -24,10 +24,11 @@ public:
 	string state; // MapStarting, MapRunning, MapChanging, Stop(internalTick¿Ã ¡§¡ˆµ )
 
 	int currentStage;
+	Map currentMap;
 	vector<Map> maps;
 	vector<InitialSetting> initialSettings;
-
-	Map currentMap;
+	InitialSetting prevSetting;
+	
 	vector<Player> players;
 	vector<Bubble> bubbles;
 	vector<Enemy> enemies;
@@ -39,6 +40,9 @@ public:
 	vector<vector<bool>> bubbleAdjVector;
 
 	int playerNum;
+	int playerCnt = 1; // test
+	int enemyCnt = 1;  // test
+	
 
 	void clear();
 	
@@ -47,7 +51,7 @@ public:
 	void changeState();
 	void incTick(void);
 
-	void load(int n);
+	void begin(int n);
 
 	void move();
 
