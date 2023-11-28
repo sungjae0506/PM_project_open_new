@@ -43,15 +43,22 @@ void Enemy::setName(string s)
 	name = s;
 }
 
+string Enemy::getName(void)
+{
+	return name;
+}
+
 
 
 void Enemy::draw(void)
 {
+	if (getState() != "Killed")
+		(Image("image/bubble_bobble_enemy.png", Range(-8, -10, 8, 10)) + pos).draw();
+
 	// test
 	//auto tmp = (hitBox + pos);
 	//tmp.print();
-	if (getState() != "Killed")
-		(Image("image/bubble_bobble_enemy.png", Range(-8, -10, 8, 10)) + pos).draw();
+	
 	//printf("%lf %lf\n", pos.x, pos.y);
 
 	//(Image("image/snu.png", Range(-10, -10, 10, 10)) + pos).draw();
@@ -97,15 +104,18 @@ void Enemy::move(void)
 		pos(0, 0);
 		return;
 	}
-	pos += vel / idlePerSecond;
-	vel += acc / idlePerSecond;
-	if (vel.y < -playerFallingVelLimit)
-		vel.y = -playerFallingVelLimit;
-	if (pos.y < 0.0)
-		pos.y = 320.0;
+	if (getState() == "None")
+	{
+		pos += vel / idlePerSecond;
+		vel += acc / idlePerSecond;
+		if (vel.y < -playerFallingVelLimit)
+			vel.y = -playerFallingVelLimit;
+		if (pos.y < 0.0)
+			pos.y = 320.0;
+	}
 }
 
-Point Enemy::getPos(void)
+Point Enemy::getPos(void) const
 {
 	return pos;
 }

@@ -21,3 +21,5 @@ const Point player1Start(80.0, 160.0);
 const Point player2Start(240.0, 160.0);
 
 const Point gravity(0.0, -620.0);
+
+const int playerInitialHP = 3;

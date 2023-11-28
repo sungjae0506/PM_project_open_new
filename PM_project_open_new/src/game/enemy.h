@@ -36,11 +36,12 @@ public:
 	virtual void setAcc(const Point& p);
 
 	virtual void setName(string s);
+	string getName(void);
 
 	virtual void draw(void);
 	virtual void move(void);
 
-	Point getPos(void);
+	Point getPos(void) const;
 	Point getVel(void);
 
 	void setKeyboardState(int i, bool b);

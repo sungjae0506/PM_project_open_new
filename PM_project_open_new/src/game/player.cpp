@@ -8,6 +8,7 @@ Player::Player()
 	hitBox.addLine(Line(Point(-width / 2 , -height / 2), Point(width / 2, -height / 2), Point(0, -1))); // го
 	hitBox.addLine(Line(Point(-width / 2, -height / 2), Point(-width / 2, height / 2), Point(-1, 0))); // аб
 	hitBox.addLine(Line(Point(width / 2, -height / 2), Point(width / 2, height / 2), Point(1, 0)));  // ©Л
+	HP = playerInitialHP;
 	dir = "RIGHT";
 	setState("None");
 	setBubbleState("BubbleAvailable");
@@ -22,6 +23,7 @@ Player::Player(Point _pos)
 	hitBox.addLine(Line(Point(-width / 2, -height / 2), Point(width / 2, -height / 2), Point(0, -1))); // го
 	hitBox.addLine(Line(Point(-width / 2, -height / 2), Point(-width / 2, height / 2), Point(-1, 0))); // аб
 	hitBox.addLine(Line(Point(width / 2, -height / 2), Point(width / 2, height / 2), Point(1, 0)));  // ©Л
+	HP = playerInitialHP;
 	dir = "RIGHT";
 	setState("None");
 	setBubbleState("BubbleAvailable");
@@ -49,11 +51,22 @@ void Player::setName(string s)
 
 void Player::draw(void)
 {
+	string st = getState();
+	if (st == "None" || st == "EnemyCollision")
+	{
+		(Image("image/bubble_bobble_player.png", Range(-8, -10, 8, 10)) + pos).draw();
+	}
+	else if (st == "Transparent")
+	{
+		if ((internalTick / 20) % 2 == 0)
+		{
+			(Image("image/bubble_bobble_player.png", Range(-8, -10, 8, 10)) + pos).draw();
+		}
+	}
+
 	// test
 	auto tmp = (hitBox + pos);
 	tmp.print();
-
-	//(Image("image/snu.png", Range(-10, -10, 10, 10)) + pos).draw();
 	
 	/*if (keyboardState[4]) {
 		images[5].draw();
@@ -91,6 +104,14 @@ void Player::draw(void)
 }
 void Player::move(void)
 {
+	if (getState() == "Killed")
+	{
+		pos(0, 0);
+		vel(0, 0);
+		acc(0, 0);
+		return;
+	}
+
 	pos += vel / idlePerSecond;
 	vel += acc / idlePerSecond;
 	if (vel.y < -playerFallingVelLimit)
@@ -246,6 +267,19 @@ bool Player::collisionDetection(const Bubble& b)
 	return false;
 }
 
+bool Player::collisionDetection(const Enemy& e)
+{
+	string st = e.getState();
+	if (st == "None")
+	{
+		auto res = (hitBox + pos).collisionDetection(e.hitBox + e.getPos());
+		for (auto& i : res)
+			if (i.size() != 0)
+				return true;
+	}
+	return false;
+}
+
 bool Player::bubbleJumpDetection(const Bubble& b)
 {
 	return ((hitBox.line[1] + pos).collisionDetection(b.platform + b.getPos()) == Sliding);
@@ -295,11 +329,36 @@ string Player::getState(void) const
 
 void Player::changeState(void)
 {
+	if (getState() == "None")
+	{
+		if (enemyCollisionState)
+		{
+			setState("EnemyCollision");
+		}
+	}
+	else if (getState() == "EnemyCollision")
+	{
+		if (HP != 0)
+		{
+			setState("Transparent");
+		}
+		else
+		{
+			setState("Killed");
+		}
+	}
+	else if (getState() == "Transparent")
+	{
+		if (internalTick >= 300)
+		{
+			setState("None");
+		}
+	}
 
 
 	if (getBubbleState() == "BubbleAvailable")
 	{
-		if (keyboardState[4] == true)
+		if (keyboardState[4] == true && getState() == "None")
 			setBubbleState("ShootBubble");
 	}
 	else if (getBubbleState() == "ShootBubble")

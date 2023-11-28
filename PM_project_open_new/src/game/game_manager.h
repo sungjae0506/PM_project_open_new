@@ -42,6 +42,8 @@ public:
 	int playerNum;
 	int playerCnt = 1; // test
 	int enemyCnt = 1;  // test
+
+	vector<Image> heartImage;
 	
 
 	void clear();
@@ -58,6 +60,7 @@ public:
 	void drawEntity(void);
 	void drawMap();
 	void drawMap(double stage);
+	void drawHeart(void);
 
 	void keyboardEvent(KeyboardEvent e, string key, Point p);
 	void idleEvent(IdleEvent e);

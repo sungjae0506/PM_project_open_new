@@ -21,6 +21,8 @@ public:
 
 	vector<Image> images; //[좌1, 좌2, 우1, 우2, 점프, 스페이스바, 정지]
 
+	int HP;
+
 	bool enemyCollisionState;
 	vector<bool> mapCollisionState{ false, false, false, false }; // 상 하 좌 우
 	vector<bool> keyboardState{ false, false, false, false, false }; // 상 하 좌 우 스페이스
@@ -53,6 +55,7 @@ public:
 
 	void collisionHandling(const Map &mp);
 	bool collisionDetection(const Bubble& b);
+	bool collisionDetection(const Enemy& e);
 	bool bubbleJumpDetection(const Bubble& b);
 	void bubblePushHandling(Bubble& b);
 

@@ -170,6 +170,14 @@ void GameManager::move()
 				i.onBubble = true;
 			}
 		}
+		i.enemyCollisionState = false;
+		for (auto& j : enemies)
+		{
+			if (i.collisionDetection(j))
+			{
+				i.enemyCollisionState = true;
+			}
+		}
 	}
 	for (auto& i : bubbles)
 	{
@@ -245,7 +253,22 @@ void GameManager::move()
 			}
 		}
 	}
-	
+
+	for (auto& i : players)
+	{
+		if (i.getState() == "EnemyCollision")
+		{
+			--i.HP;
+		}
+	}
+
+	playerCnt = 0;
+	for (auto& i: players)
+	{
+		if (i.getState() != "Killed")
+			++playerCnt;
+	}
+
 	enemyCnt = 0;
 	for (auto& i : enemies)
 	{
@@ -281,9 +304,9 @@ void GameManager::drawEntity(void)
 
 void GameManager::drawMap()
 {
-	currentMap.draw();
-	//currentMap.platform.print();
-	//currentMap.wall.print();
+	//currentMap.draw();
+	currentMap.platform.print();
+	currentMap.wall.print();
 	
 }
 
@@ -301,6 +324,22 @@ void GameManager::drawMap(double stage)
 	glTranslatef(0, -320.0, 0);
 	maps[prevStage + 1].draw();
 	glPopMatrix();
+}
+
+void GameManager::drawHeart(void)
+{
+	if (playerNum == 1)
+	{
+		for (int i = 0; i < players[0].HP; ++i)
+			(heartImage[0] + Point(10 * i, 20)).draw();
+	}
+	if (playerNum == 2)
+	{
+		for (int i = 0; i < players[0].HP; ++i)
+			(heartImage[0] + Point(10 * i, 20)).draw();
+		for (int i = 1; i <= players[1].HP; ++i)
+			(heartImage[1] + Point(320 - 10 * i, 20)).draw();
+	}
 }
 
 void GameManager::keyboardEvent(KeyboardEvent e, string key, Point p)
@@ -323,7 +362,7 @@ void GameManager::keyboardEvent(KeyboardEvent e, string key, Point p)
 			players[0].setKeyboardState(3, setState);
 		if (key == " ")
 			players[0].setKeyboardState(4, setState);
-		players[0].updateKeyboardState();
+		//players[0].updateKeyboardState();
 	}
 	if (playerNum == 2)
 	{
@@ -337,7 +376,7 @@ void GameManager::keyboardEvent(KeyboardEvent e, string key, Point p)
 			players[1].setKeyboardState(3, setState);
 		if (key.c_str()[0] == 13)
 			players[1].setKeyboardState(4, setState);
-		players[1].updateKeyboardState();
+		//players[1].updateKeyboardState();
 	}
 	
 }
@@ -404,10 +443,21 @@ void GameManager::idleEvent(IdleEvent e)
 			tempEnemy.setPos(Point(initialSettings[currentStage - 1].enemyPos[i].x, 320.0));
 			prevSetting.addEnemyPos(tempEnemy.getPos());
 			tempEnemy.setName(initialSettings[currentStage - 1].enemyName[i]);
+
+			//////////////////////////////////////////////////////////
+			if (tempEnemy.getName() == "enemy1")
+			{
+				tempEnemy.setAcc(gravity);
+			}
+			//////////////////////////////////////////////////////////
+
 			// 이미지도 추가 필요
 			enemies.push_back(tempEnemy);
+			
 		}
 		enemyCnt = enemies.size();
+
+		heartImage = imageManager.getImages("heart");
 	}
 	else if (getState() == "MapChanging")
 	{
@@ -436,16 +486,19 @@ void GameManager::draw(Point mousePos)
 	{
 		drawMap();
 		drawEntity();
+		drawHeart();
 	}
 	if (state == "MapLoading")
 	{
 		drawMap();
 		drawEntity();
+		drawHeart();
 	}
 	if (state == "MapChanging")
 	{
 		drawMap((currentStage - 1) + internalTick / (idlePerSecond * mapChangingTime));
 		drawEntity();
+		drawHeart();
 	}
 }
 

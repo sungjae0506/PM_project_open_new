@@ -15,7 +15,7 @@ void gamePageIdle(IdleEvent e)
 		gameManager.readMap("stage1.json");
 		gameManager.readMap("stage2.json");
 
-		gameManager.begin(1);
+		gameManager.begin(2);
 		printf("ok");
 	}
 }
