@@ -13,6 +13,7 @@
 #include <ctime>
 #include "initial_setting.h"
 #include "../asset/image_manager.h"
+#include "enemy_AI.h"
 
 using json = nlohmann::json;
 
@@ -32,6 +33,7 @@ public:
 	vector<Player> players;
 	vector<Bubble> bubbles;
 	vector<Enemy> enemies;
+	vector<EnemyAI> enemyAI;
 
 	const int bubbleMax = 240;
 	queue<int> bubbleResourceQueue;

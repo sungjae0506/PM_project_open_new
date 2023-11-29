@@ -288,7 +288,8 @@ bool Player::bubbleJumpDetection(const Bubble& b)
 void Player::bubblePushHandling(Bubble& b)
 {
 	Point deltaVel, delta;
-	if (abs(vel.y) < 5.0 && (b.getState() == "Vertical" || b.getState() == "ContaionEnemy"))
+	deltaVel = b.getVel() - vel;
+	if (abs(deltaVel.y) < 50.0 && (b.getState() == "Vertical" || b.getState() == "ContaionEnemy"))
 	{
 		//printf("can push!");
 		auto res = (hitBox + pos).collisionDetection(b.wall + b.getPos());
@@ -296,7 +297,7 @@ void Player::bubblePushHandling(Bubble& b)
 		{
 			if (res[2][0].first == Sliding && (pos.y - 5.0 - COLLISION_EPSILON * 0.1 <= b.getPos().y&& b.getPos().y <= pos.y + 5.0 + COLLISION_EPSILON * 0.1))
 			{
-				deltaVel = b.getVel() - vel;
+				
 				delta = (deltaVel * Point(-1, 0)) * Point(-1, 0) / idlePerSecond;
 				pos += delta * 0.235;
 				b.setPos(b.getPos() - delta * 0.735);
@@ -306,7 +307,6 @@ void Player::bubblePushHandling(Bubble& b)
 		{
 			if (res[3][0].first == Sliding && (pos.y - 5.0 - COLLISION_EPSILON * 0.1 <= b.getPos().y && b.getPos().y <= pos.y + 5.0 + COLLISION_EPSILON * 0.1))
 			{
-				deltaVel = b.getVel() - vel;
 				delta = (deltaVel * Point(1, 0)) * Point(1, 0) / idlePerSecond;
 				pos += delta * 0.235;
 				b.setPos(b.getPos() - delta * 0.735);

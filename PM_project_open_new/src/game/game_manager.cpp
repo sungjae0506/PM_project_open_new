@@ -10,6 +10,7 @@ void GameManager::clear()
 	players.clear();
 	bubbles.clear();
 	enemies.clear();
+	enemyAI.clear();
 
 	while (!bubbleResourceQueue.empty())
 		bubbleResourceQueue.pop();
@@ -84,6 +85,7 @@ void GameManager::begin(int n)
 	currentStage = 0;
 
 	enemies.clear();
+	enemyAI.clear();
 
 	bubbles.resize(bubbleMax);
 	for (int i = 0; i < bubbleMax; ++i)
@@ -232,10 +234,11 @@ void GameManager::move()
 		}
 	}
 	
-	for (auto& i : enemies)
+	for (int i = 0; i < enemies.size(); ++i)
 	{
-		i.move();
-		i.collisionHandling(currentMap);
+		enemyAI[i].pathfinding(enemies[i], players, currentMap);
+		enemies[i].move();
+		enemies[i].collisionHandling(currentMap);
 	}
 	//cout << players[0].getBubbleState() << " " << bubbles.size() << endl;
 
@@ -304,9 +307,9 @@ void GameManager::drawEntity(void)
 
 void GameManager::drawMap()
 {
-	//currentMap.draw();
-	currentMap.platform.print();
-	currentMap.wall.print();
+	currentMap.draw();
+	//currentMap.platform.print();
+	//currentMap.wall.print();
 	
 }
 
@@ -437,6 +440,7 @@ void GameManager::idleEvent(IdleEvent e)
 				bubbleAdjVector[i][j] = false;
 
 		enemies.clear();
+		enemyAI.clear();
 		for (int i = 0; i < initialSettings[currentStage - 1].enemyPos.size(); ++i)
 		{
 			auto tempEnemy = Enemy();
@@ -452,7 +456,10 @@ void GameManager::idleEvent(IdleEvent e)
 			//////////////////////////////////////////////////////////
 
 			// 이미지도 추가 필요
+			auto tempEnemyAI = EnemyAI("MODE1");
+			tempEnemyAI.enemyInit(tempEnemy);
 			enemies.push_back(tempEnemy);
+			enemyAI.push_back(tempEnemyAI);
 			
 		}
 		enemyCnt = enemies.size();

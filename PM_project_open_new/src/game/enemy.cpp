@@ -133,7 +133,7 @@ void Enemy::setKeyboardState(int i, bool b)
 
 void Enemy::updateKeyboardState(void)
 {
-
+	
 	if (keyboardState[2] == false && keyboardState[3] == true)
 	{
 		dir = "RIGHT";
