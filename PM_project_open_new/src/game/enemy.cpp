@@ -214,12 +214,21 @@ void Enemy::collisionHandling(const Map& mp)
 
 	res1 = (hitBox + pos).collisionDetection(platform);
 
-	for (int i = 1; i < 2; ++i)
+	for (int i = 0; i < 2; ++i) // ¼öÁ¤ÇÔ. (i : 1 -> 0)
 	{
 		isCol = true;
 		if (res1[i].size() == 0)
 			isCol = false;
 		for (auto& j : res1[i])
+			if (j.first != Sliding)
+				isCol = false;
+		if (isCol)
+			mapCollisionState[i] = true;
+
+		isCol = true;
+		if (res2[i].size() == 0)
+			isCol = false;
+		for (auto& j : res2[i])
 			if (j.first != Sliding)
 				isCol = false;
 		if (isCol)
@@ -241,6 +250,8 @@ void Enemy::collisionHandling(const Map& mp)
 			}
 		}
 	}
+
+
 }
 
 void Enemy::setState(string s)

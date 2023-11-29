@@ -456,7 +456,7 @@ void GameManager::idleEvent(IdleEvent e)
 			//////////////////////////////////////////////////////////
 
 			// 이미지도 추가 필요
-			auto tempEnemyAI = EnemyAI("MODE1");
+			auto tempEnemyAI = EnemyAI("MODE3");
 			tempEnemyAI.enemyInit(tempEnemy);
 			enemies.push_back(tempEnemy);
 			enemyAI.push_back(tempEnemyAI);
@@ -568,6 +568,7 @@ void GameManager::readMap(string path)
 	tempMap.platform = vectorToLines(tempTile, r);
 	tempMap.wall.addLine(Line(Point(r.point0.x + 20, r.point0.y), Point(r.point0.x + 20, r.point1.y), Point(1, 0)));
 	tempMap.wall.addLine(Line(Point(r.point1.x - 20, r.point0.y), Point(r.point1.x - 20, r.point1.y), Point(-1, 0)));
+	tempMap.wall.addLine(Line(Point(r.point0.x + 20, r.point1.y), Point(r.point1.x - 20, r.point1.y), Point(0, -1)));
 
 	initialSettings.push_back(tempInitialSetting);
 

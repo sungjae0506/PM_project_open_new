@@ -12,6 +12,7 @@ class EnemyAI
 {
 public:
 	string mode;
+	Point targetVel;
 
 	EnemyAI(string _mode);
 
