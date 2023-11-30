@@ -14,7 +14,9 @@ public:
 	string mode;
 	Point targetVel;
 
+	EnemyAI();
 	EnemyAI(string _mode);
+	void setMode(string _mode);
 
 	void enemyInit(Enemy& e);
 	void pathfinding(Enemy& e, const vector<Player>& p, const Map& mp);

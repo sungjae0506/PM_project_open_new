@@ -3,7 +3,7 @@
 Player::Player()
 {
 	width = 16;
-	height = 20;
+	height = 16;
 	hitBox.addLine(Line(Point(-width / 2, height / 2), Point(width / 2, height / 2), Point(0, 1)));  // »ó
 	hitBox.addLine(Line(Point(-width / 2 , -height / 2), Point(width / 2, -height / 2), Point(0, -1))); // ÇÏ
 	hitBox.addLine(Line(Point(-width / 2, -height / 2), Point(-width / 2, height / 2), Point(-1, 0))); // ÁÂ
@@ -18,7 +18,7 @@ Player::Player(Point _pos)
 {
 	pos = _pos;
 	width = 16;
-	height = 20;
+	height = 16;
 	hitBox.addLine(Line(Point(-width / 2, height / 2), Point(width / 2, height / 2), Point(0, 1)));  // »ó
 	hitBox.addLine(Line(Point(-width / 2, -height / 2), Point(width / 2, -height / 2), Point(0, -1))); // ÇÏ
 	hitBox.addLine(Line(Point(-width / 2, -height / 2), Point(-width / 2, height / 2), Point(-1, 0))); // ÁÂ
@@ -54,13 +54,13 @@ void Player::draw(void)
 	string st = getState();
 	if (st == "None" || st == "EnemyCollision")
 	{
-		(Image("image/bubble_bobble_player.png", Range(-8, -10, 8, 10)) + pos).draw();
+		(Image("image/bubble_bobble_player.png", Range(-8, -8, 8, 8)) + pos).draw();
 	}
 	else if (st == "Transparent")
 	{
 		if ((internalTick / 20) % 2 == 0)
 		{
-			(Image("image/bubble_bobble_player.png", Range(-8, -10, 8, 10)) + pos).draw();
+			(Image("image/bubble_bobble_player.png", Range(-8, -8, 8, 8)) + pos).draw();
 		}
 	}
 
@@ -125,7 +125,7 @@ void Player::move(void)
 	}
 }
 
-Point Player::getPos(void)
+Point Player::getPos(void) const
 {
 	return pos;
 }
@@ -223,7 +223,7 @@ void Player::collisionHandling(const Map &mp)
 
 	res1 = (hitBox + pos).collisionDetection(platform);
 
-	for (int i = 1; i < 2; ++i)
+	for (int i = 0; i < 2; ++i) // ¼öÁ¤ÇÔ. (i : 1 -> 0)
 	{
 		isCol = true;
 		if (res1[i].size() == 0)

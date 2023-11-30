@@ -58,7 +58,7 @@ Point& Point::operator-=(const Point& p)
 }
 Point& Point::operator*=(double c)
 {
-	return (*this) = (*this) / c;
+	return (*this) = (*this) * c;
 }
 Point& Point::operator/=(double c)
 {
@@ -70,7 +70,7 @@ Point operator*(double c, const Point &p)
 }
 double abs(const Point &p)
 {
-	return sqrt(p.x * p.x + p.y * p.y);
+	return sqrt((p.x * p.x) + (p.y * p.y));
 }
 
 // /////////////////////////////////////////////////////////////////////////////////////

@@ -3,7 +3,7 @@
 Enemy::Enemy()
 {
 	width = 16;
-	height = 20;
+	height = 16;
 	hitBox.addLine(Line(Point(-width / 2, height / 2), Point(width / 2, height / 2), Point(0, 1)));  // ╩С
 	hitBox.addLine(Line(Point(-width / 2, -height / 2), Point(width / 2, -height / 2), Point(0, -1))); // го
 	hitBox.addLine(Line(Point(-width / 2, -height / 2), Point(-width / 2, height / 2), Point(-1, 0))); // аб
@@ -16,7 +16,7 @@ Enemy::Enemy(Point _pos)
 {
 	pos = _pos;
 	width = 16;
-	height = 20;
+	height = 16;
 	hitBox.addLine(Line(Point(-width / 2, height / 2), Point(width / 2, height / 2), Point(0, 1)));  // ╩С
 	hitBox.addLine(Line(Point(-width / 2, -height / 2), Point(width / 2, -height / 2), Point(0, -1))); // го
 	hitBox.addLine(Line(Point(-width / 2, -height / 2), Point(-width / 2, height / 2), Point(-1, 0))); // аб
@@ -53,7 +53,7 @@ string Enemy::getName(void)
 void Enemy::draw(void)
 {
 	if (getState() != "Killed")
-		(Image("image/bubble_bobble_enemy.png", Range(-8, -10, 8, 10)) + pos).draw();
+		(Image("image/bubble_bobble_enemy.png", Range(-8, -8, 8, 8)) + pos).draw();
 
 	// test
 	//auto tmp = (hitBox + pos);
@@ -102,7 +102,10 @@ void Enemy::move(void)
 	if (getState() == "Killed")
 	{
 		pos(0, 0);
-		return;
+	}
+	if (getState() == "InBubble")
+	{
+		vel(0, 0);
 	}
 	if (getState() == "None")
 	{
@@ -157,6 +160,9 @@ void Enemy::updateKeyboardState(void)
 
 void Enemy::collisionHandling(const Map& mp)
 {
+	if (mapTransparent)
+		return;
+
 	bool isCol = true;
 	Lines platform = mp.platform;
 	Lines wall = mp.wall;
@@ -388,4 +394,9 @@ Projectile Enemy::shootProjectile(const Map& mp)
 		}
 	}
 	return projectile;
+}
+
+int Enemy::getMainTick(void)
+{
+	return mainTick;
 }

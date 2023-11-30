@@ -1,6 +1,15 @@
 #include "enemy_AI.h"
 
+EnemyAI::EnemyAI()
+{
+}
+
 EnemyAI::EnemyAI(string _mode)
+{
+	mode = _mode;
+}
+
+void EnemyAI::setMode(string _mode)
 {
 	mode = _mode;
 }
@@ -11,14 +20,21 @@ void EnemyAI::enemyInit(Enemy& e)
 	{
 		e.setAcc(gravity);
 	}
-	else if (mode == "MODE3" || mode == "MODE4")
+	else if (mode == "MODE3")
 	{
 		e.setAcc(Point(0, 0));
+	}
+	else if (mode == "MODE4")
+	{
+		e.setAcc(Point(0, 0));
+		e.mapTransparent = true;
 	}
 }
 
 void EnemyAI::pathfinding(Enemy& e, const vector<Player>& p, const Map &mp)
 {
+	int tick = e.getMainTick();
+
 	if (mode == "MODE1")
 	{
 		if (e.mapCollisionState[1])
@@ -54,6 +70,25 @@ void EnemyAI::pathfinding(Enemy& e, const vector<Player>& p, const Map &mp)
 				}
 			}
 		}
+		/*if (false) // ¶Ù¾î´Ù´Ô
+		{
+			if (e.mapCollisionState[0])
+			{
+				e.setVel(Point(e.getVel().x, -playerHorizontalVel));
+			}
+			if (e.mapCollisionState[1])
+			{
+				e.setVel(Point(e.getVel().x, playerHorizontalVel));
+			}
+			if (e.mapCollisionState[2])
+			{
+				e.setVel(Point(playerHorizontalVel, e.getVel().y));
+			}
+			if (e.mapCollisionState[3])
+			{
+				e.setVel(Point(-playerHorizontalVel, e.getVel().y));
+			}
+		}*/
 	}
 	else if (mode == "MODE3")
 	{
@@ -68,22 +103,51 @@ void EnemyAI::pathfinding(Enemy& e, const vector<Player>& p, const Map &mp)
 				e.setVel(Point(-playerHorizontalVel, playerHorizontalVel));
 			}
 		}
+		if (e.mapCollisionState[0])
+		{
+			e.setVel(Point(e.getVel().x, -0.75 * playerHorizontalVel));
+		}
+		if (e.mapCollisionState[1])
+		{
+			e.setVel(Point(e.getVel().x, 0.75 * playerHorizontalVel));
+		}
+		if (e.mapCollisionState[2])
+		{
+			e.setVel(Point(0.75 * playerHorizontalVel, e.getVel().y));
+		}
+		if (e.mapCollisionState[3])
+		{
+			e.setVel(Point(-0.75 * playerHorizontalVel, e.getVel().y));
+		}
 	}
-	if (e.mapCollisionState[0])
+	else if (mode == "MODE4")
 	{
-		e.setVel(Point(e.getVel().x, -0.75 * playerHorizontalVel));
+		double mp = -1, mn = 1e9;
+		if (tick % (int)(4.0 * idlePerSecond) == (int)(2.0 * idlePerSecond))
+		{
+			for (int i = 0; i < p.size(); ++i)
+			{
+				if (abs(e.getPos() - p[i].getPos()) < mn && p[i].getState() != "Killed")
+				{
+					mn = abs(e.getPos() - p[i].getPos());
+					mp = i;
+				}
+			}
+			targetVel = (p[mp].getPos() - e.getPos());
+			targetVel /= abs(targetVel);
+			if (abs(p[mp].getPos() - e.getPos()) > 16.0)
+			{
+				targetVel *= min(playerHorizontalVel, max(0.0, (abs(p[mp].getPos() - e.getPos()) - 15.0) / 2.0));
+			}
+			
+		}
+		if ((int)(2.0 * idlePerSecond) <= tick % (int)(4.0 * idlePerSecond))
+		{	
+			e.setVel(targetVel);
+		}
+		else
+		{
+			e.setVel(Point(0, 0));
+		}
 	}
-	if (e.mapCollisionState[1])
-	{
-		e.setVel(Point(e.getVel().x, 0.75 * playerHorizontalVel));
-	}
-	if (e.mapCollisionState[2])
-	{
-		e.setVel(Point(0.75 * playerHorizontalVel, e.getVel().y));
-	}
-	if (e.mapCollisionState[3])
-	{
-		e.setVel(Point(-0.75 * playerHorizontalVel, e.getVel().y));
-	}
-	
 }

@@ -448,15 +448,25 @@ void GameManager::idleEvent(IdleEvent e)
 			prevSetting.addEnemyPos(tempEnemy.getPos());
 			tempEnemy.setName(initialSettings[currentStage - 1].enemyName[i]);
 
-			//////////////////////////////////////////////////////////
+			// 이미지도 추가 필요
+			
+			auto tempEnemyAI = EnemyAI();
 			if (tempEnemy.getName() == "enemy1")
 			{
-				tempEnemy.setAcc(gravity);
+				tempEnemyAI.setMode("MODE1");
 			}
-			//////////////////////////////////////////////////////////
-
-			// 이미지도 추가 필요
-			auto tempEnemyAI = EnemyAI("MODE3");
+			if (tempEnemy.getName() == "enemy2")
+			{
+				tempEnemyAI.setMode("MODE2");
+			}
+			if (tempEnemy.getName() == "enemy3")
+			{
+				tempEnemyAI.setMode("MODE3");
+			}
+			if (tempEnemy.getName() == "enemy4")
+			{
+				tempEnemyAI.setMode("MODE4");
+			}
 			tempEnemyAI.enemyInit(tempEnemy);
 			enemies.push_back(tempEnemy);
 			enemyAI.push_back(tempEnemyAI);

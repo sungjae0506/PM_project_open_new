@@ -21,6 +21,7 @@ public:
 	bool bubbleCollisionState = false;
 	bool bubblePop = false;
 	bool bubbleTimeout = false;
+	bool mapTransparent = false;
 	vector<bool> mapCollisionState{ false, false, false, false }; // 상 하 좌 우
 	vector<bool> keyboardState{ false, false, false, false, false }; // 상 하 좌 우 스페이스
 
@@ -59,4 +60,6 @@ public:
 
 	void setProjectile(Projectile p);
 	Projectile shootProjectile(const Map& mp);
+
+	int getMainTick(void);
 };
