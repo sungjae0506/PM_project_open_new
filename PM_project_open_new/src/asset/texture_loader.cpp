@@ -56,23 +56,17 @@ void TextureLoader::load(string fileName)
 
 	GLubyte* textureData = FreeImage_GetBits(bitmap32);
 
-	dataTable.insert({fileName, TextureData(imageWidth, imageHeight, textureData)});
+	dataTable.insert({ fileName, TextureData(imageWidth, imageHeight, textureData) });
 
-	IDTable.clear();
-	//glEnable(GL_TEXTURE_2D);
-	glGenTextures(dataTable.size(), ID);
-
-	int cnt = 0;
-	for (auto& i : dataTable)
-	{
-		IDTable.insert({i.first, ID[cnt]});
-		glBindTexture(GL_TEXTURE_2D, ID[cnt++]);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, i.second.imageWidth, i.second.imageHeight, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, i.second.textureData);
-	}
+	glEnable(GL_TEXTURE_2D);
+	glGenTextures(1, ID);
+	IDTable.insert({ fileName, ID[0] });
+	glBindTexture(GL_TEXTURE_2D, ID[0]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, textureData);
 }
 
 void TextureLoader::bind(string fileName)

@@ -23,7 +23,7 @@ class TextureLoader
 public:
 	unordered_map<string, TextureData> dataTable;
 	unordered_map<string, GLuint> IDTable;
-	GLuint ID[100] = { 0 };
+	GLuint ID[1] = { 0 };
 
 	TextureLoader();
 	FIBITMAP* createBitMap(string fileName);

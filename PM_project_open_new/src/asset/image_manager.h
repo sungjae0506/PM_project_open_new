@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include "../util/json.hpp"
+#include <json.hpp>
 
 using namespace std;
 using json = nlohmann::json;

@@ -26,6 +26,7 @@ public:
 	vector<Image> images;
 	vector<Text> texts;
 	vector<Button> buttons;
+	string background;
 
 	int windowWidth;
 	int windowHeight;
@@ -57,4 +58,5 @@ public:
 	Page& addButton(const Button& t);
 	Page& addButton(vector<Button> ts);
 
+	Page& addBackground(string s);
 };

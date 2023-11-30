@@ -94,6 +94,9 @@
     <ClCompile Include="src\game\enemy_AI.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="src\asset\font_loader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\not_used\background.h">
@@ -165,7 +168,7 @@
     <ClInclude Include="src\game\projectile.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="src\util\json.hpp">
+    <ClInclude Include="include\json.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="src\asset\image_manager.h">
@@ -175,6 +178,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="src\game\enemy_AI.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="src\asset\font_loader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

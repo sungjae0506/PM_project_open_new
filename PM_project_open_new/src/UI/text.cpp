@@ -1,7 +1,4 @@
 #include "text.h"
-
-#include <GL/GL.h>
-
 const string fontWhite = "image/font_white.png";
 const string fontBlack = "image/font_black.png";
 
@@ -10,8 +7,9 @@ const double letterSpacing = 100.0;
 const double aspectRatio = 1.6;
 
 static TextureLoader textLoader;
+static FontLoader fontLoader;
 
-vector<double> stringToRGB(string str)
+vector<double> stringToRGBf(string str)
 {
 	if (str[0] == '#')
 	{
@@ -34,6 +32,29 @@ vector<double> stringToRGB(string str)
 		return vector<double>{0, 0, 0};
 }
 
+vector<int> stringToRGBi(string str)
+{
+	if (str[0] == '#')
+	{
+		int hex = 0;
+		int red = 0, green = 0, blue = 0;
+		for (int i = 1; i <= 6; ++i)
+		{
+			hex *= 16;
+			if ('0' <= str[i] && str[i] <= '9')
+				hex += str[i] - '0';
+			else
+				hex += str[i] - 'A' + 10;
+		}
+		red = hex / 65536;
+		green = (hex % 65536) / 256;
+		blue = hex % 256;
+		return vector<int>{(int)red, (int)green, (int)blue};
+	}
+	else
+		return vector<int>{0, 0, 0};
+}
+
 Text::Text()
 {
 }
@@ -46,6 +67,7 @@ Text::Text(string str, string cColor, string bColor, double sz, const Range& r)
 	range = r;
 	textLoader.load(fontWhite);
 	textLoader.load(fontBlack);
+	fontLoader.load(fontWhite);
 	textFunc = NULL;
 	
 }
@@ -115,7 +137,7 @@ void Text::draw()
 	if (backgroundColor != "")
 	{
 		double red, green, blue;
-		vector<double> res = stringToRGB(backgroundColor);
+		vector<double> res = stringToRGBf(backgroundColor);
 		red = res[0];
 		green = res[1];
 		blue = res[2];
@@ -128,20 +150,20 @@ void Text::draw()
 		glEnd();
 	}
 
-	cursor = Point(range.point0.x, range.point1.y - fontSize);
+	
+
+	int red, green, blue, bitMask;
+	vector<int> res = stringToRGBi(charColor);
+	red = res[0];
+	green = res[1];
+	blue = res[2];
+	bitMask = (red & 0xFF) | ((green & 0xFF) << 8) | ((blue & 0xFF) << 16);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	if (charColor == "#FFFFFF")
-	{
-		textLoader.bind(fontWhite);
-	}
-	else if (charColor == "#000000")
-	{
-		textLoader.bind(fontBlack);
-	}
-	
+	fontLoader.bind(fontWhite, 24);
+	cursor = Point(range.point0.x, range.point1.y - fontSize);
 	for (auto c : content)
 	{
 		if (32 <= c && c <= 127)
@@ -155,6 +177,28 @@ void Text::draw()
 		}
 	}
 
+	glBlendFunc(GL_ONE, GL_ONE);
+
+	for (int i = 0; i < 24; ++i)
+	{
+		if (bitMask & (1 << i))
+		{
+			fontLoader.bind(fontWhite, i);
+			cursor = Point(range.point0.x, range.point1.y - fontSize);
+			for (auto c : content)
+			{
+				if (32 <= c && c <= 127)
+				{
+					drawChar(c);
+					cursor += Point(fontSize / aspectRatio * letterSpacing / 100.0, 0.0);
+				}
+				if (c == 10)
+				{
+					cursor = Point(range.point0.x, cursor.y - (fontSize * lineSpacing / 100.0));
+				}
+			}
+		}
+	}
 	glDisable(GL_BLEND);
 }
 

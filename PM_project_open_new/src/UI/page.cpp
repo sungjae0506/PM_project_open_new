@@ -64,6 +64,10 @@ void Page::resizeEvent(int w, int h)
 void Page::draw(Point mousePos)
 {
 	Range scissor;
+	if (background != "")
+	{
+		Image(background, range).draw();
+	}
 	for (auto& i : canvases)
 	{
 		scissor = Transform(range, Range(0, 0, windowWidth, windowHeight))(i.range);
@@ -168,5 +172,11 @@ Page& Page::addButton(vector<Button> bs)
 {
 	for (auto& b : bs)
 		buttons.push_back(b);
+	return *this;
+}
+
+Page& Page::addBackground(string s)
+{
+	background = s;
 	return *this;
 }

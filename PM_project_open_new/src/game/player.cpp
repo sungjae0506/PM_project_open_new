@@ -54,7 +54,10 @@ void Player::draw(void)
 	string st = getState();
 	if (st == "None" || st == "EnemyCollision")
 	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		(Image("image/bubble_bobble_player.png", Range(-8, -8, 8, 8)) + pos).draw();
+		glDisable(GL_BLEND);
 	}
 	else if (st == "Transparent")
 	{

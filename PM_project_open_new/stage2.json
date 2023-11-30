@@ -21,11 +21,11 @@
       "pos": [ 80.0, 40.0 ]
     },
     {
-      "name": "enemy1",
+      "name": "enemy3",
       "pos": [ 240.0, 40.0 ]
     },
     {
-      "name": "enemy3",
+      "name": "enemy1",
       "pos": [ 80.0, 240.0 ]
     },
     {

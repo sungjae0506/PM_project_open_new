@@ -16,7 +16,15 @@ using namespace std;
 #define HEIGHT 900
 
 Window window;
+Page startingPage("startingPage", Range(0, 0, 1600, 900));
+Page storyPage("storyPage", Range(0, 0, 1600, 900));
+Page selectingPage("selectingPage", Range(0, 0, 1600, 900));
 Page gamePage("gamePage", Range(0, 0, 1600, 900));
+Page gameOverPage("gameOverPage", Range(0, 0, 1600, 900));
+Page gameWinPage("gameWinPage", Range(0, 0, 1600, 900));
+Page scoreboardPage("scoreboardPage", Range(0, 0, 1600, 900));
+
+
 
 
 int main(int argc, char** argv)
@@ -24,8 +32,14 @@ int main(int argc, char** argv)
 
 
 	window("Bubble Bobble", &argc, argv, 50, 50, WIDTH, HEIGHT);
+
 	
+
 	gamePage
+	.addBackground
+	(
+		"image/snu.png"
+	)
 	.addIdleFunc
 	(
 		gamePageIdle
@@ -48,7 +62,7 @@ int main(int argc, char** argv)
 	)
 	.addText
 	(
-		Text("wow!", "#FFFFFF", "", 32.0, Range(0, 0, 320, 40))
+		Text("wow!", "#16FFFF", "", 32.0, Range(0, 0, 320, 40))
 	);
 
 	window

@@ -3,8 +3,10 @@
 #include <vector>
 #include "../asset/texture_loader.h"
 #include "../util/range.h"
+#include "../asset/font_loader.h"
 
-vector<double> stringToRGB(string str);
+vector<double> stringToRGBf(string str);
+vector<int> stringToRGBi(string str);
 
 class Text
 {

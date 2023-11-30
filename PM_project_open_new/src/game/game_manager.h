@@ -9,7 +9,7 @@
 #include "enemy.h"
 #include "map.h"
 #include "game_const.h"
-#include "../util/json.hpp"
+#include <json.hpp>
 #include <ctime>
 #include "initial_setting.h"
 #include "../asset/image_manager.h"

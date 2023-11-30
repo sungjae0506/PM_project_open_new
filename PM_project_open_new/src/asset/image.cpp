@@ -34,6 +34,7 @@ void Image::draw()
 	imageLoader.bind(file);
 
 	glBegin(GL_QUADS);
+	glEnable(GL_TEXTURE_2D);
 	glColor3f(1.0, 1.0, 1.0);
 
 	glTexCoord2f(0.0f, 0.0f); glVertex2f(range.point0.x, range.point0.y);
