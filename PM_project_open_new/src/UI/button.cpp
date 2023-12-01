@@ -34,7 +34,6 @@ void Button::draw(bool isMouseOn)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	buttonImage.draw();
-	glDisable(GL_BLEND);
 	buttonText.draw();
 
 	if (isMouseOn)

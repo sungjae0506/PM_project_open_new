@@ -11,8 +11,10 @@ void storyPageDraw(Point pos);
 void storyPageKeyboard(KeyboardEvent e, string key, Point pos);
 void storyPageIdle(IdleEvent e);
 
+void selectionPageDraw(Point pos);
 void selectionPageButton(string bt);
 void selectionPageKeyboard(KeyboardEvent e, string key, Point p);
+void selectionPageIdle(IdleEvent e);
 
 void gamePageIdle(IdleEvent e);
 void gameManagerDraw(Point mousePos);

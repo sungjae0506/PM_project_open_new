@@ -1,11 +1,21 @@
 {
   "metal": [
     [
-      "image/tile1.png",
+      "image/metal_tile1.png",
       [ 0, 0, 10, 10 ]
     ],
     [
-      "image/tile2.png",
+      "image/metal_tile2.png",
+      [ 0, 0, 20, 20 ]
+    ]
+  ],
+  "wood": [
+    [
+      "image/wood_tile1.png",
+      [ 0, 0, 10, 10 ]
+    ],
+    [
+      "image/wood_tile2.png",
       [ 0, 0, 20, 20 ]
     ]
   ],
