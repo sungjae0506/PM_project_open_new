@@ -37,12 +37,13 @@ void Button::draw(bool isMouseOn)
 
 	if (isMouseOn)
 	{
-
-		Image("image/button2_pushed.png", range).draw();
+		Image("image/button2_pushed.png", range).draw(); //일반화..?는 일단 제끼고 구현만 해놓음
 		glPushMatrix();
 		glTranslatef(0, -10, 0);
 		buttonText.draw();
 		glPopMatrix();
+
+
 
 		/*glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -59,7 +60,6 @@ void Button::draw(bool isMouseOn)
 	}
 	else 
 	{
-
 		buttonImage.draw();
 		buttonText.draw();	
 	}
