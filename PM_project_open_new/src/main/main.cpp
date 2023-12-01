@@ -100,37 +100,41 @@ int main(int argc, char** argv)
 	)
 	.addButton
 	({
-		Button("image/bubble_bobble_player.png", "p1", "#FF0000", 36.0, Range(450, 200, 650, 400))
+		Button("image/bubble_bobble_player.png", "", "#FF0000", 36.0, Range(450, 200, 650, 400))
 		.addButtonFunc
 		(
-			[]() -> void {  }
+			[]() -> void { selectionPageButton("P1"); }
 		),
-		Button("image/bubble_bobble_enemy.png", "p2", "#00FF00", 36.0, Range(700, 200, 900, 400))
+		Button("image/bubble_bobble_enemy.png", "", "#00FF00", 36.0, Range(700, 200, 900, 400))
 		.addButtonFunc
 		(
-			[]() -> void { }
+			[]() -> void { selectionPageButton("P2"); }
 		),
-		Button("image/snu.png", "p3", "#0000FF", 36.0, Range(950, 200, 1150, 400))
+		Button("image/snu.png", "", "#0000FF", 36.0, Range(950, 200, 1150, 400))
 		.addButtonFunc
 		(
-			[]() -> void { }
+			[]() -> void { selectionPageButton("P3"); }
 		),
 		Button("image/button2.png", "Single", "#0000FF", 36.0, Range(450, 50, 650, 150))
 		.addButtonFunc
 		(
-			[]() -> void { }
+			[]() -> void { selectionPageButton("Single"); }
 		),
 		Button("image/button2.png", "Multi", "#FFFF00", 36.0, Range(700, 50, 900, 150))
 		.addButtonFunc
 		(
-			[]() -> void { }
+			[]() -> void { selectionPageButton("Multi"); }
 		),
 		Button("image/button2.png", "Next", "#FF0000", 36.0, Range(950, 50, 1150, 150))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("gamePage"); }
 		)
-	});
+	})
+	.addKeyboardFunc
+	(
+		selectionPageKeyboard
+	);
 
 	gamePage
 	.addIdleFunc

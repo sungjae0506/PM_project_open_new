@@ -100,7 +100,21 @@ void storyPageIdle(IdleEvent e)
 	}
 }
 
+void selectionPageButton(string bt)
+{
 
+}
+
+void selectionPageKeyboard(KeyboardEvent e, string key, Point p)
+{
+	if (e == KeyboardDown)
+	{
+		if (key == " ")
+		{
+			window.setPage("gamePage");
+		}
+	}
+}
 
 
 
