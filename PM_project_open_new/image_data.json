@@ -1,11 +1,11 @@
 {
-  "minecraft": [
+  "metal": [
     [
       "image/tile1.png",
       [ 0, 0, 10, 10 ]
     ],
     [
-      "image/tile1.png",
+      "image/tile2.png",
       [ 0, 0, 20, 20 ]
     ]
   ],
