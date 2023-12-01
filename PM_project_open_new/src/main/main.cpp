@@ -83,12 +83,34 @@ int main(int argc, char** argv)
 	)
 	.addButton
 	(
-		Button("image/button2.png", "Back", "#FF0000", 36.0, Range(30, 550, 230, 750))
+		Button("image/button2.png", "Back", "#FF0000", 36.0, Range(30, 750, 230, 850))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("startingPage"); }
 		)
 	);
+
+	scoreboardPage
+	.addBackground
+	(
+		"image/bubble_bobble_scoreboard_background.png"
+	)
+	.addButton
+	(
+		Button("image/button2.png", "Back", "#FF0000", 36.0, Range(30, 750, 230, 850))
+		.addButtonFunc
+		(
+			[]() -> void { window.setPage("startingPage"); }
+		)
+	);
+	/*.addCanvas
+	(
+		Canvas(Range(200, 150, 1400, 750), Range(200, 150, 1400, 750))
+		.addDrawFunc
+		(
+			scoreBoardDraw
+		)
+	);*/
 
 
 	storyPage
@@ -187,6 +209,7 @@ int main(int argc, char** argv)
 	({
 		startingPage,
 		helpPage,
+		scoreboardPage,
 		storyPage,
 		selectionPage,
 		gamePage
