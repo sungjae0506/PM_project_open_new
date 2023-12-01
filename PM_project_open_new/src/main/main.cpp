@@ -71,6 +71,48 @@ int main(int argc, char** argv)
 		startingPageKeyboard
 	);
 
+
+	helpPage
+	.addBackground
+	(
+		"image/bubble_bobble_help.png"
+	)
+	.addText
+	(
+		Text("wow!", "#16FFFF", "", 32.0, Range(0, 0, 320, 40))
+	)
+	.addButton
+	(
+		Button("image/button2.png", "Back", "#FF0000", 36.0, Range(30, 750, 230, 850))
+		.addButtonFunc
+		(
+			[]() -> void { window.setPage("startingPage"); }
+		)
+	);
+
+	scoreboardPage
+	.addBackground
+	(
+		"image/bubble_bobble_scoreboard_background.png"
+	)
+	.addButton
+	(
+		Button("image/button2.png", "Back", "#FF0000", 36.0, Range(30, 750, 230, 850))
+		.addButtonFunc
+		(
+			[]() -> void { window.setPage("startingPage"); }
+		)
+	);
+	/*.addCanvas
+	(
+		Canvas(Range(200, 150, 1400, 750), Range(200, 150, 1400, 750))
+		.addDrawFunc
+		(
+			scoreBoardDraw
+		)
+	);*/
+
+
 	storyPage
 	.addText
 	(
@@ -178,6 +220,8 @@ int main(int argc, char** argv)
 	.addPage
 	({
 		startingPage,
+		helpPage,
+		scoreboardPage,
 		storyPage,
 		selectionPage,
 		gamePage

@@ -226,3 +226,7 @@ void gameManagerKeyboard(KeyboardEvent e, string key, Point p)
 
 
 
+void scoreBoardDraw(Point pos)
+{
+
+}
