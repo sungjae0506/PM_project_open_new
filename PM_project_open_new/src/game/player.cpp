@@ -68,8 +68,8 @@ void Player::draw(void)
 	}
 
 	// test
-	auto tmp = (hitBox + pos);
-	tmp.print();
+	//auto tmp = (hitBox + pos);
+	//tmp.print();
 	
 	/*if (keyboardState[4]) {
 		images[5].draw();

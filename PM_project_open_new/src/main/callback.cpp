@@ -100,9 +100,70 @@ void storyPageIdle(IdleEvent e)
 	}
 }
 
+int selectionMode = 1;
+vector<int> selectionState;
+
+
+void selectionPageDraw(Point pos)
+{
+	for (int i = 0; i < 3; ++i)
+	{
+		if (selectionState[i] == 1)
+		{
+			glColor3f(1.0, 0.0, 0.0);
+		}
+		if (selectionState[i] == 2)
+		{
+			glColor3f(0.0, 0.0, 1.0);
+		}
+		if (selectionState[i])
+		{
+			glLineWidth(5.0);
+			glBegin(GL_LINE_LOOP);
+			glVertex2f(450.0 + i * 250, 200.0);
+			glVertex2f(450.0 + i * 250, 400.0);
+			glVertex2f(650.0 + i * 250, 400.0);
+			glVertex2f(650.0 + i * 250, 200.0);
+			glEnd();
+		}
+		
+	}
+}
+
 void selectionPageButton(string bt)
 {
-
+	
+	if (bt == "1P")
+	{
+		selectionMode = 1;
+	}
+	if (bt == "2P")
+	{
+		selectionMode = 2;
+	}
+	if (bt == "player1")
+	{
+		for (auto& i : selectionState)
+			if (i >= selectionMode)
+				i = 0;
+		selectionState[0] = (selectionMode - 1) * (2 - selectionState[0]) + (2 - selectionMode);
+	}
+	if (bt == "player2")
+	{
+		for (auto& i : selectionState)
+			if (i >= selectionMode)
+				i = 0;
+		selectionState[1] = (selectionMode - 1) * (2 - selectionState[1]) + (2 - selectionMode);
+	}
+	if (bt == "player3")
+	{
+		for (auto& i : selectionState)
+			if (i >= selectionMode)
+				i = 0;
+		selectionState[2] = (selectionMode - 1) * (2 - selectionState[2]) + (2 - selectionMode);
+	}
+	for (auto& i : selectionState)
+		i %= (selectionMode + 1);
 }
 
 void selectionPageKeyboard(KeyboardEvent e, string key, Point p)
@@ -113,6 +174,17 @@ void selectionPageKeyboard(KeyboardEvent e, string key, Point p)
 		{
 			window.setPage("gamePage");
 		}
+	}
+}
+
+void selectionPageIdle(IdleEvent e)
+{
+	if (e == IdleBegin)
+	{
+		selectionState.clear();
+		selectionState.resize(3);
+		selectionState[0] = 1;
+		selectionMode = 1;
 	}
 }
 
