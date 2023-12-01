@@ -12,10 +12,12 @@
 
 class Sound {
 public:
-	Sound(const char* p, bool l);
+	Sound(const char* path, bool loop);
+	~Sound();
 	FMOD::System* system;
-	FMOD::Sound* soundfile;
 	FMOD::Channel* channel;
+
+	FMOD::Sound* soundfile;
 
 	void initsound(bool run);
 	void updatesound();

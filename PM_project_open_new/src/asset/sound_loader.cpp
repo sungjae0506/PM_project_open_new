@@ -1,19 +1,21 @@
 #include "sound_loader.h"
 
+
 FMOD_SYSTEM* Sound::g_sound_system;
 
-Sound::Sound(const char* p, bool l) {
+Sound::Sound(const char* path, bool loop) {
 
     if (loop)
         FMOD_System_CreateSound(g_sound_system, path, FMOD_LOOP_NORMAL, 0, &m_sound);
     else
-        FMOD_System_CreateSound(g_sound_system, path, FMOD_LOOP_OFF, 0, &m_sound);
-
-    loop = l;
-    path = p;
+        FMOD_System_CreateSound(g_sound_system, path, FMOD_DEFAULT, 0, &m_sound);
+    
 
     m_channel = nullptr;
     m_volume = SOUND_DEFAULT;
+}
+Sound::~Sound() {
+    FMOD_Sound_Release(m_sound);
 }
 
 void Sound::initsound(bool run) {
