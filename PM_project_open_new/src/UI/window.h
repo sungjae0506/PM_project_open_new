@@ -25,13 +25,14 @@ class Window
 {
 private:
 	string windowName;
+	string nextPage;
 public:
 	Window();
 	Window(string name, int* argc, char** argv, int x, int y, int w, int h);
 	Window& operator() (string name, int* argc, char** argv, int x, int y, int w, int h);
 
 	Window& addPage(const Page& p);
-	Window& addPages(vector<Page> p);
+	Window& addPage(vector<Page> p);
 
 	void setPage(Page p);
 	void setPage(string pageName);

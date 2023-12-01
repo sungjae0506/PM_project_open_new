@@ -15,6 +15,18 @@
       [ 0, 0, 320, 320 ]
     ]
   ],
+
+  "story": [
+    [
+      "image/bubble_bobble_player.png",
+      [ 0, 0, 1600, 900 ]
+    ],
+    [
+      "image/bubble_bobble_enemy.png",
+      [ 0, 0, 1600, 900 ]
+    ]
+  ],
+
   "heart": [
     [
       "image/heart.png",

@@ -1,6 +1,6 @@
 #include "game_manager.h"
 
-ImageManager imageManager("image_data.json");
+static ImageManager imageManager("image_data.json");
 
 void GameManager::clear()
 {

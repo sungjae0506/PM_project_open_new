@@ -17,6 +17,7 @@ static clock_t idleStartClock = clock(), idleEndClock;
 
 static vector<Page> pages;
 static Page currentPage;
+static string nextPageName;
 
 static Point mousePos;
 
@@ -58,6 +59,18 @@ void windowIdle() {
 	{
 		idleStartClock = idleEndClock;
 		currentPage.idleEvent(IdleRunning);
+	}
+
+	if (nextPageName != currentPage.pageName)
+	{
+		currentPage.idleEvent(IdleEnd);
+		for (auto p : pages)
+			if (p.pageName == nextPageName)
+				currentPage = p;
+		mouseTransform(Range(Point(0, windowHeight), Point(windowWidth, 0)), currentPage.range);
+		currentPage.resizeEvent(windowWidth, windowHeight);
+		currentPage.idleEvent(IdleBegin);
+		nextPageName = currentPage.pageName;
 	}
 }
 
@@ -344,14 +357,14 @@ Window& Window::addPage(const Page& p)
 	return *this;
 }
 
-Window& Window::addPages(vector<Page> ps)
+Window& Window::addPage(vector<Page> ps)
 {
 	for (auto p : ps)
 		pages.push_back(p);
 	return *this;
 }
 
-void Window::setPage(Page p)
+void Window::setPage(Page p) // ¿ß«Ë«‘.
 {
 	currentPage.idleEvent(IdleEnd);
 	currentPage = p;
@@ -362,13 +375,7 @@ void Window::setPage(Page p)
 
 void Window::setPage(string pageName)
 {
-	currentPage.idleEvent(IdleEnd);
-	for (auto p : pages)
-		if (p.pageName == pageName)
-			currentPage = p;
-	mouseTransform(Range(Point(0, windowHeight), Point(windowWidth, 0)), currentPage.range);
-	currentPage.resizeEvent(windowWidth, windowHeight);
-	currentPage.idleEvent(IdleBegin);
+	nextPageName = pageName;
 }
 
 void Window::mainLoop(string pageName)
