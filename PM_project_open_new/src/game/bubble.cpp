@@ -67,7 +67,7 @@ void Bubble::draw(void)
 
 	if (st == "Pop")
 	{
-		Image("image/pop.png", Range(-10, -10, 10, 10) + pos).draw();
+		(Image("image/pop.png", Range(-10, -10, 10, 10)) + pos).draw();
 		return;
 	}
 
@@ -85,7 +85,7 @@ void Bubble::draw(void)
 
 	glColor3f(0.0, 1.0, 0.0);
 	glPushMatrix();
-	Image("image/bubble.png", Range(-size * 0.5, -size * 0.5, size * 0.5, size * 0.5) + pos).draw();
+	Image("image/bubble.png", Range(-size, -size, size, size ) + pos).draw();
 
 	glTranslatef(pos.x, pos.y, 0.0);
 	//glutSolidSphere(size, 20, 20);

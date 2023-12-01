@@ -30,8 +30,8 @@ Page gamePage("gamePage", Range(0, 0, 1600, 900));
 Page gameOverPage("gameOverPage", Range(0, 0, 1600, 900));
 Page gameWinPage("gameWinPage", Range(0, 0, 1600, 900));
 
-
-
+extern string player1;
+extern string player2;
 
 int main(int argc, char** argv)
 {
@@ -97,7 +97,40 @@ int main(int argc, char** argv)
 	.addText
 	(
 		Text("wow!", "#FFFFFF", "", 32.0, Range(0, 0, 320, 40))
-	);
+	)
+	.addButton
+	({
+		Button("image/bubble_bobble_player.png", "p1", "#FF0000", 36.0, Range(450, 200, 650, 400))
+		.addButtonFunc
+		(
+			[]() -> void {  }
+		),
+		Button("image/bubble_bobble_enemy.png", "p2", "#00FF00", 36.0, Range(700, 200, 900, 400))
+		.addButtonFunc
+		(
+			[]() -> void { }
+		),
+		Button("image/snu.png", "p3", "#0000FF", 36.0, Range(950, 200, 1150, 400))
+		.addButtonFunc
+		(
+			[]() -> void { }
+		),
+		Button("image/button2.png", "Single", "#0000FF", 36.0, Range(450, 50, 650, 150))
+		.addButtonFunc
+		(
+			[]() -> void { }
+		),
+		Button("image/button2.png", "Multi", "#FFFF00", 36.0, Range(700, 50, 900, 150))
+		.addButtonFunc
+		(
+			[]() -> void { }
+		),
+		Button("image/button2.png", "Next", "#FF0000", 36.0, Range(950, 50, 1150, 150))
+		.addButtonFunc
+		(
+			[]() -> void { window.setPage("gamePage"); }
+		)
+	});
 
 	gamePage
 	.addIdleFunc
