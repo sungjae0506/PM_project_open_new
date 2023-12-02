@@ -136,6 +136,9 @@ void selectionPageButton(string bt)
 	if (bt == "1P")
 	{
 		selectionMode = 1;
+		for (auto& i : selectionState)
+			if (i == 2)
+				i = 0;
 	}
 	if (bt == "2P")
 	{
@@ -143,27 +146,61 @@ void selectionPageButton(string bt)
 	}
 	if (bt == "player1")
 	{
-		for (auto& i : selectionState)
-			if (i >= selectionMode)
+		if (selectionMode == 1)
+		{
+			for (auto& i : selectionState)
 				i = 0;
-		selectionState[0] = (selectionMode - 1) * (2 - selectionState[0]) + (2 - selectionMode);
+			selectionState[0] = 1;
+		}
+		else
+		{
+			if (selectionState[0] == 0)
+			{
+				for (auto& i : selectionState)
+					if (i == 2)
+						i = 0;
+				selectionState[0] = 2;
+			}
+		}
 	}
 	if (bt == "player2")
 	{
-		for (auto& i : selectionState)
-			if (i >= selectionMode)
+		if (selectionMode == 1)
+		{
+			for (auto& i : selectionState)
 				i = 0;
-		selectionState[1] = (selectionMode - 1) * (2 - selectionState[1]) + (2 - selectionMode);
+			selectionState[1] = 1;
+		}
+		else
+		{
+			if (selectionState[1] == 0)
+			{
+				for (auto& i : selectionState)
+					if (i == 2)
+						i = 0;
+				selectionState[1] = 2;
+			}
+		}
 	}
 	if (bt == "player3")
 	{
-		for (auto& i : selectionState)
-			if (i >= selectionMode)
+		if (selectionMode == 1)
+		{
+			for (auto& i : selectionState)
 				i = 0;
-		selectionState[2] = (selectionMode - 1) * (2 - selectionState[2]) + (2 - selectionMode);
+			selectionState[2] = 1;
+		}
+		else
+		{
+			if (selectionState[2] == 0)
+			{
+				for (auto& i : selectionState)
+					if (i == 2)
+						i = 0;
+				selectionState[2] = 2;
+			}
+		}
 	}
-	for (auto& i : selectionState)
-		i %= (selectionMode + 1);
 }
 
 void selectionPageKeyboard(KeyboardEvent e, string key, Point p)
