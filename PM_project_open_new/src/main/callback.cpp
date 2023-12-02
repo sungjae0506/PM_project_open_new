@@ -12,6 +12,7 @@ using namespace std;
 GameManager gameManager;
 static ImageManager imageManager("image_data.json");
 extern Window window;
+int tick;
 
 void buttonStyle(Button* b)
 {
@@ -510,22 +511,41 @@ void gameManagerIdle(IdleEvent e)
 	}
 }
 
+
+
+
+
 void gameManagerKeyboard(KeyboardEvent e, string key, Point p)
 {
 	gameManager.keyboardEvent(e, key, p);
 }
 
-
-
-
-
-
 void gameOverPageKeyboard(KeyboardEvent e, string key, Point p)
 {
 	if (e == KeyboardDown)
 	{
-		//window.setPage("startingPage");
-		window.setPage("nameInputPage");
+		if (scoreboardData["data"][4]["score"].get<int>() < gameManager.score)
+			window.setPage("nameInputPage");
+		else
+			window.setPage("scoreboardPage");
+	}
+}
+
+void gameOverPageIdle(IdleEvent e)
+{
+	if (e == IdleBegin)
+	{
+		tick = 0;
+	}
+	if (e == IdleRunning)
+	{
+		if (++tick >= 1000)
+		{
+			if (scoreboardData["data"][4]["score"].get<int>() < gameManager.score)
+				window.setPage("nameInputPage");
+			else
+				window.setPage("scoreboardPage");
+		}
 	}
 }
 
@@ -533,7 +553,29 @@ void gameWinPageKeyboard(KeyboardEvent e, string key, Point p)
 {
 	if (e == KeyboardDown)
 	{
-		window.setPage("scoreboardPage");
+		if (scoreboardData["data"][4]["score"].get<int>() < gameManager.score)
+			window.setPage("nameInputPage");
+		else
+			window.setPage("scoreboardPage");
+			
+	}
+}
+
+void gameWinPageIdle(IdleEvent e)
+{
+	if (e == IdleBegin)
+	{
+		tick = 0;
+	}
+	if (e == IdleRunning)
+	{
+		if (++tick >= 1000)
+		{
+			if (scoreboardData["data"][4]["score"].get<int>() < gameManager.score)
+				window.setPage("nameInputPage");
+			else
+				window.setPage("scoreboardPage");
+		}
 	}
 }
 

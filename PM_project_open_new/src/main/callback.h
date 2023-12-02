@@ -30,6 +30,8 @@ void gameManagerKeyboard(KeyboardEvent e, string key, Point p);
 string gameManagerText(string mode);
 
 void gameOverPageKeyboard(KeyboardEvent e, string key, Point p);
+void gameOverPageIdle(IdleEvent e);
 void gameWinPageKeyboard(KeyboardEvent e, string key, Point p);
+void gameWinPageIdle(IdleEvent e);
 
 void nameInputPageInputBox(string str);
