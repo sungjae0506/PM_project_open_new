@@ -39,11 +39,11 @@ int main(int argc, char** argv)
 	startingPage.
 	addBackground
 	(
-		"image/bubble_bobble_starting.png"
+		"image/Page/bubble_bobble_starting.png"
 	)
 	.addButton
 	({
-		Button("image/button2.png", "Start", "#591010", 36.0, Range(450, 200, 750, 300))
+		Button("image/button2.png", "Start", "#591010", 36.0, Range(487, 300, 787, 400))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("storyPage"); }
@@ -52,7 +52,7 @@ int main(int argc, char** argv)
 		(
 			buttonStyle
 		),
-		Button("image/button2.png", "Help", "#591010", 36.0, Range(850, 200, 1150, 300))
+		Button("image/button2.png", "Help", "#591010", 36.0, Range(813, 300, 1113, 400))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("helpPage"); }
@@ -61,7 +61,7 @@ int main(int argc, char** argv)
 		(
 			buttonStyle
 		),
-		Button("image/button2.png", "Scoreboard", "#591010", 36.0, Range(450, 50, 750, 150))
+		Button("image/button2.png", "Scoreboard", "#591010", 36.0, Range(450, 150, 750, 250))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("scoreboardPage"); }
@@ -70,7 +70,7 @@ int main(int argc, char** argv)
 		(
 			buttonStyle
 		),
-		Button("image/button2.png", "Custom", "#591010", 36.0, Range(850, 50, 1150, 150))
+		Button("image/button2.png", "Custom", "#591010", 36.0, Range(850, 150, 1150, 250))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("customPage"); }
