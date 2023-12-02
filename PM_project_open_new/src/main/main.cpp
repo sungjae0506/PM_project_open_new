@@ -110,11 +110,49 @@ int main(int argc, char** argv)
 		)
 	);
 
+	/*fstream f(path);
+	jsonData = json::parse(f);*/
+
 	scoreboardPage
 	.addBackground
 	(
 		"image/bubble_bobble_scoreboard_background.png"
 	)
+	.addCanvas
+	(
+		Canvas(Range(450, 0, 1100, 850), Range(0, 0, 700, 800))
+		.addDrawFunc
+		({
+			[](Point pos) ->
+			void {
+				Text("Score Board", "#000000", "", 72.0, Range(100, 710, 600, 800)).draw();
+				Text("1", "#FFD700", "", 72.0, Range(0, 576, 50, 648)).draw();
+				Text("2", "#C0C0C0", "", 72.0, Range(0, 432, 50, 504)).draw();
+				Text("3", "#16FFFF", "", 72.0, Range(0, 288, 50, 360)).draw();
+				Text("4", "#16FFFF", "", 72.0, Range(0, 144, 50, 216)).draw();
+				Text("5", "#16FFFF", "", 72.0, Range(0,   0, 50,  72)).draw();
+				Text("", "#16FFFF", "", 45.0, Range(150, 0, 600, 648))
+				.addTextFunc
+				(
+					scoreboardPageText
+				)
+				.draw();
+			}
+		})
+	)
+	/*.addText
+	({
+		Text("1", "#FFD700", "", 72.0, Range(500, 640, 550, 720)),
+		Text("2", "#16FFFF", "", 72.0, Range(500, 504, 550, 576)),
+		Text("3", "#16FFFF", "", 72.0, Range(500, 360, 550, 432)),
+		Text("4", "#16FFFF", "", 72.0, Range(500, 216, 550, 288)),
+		Text("5", "#16FFFF", "", 72.0, Range(500, 72, 550, 144)),
+		Text("", "#16FFFF", "", 45.0, Range(700, 72, 1100, 720))
+		.addTextFunc
+		(
+			scoreboardPageText
+		)
+	})*/
 	.addButton
 	(
 		Button("image/button2.png", "Back", "#FF0000", 36.0, Range(30, 750, 130, 850))

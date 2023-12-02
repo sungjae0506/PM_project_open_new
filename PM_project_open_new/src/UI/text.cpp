@@ -2,7 +2,7 @@
 const string fontWhite = "image/font_white.png";
 const string fontBlack = "image/font_black.png";
 
-const double lineSpacing = 100.0;
+const double lineSpacing = 160.0;
 const double letterSpacing = 100.0;
 const double aspectRatio = 1.6;
 

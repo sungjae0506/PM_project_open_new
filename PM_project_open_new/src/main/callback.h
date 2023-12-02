@@ -13,6 +13,9 @@ void storyPageDraw(Point pos);
 void storyPageKeyboard(KeyboardEvent e, string key, Point pos);
 void storyPageIdle(IdleEvent e);
 
+void scoreboardPageDraw(Point pos);
+string scoreboardPageText(void);
+
 void selectionPageDraw(Point pos);
 void selectionPageButton(string bt);
 void selectionPageKeyboard(KeyboardEvent e, string key, Point p);
