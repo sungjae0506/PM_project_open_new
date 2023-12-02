@@ -28,15 +28,15 @@
 
   "story": [
     [
-      "image/player/player1.png",
+      "image/Page/bubble_bobble_story_1.png",
       [ 0, 0, 1600, 900 ]
     ],
     [
-      "image/player/player2.png",
+      "image/Page/bubble_bobble_story_2.png",
       [ 0, 0, 1600, 900 ]
     ],
     [
-      "image/player/player3.png",
+      "image/Page/bubble_bobble_story_3.png",
       [ 0, 0, 1600, 900 ]
     ]
   ],
