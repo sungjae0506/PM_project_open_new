@@ -15,6 +15,7 @@ void storyPageIdle(IdleEvent e);
 
 void scoreboardPageDraw(Point pos);
 string scoreboardPageText(void);
+void scoreboardPageIdle(IdleEvent e);
 
 void selectionPageDraw(Point pos);
 void selectionPageButton(string bt);

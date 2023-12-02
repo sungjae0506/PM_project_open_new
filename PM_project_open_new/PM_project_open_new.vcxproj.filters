@@ -188,7 +188,7 @@
     <None Include="stage1.json" />
     <None Include="fmod.dll" />
     <None Include="image_data.json" />
-    <None Include="highscore.json" />
+    <None Include="scoreboard.json" />
     <None Include="stage2.json" />
   </ItemGroup>
 </Project>

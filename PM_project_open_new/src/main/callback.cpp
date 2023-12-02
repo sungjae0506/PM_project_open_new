@@ -1,11 +1,13 @@
-#include "callback.h"
-
 #pragma once
+#pragma warning(disable:4996)
+#include "callback.h"
+#include <vector>
 #include "../util/object.h"
 #include "../UI/event.h"
 #include "../game/game_manager.h"
 #include "../UI/window.h"
 #include "../asset/image_manager.h"
+using namespace std;
 
 GameManager gameManager;
 static ImageManager imageManager("image_data.json");
@@ -116,39 +118,75 @@ void storyPageIdle(IdleEvent e)
 	}
 }
 
+json scoreboardData;
+
 void scoreboardPageDraw(Point pos)
 {
-	glColor3f(1.0, 1.0, 1.0);
-	glBegin(GL_QUADS);
-	glVertex2f(0.0, 0.0);
-	glVertex2f(0.0, 800.0);
-	glVertex2f(700.0, 800.0);
-	glVertex2f(700.0, 0.0);
-	glEnd();
+	vector<vector<string>> arr;
+	json temp;
+	arr.resize(5);
+	for (int i = 0; i < 5; ++i)
+	{
+		temp = scoreboardData["data"][i]["character"];
+		for (auto& j : temp)
+		{
+			arr[i].push_back(j.get<string>());
+		}
+	}
+	
+	Point cursor;
 
-	/*
-	Text("Score Board", "#000000", "", 72.0, Range(100, 710, 600, 800)).draw();
-	Text("1", "#FFD700", "", 72.0, Range(0, 576, 50, 648)).draw();
-	Text("2", "#C0C0C0", "", 72.0, Range(0, 432, 50, 504)).draw();
-	Text("3", "#16FFFF", "", 72.0, Range(0, 288, 50, 360)).draw();
-	Text("4", "#16FFFF", "", 72.0, Range(0, 144, 50, 216)).draw();
-	Text("5", "#16FFFF", "", 72.0, Range(0,   0, 50,  72)).draw();
-	Text("", "#16FFFF", "", 45.0, Range(150, 0, 600, 648))
-	.addTextFunc
-	(
-		scoreboardPageText
-	)
-	.draw();*/
+	for (int i = 0; i < 5; ++i)
+	{
+		cursor(0, 648 - 144 * i);
+		for (auto& j : arr[i])
+		{
+			auto image = imageManager.getImages(j)[0];
+			image.range(0, -48, 48, 0);
+			(image + cursor).draw();
+			cursor += Point(50, 0);
+		}
+	}
 }
 
 string scoreboardPageText(void)
 {
-	return "yumin : 10000\n\nhsj   : 10000\n\nhsj   : 10000\n\nhsj   : 10000\n\nhsj   : 10000\n\n";
+	vector<pair<string, int>> arr;
+	arr.resize(5);
+	for (int i = 0; i < 5; ++i)
+	{
+		arr[i].first = scoreboardData["data"][i]["name"].get<string>();
+		arr[i].second = scoreboardData["data"][i]["score"].get<int>();
+	}
+	char c_str[30];
+	string str;
+	for (int i = 0; i < 5; ++i)
+	{
+		sprintf(c_str, "%-10s %.6d\n\n", arr[i].first.c_str(), arr[i].second);
+		str += c_str;
+	}
+	return str;
 }
+
+void scoreboardPageIdle(IdleEvent e)
+{
+	if (e == IdleBegin)
+	{
+		fstream f("scoreboard.json");
+		scoreboardData = json::parse(f);
+	}
+}
+
+
+
+
+
+
+
+
 
 int selectionMode = 1;
 vector<int> selectionState;
-
 
 void selectionPageDraw(Point pos)
 {

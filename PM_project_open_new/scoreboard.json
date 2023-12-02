@@ -1,39 +1,40 @@
 {
-  [
+  "data":[
     {
-      "Name": "yumin",
-      "Score": 999999,
+      "name": "abcdefghij",
+      "score": 999999,
       "character": [
         "player1",
         "player2"
       ]
     },
     {
-      "Name": "hsj",
-      "Score": 999999,
+      "name": "ABCDEFGHIJ",
+      "score": 999999,
       "character": [
         "player1"
       ]
     },
     {
-      "Name": "hsj",
-      "Score": 999999,
+      "name": "1234567890",
+      "score": 999999,
+      "character": [
+        "player3",
+        "player1"
+      ]
+    },
+    {
+      "name": "!@#$%^&*()",
+      "score": 999999,
       "character": [
         "player1"
       ]
     },
     {
-      "Name": "hsj",
-      "Score": 999999,
+      "name": "abCDefGHij",
+      "score": 999999,
       "character": [
-        "player1"
-      ]
-    },
-    {
-      "Name": "hsj",
-      "Score": 999999,
-      "character": [
-        "player1"
+        "player3"
       ]
     }
   ]
