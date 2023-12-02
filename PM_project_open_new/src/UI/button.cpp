@@ -37,7 +37,7 @@ void Button::draw(bool isMouseOn)
 
 	if (isMouseOn)
 	{
-		Image("image/button2_pushed.png", range).draw(); //일반화..?는 일단 제끼고 구현만 해놓음
+		Image("image/button2_pushed.png", range).draw(); //일반화..?는 일단 제끼고 구현만 해놓음 ㅋㅋㅋㅋㅋㅋ ㅇㅋ
 		glPushMatrix();
 		glTranslatef(0, -10, 0);
 		buttonText.draw();
