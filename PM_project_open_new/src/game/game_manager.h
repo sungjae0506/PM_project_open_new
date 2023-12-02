@@ -24,6 +24,8 @@ public:
 	int internalTick;
 	string state; // MapStarting, MapRunning, MapChanging, Stop(internalTickÀÌ Á¤ÁöµÊ)
 
+	int score;
+
 	int currentStage;
 	Map currentMap;
 	vector<Map> maps;

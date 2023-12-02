@@ -39,6 +39,7 @@
     <ClCompile Include="src\asset\image.cpp" />
     <ClCompile Include="src\main\main.cpp" />
     <ClCompile Include="src\game\map.cpp" />
+    <ClCompile Include="src\UI\input_box.cpp" />
     <ClCompile Include="src\util\color4f.cpp" />
     <ClCompile Include="src\util\object.cpp" />
     <ClCompile Include="src\UI\canvas.cpp" />
@@ -69,6 +70,7 @@
     <ClInclude Include="src\game\map.h" />
     <ClInclude Include="src\UI\canvas.h" />
     <ClInclude Include="src\UI\event.h" />
+    <ClInclude Include="src\UI\input_box.h" />
     <ClInclude Include="src\UI\page.h" />
     <ClInclude Include="src\game\player.h" />
     <ClInclude Include="src\util\color4f.h" />

@@ -162,7 +162,7 @@ string scoreboardPageText(void)
 	string str;
 	for (int i = 0; i < 5; ++i)
 	{
-		sprintf(c_str, "%-10s %.6d\n\n", arr[i].first.c_str(), arr[i].second);
+		sprintf(c_str, "%-10s %06d\n\n", arr[i].first.c_str(), arr[i].second);
 		str += c_str;
 	}
 	return str;
@@ -445,6 +445,8 @@ void gamePageIdle(IdleEvent e)
 {
 	if (e == IdleBegin)
 	{
+		fstream f("scoreboard.json");
+		scoreboardData = json::parse(f);
 
 		gameManager.clear();
 
@@ -503,7 +505,6 @@ void gameManagerIdle(IdleEvent e)
 		}
 		else if (st == "GameOver")
 		{
-			printf("gaov");
 			window.setPage("gameOverPage");
 		}
 	}
@@ -523,7 +524,8 @@ void gameOverPageKeyboard(KeyboardEvent e, string key, Point p)
 {
 	if (e == KeyboardDown)
 	{
-		window.setPage("startingPage");
+		//window.setPage("startingPage");
+		window.setPage("nameInputPage");
 	}
 }
 
@@ -535,11 +537,25 @@ void gameWinPageKeyboard(KeyboardEvent e, string key, Point p)
 	}
 }
 
-
-
-
-
-void scoreBoardDraw(Point pos)
+string gameManagerText(string mode)
 {
+	char c_str[30];
+	
+	if (mode == "Highscore")
+	{
+		sprintf(c_str, "%06d", max(gameManager.score, scoreboardData["data"][0]["score"].get<int>()));
+	}
+	else if (mode == "Score")
+	{
+		sprintf(c_str, "%06d", gameManager.score);
+	}
+	return string(c_str);
+}
 
+string playerName;
+
+void nameInputPageInputBox(string str)
+{
+	playerName = str;
+	cout << playerName;
 }

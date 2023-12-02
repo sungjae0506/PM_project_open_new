@@ -55,6 +55,24 @@ vector<int> stringToRGBi(string str)
 		return vector<int>{0, 0, 0};
 }
 
+string RGBiToString(vector<int> rgb)
+{
+	string res = "#";
+	char c_str[7] = { 0 };
+	for (int i = 0; i < 3; ++i)
+	{
+		if ((rgb[i] >> 4) > 9)
+			c_str[2 * i] = (rgb[i] >> 4) - 10 + 'A';
+		else
+			c_str[2 * i] = (rgb[i] >> 4) + '0';
+		if ((rgb[i] & 0xF) > 9)
+			c_str[2 * i + 1] = (rgb[i] & 0xF) - 10 + 'A';
+		else
+			c_str[2 * i + 1] = (rgb[i] & 0xF) + '0';
+	}
+	return res + c_str;
+}
+
 Text::Text()
 {
 }
