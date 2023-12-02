@@ -13,6 +13,7 @@ public:
 	bool clicked = true;
 	vector<void (*)(string)> inputBoxFuncs;
 	void (*styleFunc) (InputBox*) = NULL;
+	int cursor = 0;
 	int timeCnt = 0;
 
 	InputBox(string str, string cColor, string bColor, double sz, bool _clicked, const Range& r);

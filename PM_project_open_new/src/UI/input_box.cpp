@@ -48,17 +48,23 @@ void InputBox::keyboardEvent(KeyboardEvent e, string key, Point p)
 	{
 		if (key.c_str()[0] == 8)
 		{
-			if (content != "")
+			if (cursor != 0)
 			{
-				content.erase(content.size() - 1, 1);
+				content.erase(--cursor, 1);
 			}
 		}
-		else
+		else if (key.size() == 1)
 		{
-			if (key.size() == 1)
-			{
-				content += key;
-			}
+			content.insert(cursor++, key);
+		}
+		
+		if (key == "LEFT" && cursor != 0)
+		{
+			--cursor;
+		}
+		if (key == "RIGHT" && cursor != content.size())
+		{
+			++cursor;
 		}
 	}
 }
@@ -68,6 +74,12 @@ void InputBox::mouseEvent(MouseEvent e, string button, Point p)
 	{
 		clicked = range.contain(p);
 		timeCnt = 0;
+		if (clicked)
+		{
+			vector<double> temp = inputBoxText.getConst();
+			double cursorDelta = (inputBoxText.fontSize / temp[2] * (temp[1] / 100.0));
+			cursor = max(min((int)((p.x - range.point0.x) / cursorDelta + 0.5), (int)(content.size())), 0);
+		}
 	}
 }
 void InputBox::idleEvent(IdleEvent e)
@@ -105,7 +117,7 @@ void InputBox::draw(Point pos)
 	if (clicked)
 	{
 		vector<double> temp = inputBoxText.getConst();
-		double cursorX = (inputBoxText.fontSize / temp[2] * (temp[1] / 100.0) * content.size());
+		double cursorDelta = (inputBoxText.fontSize / temp[2] * (temp[1] / 100.0));
 
 		glBegin(GL_LINE_LOOP);
 		glColor3f(0, 1, 1);
@@ -119,10 +131,10 @@ void InputBox::draw(Point pos)
 		{
 			glColor3f(0, 0, 0);
 			glBegin(GL_QUADS);
-			glVertex2f(range.point0.x + cursorX + inputBoxText.fontSize * 0.05, range.point0.y + inputBoxText.fontSize * 0.05);
-			glVertex2f(range.point0.x + cursorX + inputBoxText.fontSize * 0.1, range.point0.y + inputBoxText.fontSize * 0.05);
-			glVertex2f(range.point0.x + cursorX + inputBoxText.fontSize * 0.1, range.point1.y - inputBoxText.fontSize * 0.05);
-			glVertex2f(range.point0.x + cursorX + inputBoxText.fontSize * 0.05, range.point1.y - inputBoxText.fontSize * 0.05);
+			glVertex2f(range.point0.x + cursorDelta * cursor - inputBoxText.fontSize * 0.025, range.point0.y + inputBoxText.fontSize * 0.05);
+			glVertex2f(range.point0.x + cursorDelta * cursor + inputBoxText.fontSize * 0.025, range.point0.y + inputBoxText.fontSize * 0.05);
+			glVertex2f(range.point0.x + cursorDelta * cursor + inputBoxText.fontSize * 0.025, range.point1.y - inputBoxText.fontSize * 0.05);
+			glVertex2f(range.point0.x + cursorDelta * cursor - inputBoxText.fontSize * 0.025, range.point1.y - inputBoxText.fontSize * 0.05);
 			glEnd();
 		}
 	}

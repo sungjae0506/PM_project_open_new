@@ -293,13 +293,13 @@ int main(int argc, char** argv)
 	(
 		"image/Page/bubble_bobble_gameOver_background.png"
 	)
-	.addCanvas
+	.addKeyboardFunc
 	(
-		Canvas(Range(0, 0, 1600, 900), Range(0, 0, 1600, 900))
-		.addKeyboardFunc
-		(
-			gameOverPageKeyboard
-		)
+		gameOverPageKeyboard
+	)
+	.addIdleFunc
+	(
+		gameOverPageIdle
 	);
 
 	gameWinPage
@@ -307,13 +307,13 @@ int main(int argc, char** argv)
 	(
 		"image/Page/bubble_bobble_gameWin_background.png"
 	)
-	.addCanvas
+	.addKeyboardFunc
 	(
-		Canvas(Range(0, 0, 1600, 900), Range(0, 0, 1600, 900))
-		.addKeyboardFunc
-		(
-			gameWinPageKeyboard
-		)
+		gameWinPageKeyboard
+	)
+	.addIdleFunc
+	(
+		gameWinPageIdle
 	);
 
 	nameInputPage
@@ -323,7 +323,7 @@ int main(int argc, char** argv)
 	)
 	.addInputBox
 	(
-		InputBox("Name", "#000000", "#FFFFFF", 48.0, true, Range(600, 200, 1000, 250))
+		InputBox("Name", "#000000", "#FFFFFF", 72.0, true, Range(550, 200, 1050, 272))
 		.addInputBoxFunc
 		(
 			nameInputPageInputBox
