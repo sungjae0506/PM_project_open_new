@@ -49,21 +49,37 @@ int main(int argc, char** argv)
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("storyPage"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
 		),
 		Button("image/button2.png", "Help", "#00FF00", 36.0, Range(850, 200, 1150, 300))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("helpPage"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
 		),
 		Button("image/button2.png", "Scoreboard", "#0000FF", 36.0, Range(450, 50, 750, 150))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("scoreboardPage"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
 		),
 		Button("image/button2.png", "Custom", "#FFFF00", 36.0, Range(850, 50, 1150, 150))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("customPage"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
 		)
 	})
 	.addKeyboardFunc
@@ -88,6 +104,10 @@ int main(int argc, char** argv)
 		(
 			[]() -> void { window.setPage("startingPage"); }
 		)
+		.addStyleFunc
+		(
+			buttonStyle
+		)
 	);
 
 	scoreboardPage
@@ -101,6 +121,10 @@ int main(int argc, char** argv)
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("startingPage"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
 		)
 	)
 	.addCanvas
@@ -150,17 +174,17 @@ int main(int argc, char** argv)
 	)
 	.addButton
 	({
-		Button("image/bubble_bobble_player.png", " ", "#FF0000", 36.0, Range(450, 200, 650, 400))
+		Button("image/player/player1.png", " ", "#FF0000", 36.0, Range(450, 200, 650, 400))
 		.addButtonFunc
 		(
 			[]() -> void { selectionPageButton("player1"); }
 		),
-		Button("image/bubble_bobble_enemy.png", " ", "#00FF00", 36.0, Range(700, 200, 900, 400))
+		Button("image/player/player2.png", " ", "#00FF00", 36.0, Range(700, 200, 900, 400))
 		.addButtonFunc
 		(
 			[]() -> void { selectionPageButton("player2"); }
 		),
-		Button("image/snu.png", " ", "#0000FF", 36.0, Range(950, 200, 1150, 400))
+		Button("image/player/player3.png", " ", "#0000FF", 36.0, Range(950, 200, 1150, 400))
 		.addButtonFunc
 		(
 			[]() -> void { selectionPageButton("player3"); }
@@ -169,16 +193,28 @@ int main(int argc, char** argv)
 		.addButtonFunc
 		(
 			[]() -> void { selectionPageButton("1P"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
 		),
 		Button("image/button2.png", "2P", "#FFFF00", 36.0, Range(700, 50, 900, 150))
 		.addButtonFunc
 		(
 			[]() -> void { selectionPageButton("2P"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
 		),
 		Button("image/button2.png", "Next", "#FF0000", 36.0, Range(950, 50, 1150, 150))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("gamePage"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
 		)
 	})
 	.addKeyboardFunc

@@ -111,6 +111,8 @@ void Map::setBackground(const vector<Image>& i)
 
 void Map::draw()
 {
+	background[0].draw();
+
 	for (size_t i = 0; i < tileVector.size(); ++i)
 	{
 		for (size_t j = 0; j < tileVector[0].size(); ++j)

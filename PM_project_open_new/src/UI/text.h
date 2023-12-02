@@ -22,6 +22,7 @@ public:
 	Text();
 	Text(string str, string cColor, string bColor, double sz, const Range& r);
 	Text& operator() (string str, string cColor, string bColor, double sz, const Range& r);
+	Text operator+(const Point& p);
 
 	Text& addTextFunc(string(*func)(void));
 

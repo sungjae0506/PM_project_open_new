@@ -37,15 +37,31 @@ void Button::draw(bool isMouseOn)
 
 	if (isMouseOn)
 	{
-		Image("image/button2_pushed.png", range).draw(); //일반화..?는 일단 제끼고 구현만 해놓음 ㅋㅋㅋㅋㅋㅋ ㅇㅋ
-		glPushMatrix();
-		glTranslatef(0, -10, 0);
+		if (buttonState != Clicked)
+			buttonState = OnButton;
+	}
+	else 
+	{
+		buttonState = None;
+	}
+
+	if (styleFunc)
+	{
+		styleFunc(this);
+		return;
+	}
+	switch (buttonState)
+	{
+	case None:
+		buttonImage.draw();
 		buttonText.draw();
-		glPopMatrix();
+		break;
+	case OnButton:
+	case Clicked:
+		buttonImage.draw();
+		buttonText.draw();
 
-
-
-		/*glEnable(GL_BLEND);
+		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		glColor4f(0.0, 0.0, 0.0, 0.2);
@@ -56,12 +72,8 @@ void Button::draw(bool isMouseOn)
 		glVertex2f(range.point0.x, range.point1.y);
 		glEnd();
 
-		glDisable(GL_BLEND);*/
-	}
-	else 
-	{
-		buttonImage.draw();
-		buttonText.draw();	
+		glDisable(GL_BLEND);
+		break;
 	}
 }
 
@@ -71,11 +83,22 @@ void Button::mouseEvent(MouseEvent e, string button, Point p)
 	{
 		for (auto& func : buttonFuncs)
 			func();
+		buttonState = Clicked;
+	}
+	else
+	{
+		buttonState = None;
 	}
 }
 
 Button& Button::addButtonFunc(void(*func)())
 {
 	buttonFuncs.push_back(func);
+	return *this;
+}
+
+Button& Button::addStyleFunc(void(*func)(Button*))
+{
+	styleFunc = func;
 	return *this;
 }

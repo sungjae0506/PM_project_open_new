@@ -13,5 +13,9 @@ public:
 	Image(string file, const Range &r);
 	Image& operator() (string file, const Range &r);
 	Image operator+ (const Point& p);
+
+	Image horizontalFlip(void);
+	Image verticalFlip(void);
+
 	void draw();
 };

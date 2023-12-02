@@ -83,6 +83,12 @@ Text& Text::operator()(string str, string cColor, string bColor, double sz, cons
 	textFunc = NULL;
 	return *this;
 }
+Text Text::operator+(const Point& p)
+{
+	Text temp = *this;
+	temp.range += p;
+	return temp;
+}
 Text& Text::addTextFunc(string(*func)(void))
 {
 	textFunc = func;

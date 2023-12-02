@@ -5,6 +5,8 @@
 #include "../UI/window.h"
 #include "../asset/image_manager.h"
 
+void buttonStyle(Button* b);
+
 void startingPageKeyboard(KeyboardEvent e, string key, Point pos);
 
 void storyPageDraw(Point pos);

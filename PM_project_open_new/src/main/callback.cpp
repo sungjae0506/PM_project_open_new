@@ -11,6 +11,22 @@ GameManager gameManager;
 static ImageManager imageManager("image_data.json");
 extern Window window;
 
+void buttonStyle(Button* b)
+{
+	switch (b->buttonState)
+	{
+	case b->None:
+		(b->buttonImage).draw();
+		(b->buttonText).draw();
+		break;
+	case b->OnButton:
+	case b->Clicked:
+		Image("image/button2_pushed.png", b->buttonImage.range).draw(); //일반화..?는 일단 제끼고 구현만 해놓음 ㅋㅋㅋㅋㅋㅋ ㅇㅋ
+		(b->buttonText + Point(0, -10)).draw();
+		break;
+	}
+}
+
 void startingPageKeyboard(KeyboardEvent e, string key, Point pos)
 {
 	if (e == KeyboardDown)
@@ -161,6 +177,10 @@ void selectionPageButton(string bt)
 						i = 0;
 				selectionState[0] = 2;
 			}
+			else if (selectionState[0] == 2)
+			{
+				selectionState[0] = 0;
+			}
 		}
 	}
 	if (bt == "player2")
@@ -180,6 +200,10 @@ void selectionPageButton(string bt)
 						i = 0;
 				selectionState[1] = 2;
 			}
+			else if (selectionState[1] == 2)
+			{
+				selectionState[1] = 0;
+			}
 		}
 	}
 	if (bt == "player3")
@@ -198,6 +222,10 @@ void selectionPageButton(string bt)
 					if (i == 2)
 						i = 0;
 				selectionState[2] = 2;
+			}
+			else if (selectionState[2] == 2)
+			{
+				selectionState[2] = 0;
 			}
 		}
 	}

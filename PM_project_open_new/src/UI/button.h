@@ -11,6 +11,10 @@ public:
 	Image buttonImage;
 	Text buttonText;
 	vector<void(*)(void)> buttonFuncs;
+	void(*styleFunc)(Button*) = NULL;
+
+
+	enum ButtonState{None, OnButton, Clicked} buttonState = None;
 	
 	Button();
 	Button(string imagePath, string text, string charColor, double fontSize, Range r);
@@ -20,4 +24,6 @@ public:
 	void draw(bool isMouseOn = false);
 
 	Button& addButtonFunc(void(*func)());
+
+	Button& addStyleFunc(void(*func)(Button*));
 };

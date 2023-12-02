@@ -3,7 +3,7 @@
 
   "theme": {
     "tile": "wood",
-    "background": "snu"
+    "background": "game_background"
   },
 
   "player": [

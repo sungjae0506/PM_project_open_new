@@ -49,3 +49,18 @@ void Image::draw()
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
 }
+
+Image Image::horizontalFlip(void)
+{
+	double temp;
+	temp = range.point0.x;
+	range.point0.x = range.point1.x;
+	range.point1.x = temp;
+}
+Image Image::verticalFlip(void)
+{
+	double temp;
+	temp = range.point0.y;
+	range.point0.y = range.point1.y;
+	range.point1.y = temp;
+}

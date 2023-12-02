@@ -19,7 +19,7 @@
       [ 0, 0, 20, 20 ]
     ]
   ],
-  "snu": [
+  "game_background": [
     [
       "image/snu.png",
       [ 0, 0, 320, 320 ]
@@ -28,11 +28,15 @@
 
   "story": [
     [
-      "image/bubble_bobble_player.png",
+      "image/player/player1.png",
       [ 0, 0, 1600, 900 ]
     ],
     [
-      "image/bubble_bobble_enemy.png",
+      "image/player/player2.png",
+      [ 0, 0, 1600, 900 ]
+    ],
+    [
+      "image/player/player3.png",
       [ 0, 0, 1600, 900 ]
     ]
   ],
@@ -49,61 +53,99 @@
   ],
   "player1": [
     [
-      "image/p11.png",
+      "image/player/player1.png",
       [ 0, 0, 10, 10 ]
     ],
     [
-      "image/p12.png",
+      "image/player/player1_left.png",
       [ 0, 0, 10, 10 ]
     ],
     [
-      "image/p13.png",
-      [ 0, 0, 10, 10 ]
-    ],
-    [
-      "image/p14.png",
-      [ 0, 0, 10, 10 ]
-    ],
-    [
-      "image/p15.png",
-      [ 0, 0, 10, 10 ]
-    ],
-    [
-      "image/p16.png",
-      [ 0, 0, 10, 10 ]
-    ],
-    [
-      "image/p17.png",
+      "image/player/player1_jump.png",
       [ 0, 0, 10, 10 ]
     ]
   ],
   "player2": [
     [
-      "image/p21.png",
+      "image/player/player2.png",
       [ 0, 0, 10, 10 ]
     ],
     [
-      "image/p22.png",
+      "image/player/player2_left.png",
       [ 0, 0, 10, 10 ]
     ],
     [
-      "image/p23.png",
+      "image/player/player2_jump.png",
+      [ 0, 0, 10, 10 ]
+    ]
+  ],
+  "player3": [
+    [
+      "image/player/player3.png",
       [ 0, 0, 10, 10 ]
     ],
     [
-      "image/p24.png",
+      "image/player/player3_left.png",
       [ 0, 0, 10, 10 ]
     ],
     [
-      "image/p25.png",
+      "image/player/player3_jump.png",
+      [ 0, 0, 10, 10 ]
+    ]
+  ],
+  "enemy1": [
+    [
+      "image/player/enemy1.png",
       [ 0, 0, 10, 10 ]
     ],
     [
-      "image/p26.png",
+      "image/player/enemy1_left.png",
       [ 0, 0, 10, 10 ]
     ],
     [
-      "image/p27.png",
+      "image/player/enemy1_jump.png",
+      [ 0, 0, 10, 10 ]
+    ]
+  ],
+  "enemy2": [
+    [
+      "image/player/enemy2.png",
+      [ 0, 0, 10, 10 ]
+    ],
+    [
+      "image/player/enemy2_left.png",
+      [ 0, 0, 10, 10 ]
+    ],
+    [
+      "image/player/enemy2_jump.png",
+      [ 0, 0, 10, 10 ]
+    ]
+  ],
+  "enemy3": [
+    [
+      "image/player/enemy3.png",
+      [ 0, 0, 10, 10 ]
+    ],
+    [
+      "image/player/enemy3_left.png",
+      [ 0, 0, 10, 10 ]
+    ],
+    [
+      "image/player/enemy3_jump.png",
+      [ 0, 0, 10, 10 ]
+    ]
+  ],
+  "enemy4": [
+    [
+      "image/player/enemy4.png",
+      [ 0, 0, 10, 10 ]
+    ],
+    [
+      "image/player/enemy4_left.png",
+      [ 0, 0, 10, 10 ]
+    ],
+    [
+      "image/player/enemy4_jump.png",
       [ 0, 0, 10, 10 ]
     ]
   ]
