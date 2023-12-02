@@ -1,11 +1,26 @@
-![버블이](./player1.png)
+<center>
+  <img 
+    src="./player1.png"
+    width="100"
+  />
+</center>
 
 name: 버블이
 
-![낙옆닌자](./player2.png)
+<center>
+  <img 
+    src="./player2.png"
+    width="100"
+  />
+</center>
 
 name: 낙옆닌자
 
-![피엠이](./player3.png)
+<center>
+  <img 
+    src="./player3.png"
+    width="100"
+  />
+</center>
 
 name: 피엠이
