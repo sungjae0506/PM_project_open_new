@@ -43,7 +43,7 @@ int main(int argc, char** argv)
 	)
 	.addButton
 	({
-		Button("image/button2.png", "Start", "#FF0000", 36.0, Range(450, 200, 750, 300))
+		Button("image/button2.png", "Start", "#591010", 36.0, Range(450, 200, 750, 300))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("storyPage"); }
@@ -52,7 +52,7 @@ int main(int argc, char** argv)
 		(
 			buttonStyle
 		),
-		Button("image/button2.png", "Help", "#00FF00", 36.0, Range(850, 200, 1150, 300))
+		Button("image/button2.png", "Help", "#591010", 36.0, Range(850, 200, 1150, 300))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("helpPage"); }
@@ -61,7 +61,7 @@ int main(int argc, char** argv)
 		(
 			buttonStyle
 		),
-		Button("image/button2.png", "Scoreboard", "#0000FF", 36.0, Range(450, 50, 750, 150))
+		Button("image/button2.png", "Scoreboard", "#591010", 36.0, Range(450, 50, 750, 150))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("scoreboardPage"); }
@@ -70,7 +70,7 @@ int main(int argc, char** argv)
 		(
 			buttonStyle
 		),
-		Button("image/button2.png", "Custom", "#FFFF00", 36.0, Range(850, 50, 1150, 150))
+		Button("image/button2.png", "Custom", "#591010", 36.0, Range(850, 50, 1150, 150))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("customPage"); }
@@ -93,7 +93,7 @@ int main(int argc, char** argv)
 	)
 	.addButton
 	(
-		Button("image/button2.png", "Back", "#FF0000", 36.0, Range(30, 750, 130, 850))
+		Button("image/button2.png", "Back", "#000000", 20.0, Range(30, 800, 130, 870))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("startingPage"); }
@@ -111,15 +111,14 @@ int main(int argc, char** argv)
 	)
 	.addCanvas
 	({
-		Canvas(Range(450, 50, 1050, 850), Range(0, 0, 600, 800))
+		Canvas(Range(450, 0, 1050, 800), Range(0, 0, 600, 800))
 		.addDrawFunc
 		(
 			[](Point pos) ->
 			void {
-				Text("Score Board", "#000000", "", 72.0, Range(100, 710, 600, 800)).draw();
-				Text("1", "#FFD700", "", 72.0, Range(0, 576, 50, 648)).draw();
-				Text("2", "#C0C0C0", "", 72.0, Range(0, 432, 50, 504)).draw();
-				Text("3", "#C49C48", "", 72.0, Range(0, 288, 50, 360)).draw();
+				Image("image/gold_medal.png",Range(0, 580, 70, 650)).draw();
+				Image("image/silver_medal.png", Range(0, 440, 70, 510)).draw();
+				Image("image/bronze_medal.png", Range(0, 300, 70, 370)).draw();
 				Text("4", "#000000", "", 72.0, Range(0, 144, 50, 216)).draw();
 				Text("5", "#000000", "", 72.0, Range(0,   0, 50,  72)).draw();
 				Text("", "#000000", "", 45.0, Range(100, 0, 600, 648))
@@ -130,7 +129,7 @@ int main(int argc, char** argv)
 				.draw();
 			}
 		),
-		Canvas(Range(1050, 50, 1150, 850), Range(0, 0, 100, 800))
+		Canvas(Range(1050, 00, 1150, 800), Range(0, 0, 100, 800))
 		.addDrawFunc
 		(
 			scoreboardPageDraw
@@ -138,7 +137,7 @@ int main(int argc, char** argv)
 	})
 	.addButton
 	(
-		Button("image/button2.png", "Back", "#FF0000", 36.0, Range(30, 750, 130, 850))
+		Button("image/button2.png", "Back", "#000000", 20.0, Range(30, 800, 130, 870))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("startingPage"); }
@@ -236,6 +235,15 @@ int main(int argc, char** argv)
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("gamePage"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
+		),
+		Button("image/button2.png", "Back", "#000000", 20.0, Range(30, 800, 130, 870))
+		.addButtonFunc
+		(
+			[]() -> void { window.setPage("startingPage"); }
 		)
 		.addStyleFunc
 		(
