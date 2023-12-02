@@ -52,15 +52,20 @@ void Image::draw()
 
 Image Image::horizontalFlip(void)
 {
+	Image tempImage = *this;
 	double temp;
-	temp = range.point0.x;
-	range.point0.x = range.point1.x;
-	range.point1.x = temp;
+	temp = tempImage.range.point0.x;
+	tempImage.range.point0.x = tempImage.range.point1.x;
+	tempImage.range.point1.x = temp;
+	return tempImage;
 }
+
 Image Image::verticalFlip(void)
 {
+	Image tempImage = *this;
 	double temp;
-	temp = range.point0.y;
-	range.point0.y = range.point1.y;
-	range.point1.y = temp;
+	temp = tempImage.range.point0.y;
+	tempImage.range.point0.y = tempImage.range.point1.y;
+	tempImage.range.point1.y = temp;
+	return tempImage;
 }

@@ -61,16 +61,60 @@ void Player::draw(void)
 	{
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		//(Image("image/bubble_bobble_player.png", Range(-8, -8, 8, 8)) + pos).draw();
-		(images[0] + pos).draw();
+		if (dir == "LEFT")
+		{
+			if (vel.y > EPSILON)
+			{
+				(images[2] + pos).draw();
+			}
+			else
+			{
+				(images[1] + pos).draw();
+			}
+		}
+		else if (dir == "RIGHT")
+		{
+			if (vel.y > EPSILON)
+			{
+				(images[2].horizontalFlip() + pos).draw();
+			}
+			else
+			{
+				(images[1].horizontalFlip() + pos).draw();
+			}
+		}
+		else
+		{
+			(images[0] + pos).draw();
+		}
 		glDisable(GL_BLEND);
 	}
 	else if (st == "Transparent")
 	{
 		if ((internalTick / 20) % 2 == 0)
 		{
-			//(Image("image/bubble_bobble_player.png", Range(-8, -8, 8, 8)) + pos).draw();
-			(images[0] + pos).draw();
+			if (dir == "LEFT")
+			{
+				if (vel.y > EPSILON)
+				{
+					(images[2] + pos).draw();
+				}
+				else
+				{
+					(images[1] + pos).draw();
+				}
+			}
+			else
+			{
+				if (vel.y > EPSILON)
+				{
+					(images[2].horizontalFlip() + pos).draw();
+				}
+				else
+				{
+					(images[1].horizontalFlip() + pos).draw();
+				}
+			}
 		}
 	}
 

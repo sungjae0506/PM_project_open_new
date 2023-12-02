@@ -143,11 +143,41 @@ void GameManager::move()
 	for (int i = 0; i < bubbleMax; ++i)
 		if (bubbles[i].getState() == "Killed")
 			bubbleResourceQueue.push(i);
+
 	for (auto& i : enemies)
 	{
 		i.bubbleCollisionState = false;
 		i.bubblePop = false;
 		i.bubbleTimeout = false;
+	}
+
+	for (auto& i : players)
+	{
+		if (i.dir == "")
+		{
+			if (i.getPos().x < 160.0)
+			{
+				i.dir = "RIGHT";
+			}
+			else
+			{
+				i.dir = "LEFT";
+			}
+		}
+	}
+	for (auto& i : enemies)
+	{
+		if (i.dir == "")
+		{
+			if (i.getPos().x < 160.0)
+			{
+				i.dir = "RIGHT";
+			}
+			else
+			{
+				i.dir = "LEFT";
+			}
+		}
 	}
 
 	for (auto& i : players)
@@ -485,10 +515,12 @@ void GameManager::idleEvent(IdleEvent e)
 	{
 		for (int i = 0; i < players.size(); ++i)
 		{
+			players[i].dir = "";
 			players[i].setPos(((1.0 - (internalTick + 1) / (idlePerSecond * mapChangingTime)) * prevSetting.playerPos[i]) + (((internalTick + 1) / (idlePerSecond * mapChangingTime)) * initialSettings[currentStage - 1].playerPos[i]));
 		}
 		for (int i = 0; i < enemies.size(); ++i)
 		{
+			enemies[i].dir = "";
 			enemies[i].setPos(((1.0 - (internalTick + 1) / (idlePerSecond * mapChangingTime)) * prevSetting.enemyPos[i]) + (((internalTick + 1) / (idlePerSecond * mapChangingTime)) * initialSettings[currentStage - 1].enemyPos[i]));
 		}
 
