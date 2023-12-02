@@ -59,8 +59,45 @@ void Enemy::draw(void)
 	//if (getState() != "Killed")
 	//	(Image("image/bubble_bobble_enemy.png", Range(-8, -8, 8, 8)) + pos).draw();
 
-	if (getState() != "Killed")
+	//if (getState() != "Killed")
+	//	(images[0] + pos).draw();
+	string st = getState();
+	if (st == "None")
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		if (dir == "LEFT")
+		{
+			if (vel.y > EPSILON && (name == "enemy1" || name == "enemy2"))
+			{
+				(images[2] + pos).draw();
+			}
+			else
+			{
+				(images[1] + pos).draw();
+			}
+		}
+		else if (dir == "RIGHT")
+		{
+			if (vel.y > EPSILON && (name == "enemy1" || name == "enemy2"))
+			{
+				(images[2].horizontalFlip() + pos).draw();
+			}
+			else
+			{
+				(images[1].horizontalFlip() + pos).draw();
+			}
+		}
+		else
+		{
+			(images[0] + pos).draw();
+		}
+	}
+	else if (st == "InBubble")
+	{
 		(images[0] + pos).draw();
+	}
+	glDisable(GL_BLEND);
 
 	// test
 	//auto tmp = (hitBox + pos);
@@ -106,9 +143,14 @@ void Enemy::draw(void)
 }
 void Enemy::move(void)
 {
+	if (vel.x < -EPSILON)
+		dir = "LEFT";
+	if (vel.x > EPSILON)
+		dir = "RIGHT";
 	if (getState() == "Killed")
 	{
 		pos(0, 0);
+		vel(0, 0);
 	}
 	if (getState() == "InBubble")
 	{

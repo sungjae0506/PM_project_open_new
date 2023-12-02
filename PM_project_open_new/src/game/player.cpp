@@ -87,7 +87,6 @@ void Player::draw(void)
 		{
 			(images[0] + pos).draw();
 		}
-		glDisable(GL_BLEND);
 	}
 	else if (st == "Transparent")
 	{
@@ -117,7 +116,7 @@ void Player::draw(void)
 			}
 		}
 	}
-
+	glDisable(GL_BLEND);
 	// test
 	//auto tmp = (hitBox + pos);
 	//tmp.print();

@@ -108,6 +108,7 @@ void Bubble::move(void)
 	{
 		vel = bubbleCurrentVel;
 		enemyPtr->setPos(pos);
+		enemyPtr->dir = "";
 	}
 	else if (st == "MakeEnemy")
 	{

@@ -167,7 +167,7 @@ void GameManager::move()
 	}
 	for (auto& i : enemies)
 	{
-		if (i.dir == "")
+		if (i.dir == "" && i.getState() != "InBubble")
 		{
 			if (i.getPos().x < 160.0)
 			{
