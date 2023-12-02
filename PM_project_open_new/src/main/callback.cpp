@@ -518,6 +518,27 @@ void gameManagerKeyboard(KeyboardEvent e, string key, Point p)
 
 
 
+
+void gameOverPageKeyboard(KeyboardEvent e, string key, Point p)
+{
+	if (e == KeyboardDown)
+	{
+		window.setPage("startingPage");
+	}
+}
+
+void gameWinPageKeyboard(KeyboardEvent e, string key, Point p)
+{
+	if (e == KeyboardDown)
+	{
+		window.setPage("scoreboardPage");
+	}
+}
+
+
+
+
+
 void scoreBoardDraw(Point pos)
 {
 

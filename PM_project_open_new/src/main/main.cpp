@@ -116,7 +116,7 @@ int main(int argc, char** argv)
 	scoreboardPage
 	.addBackground
 	(
-		"image/bubble_bobble_scoreboard_background.png"
+		"image/Page/bubble_bobble_scoreboard_background.png"
 	)
 	.addCanvas
 	({
@@ -186,9 +186,13 @@ int main(int argc, char** argv)
 	);
 
 	selectionPage
+	.addBackground
+	(
+		"image/Page/bubble_bobble_select_background.png"
+	)
 	.addText
 	(
-		Text("Select 1P", "#FFFFFF", "", 48.0, Range(660, 450, 940, 500))
+		Text("Select 1P", "#000000", "", 48.0, Range(660, 450, 940, 500))
 		.addTextFunc
 		(
 			selectionPageText
@@ -283,15 +287,31 @@ int main(int argc, char** argv)
 	);
 
 	gameOverPage
-	.addText
+	.addBackground
 	(
-		Text("wow!", "#16FFFF", "", 32.0, Range(0, 0, 320, 40))
+		"image/Page/bubble_bobble_gameOver_background.png"
+	)
+	.addCanvas
+	(
+		Canvas(Range(0, 0, 1600, 900), Range(0, 0, 1600, 900))
+		.addKeyboardFunc
+		(
+			gameOverPageKeyboard
+		)
 	);
 
 	gameWinPage
-	.addText
+	.addBackground
 	(
-		Text("wow!", "#16FFFF", "", 32.0, Range(0, 0, 320, 40))
+		"image/Page/bubble_bobble_gameWin_background.png"
+	)
+	.addCanvas
+	(
+		Canvas(Range(0, 0, 1600, 900), Range(0, 0, 1600, 900))
+		.addKeyboardFunc
+		(
+			gameWinPageKeyboard
+		)
 	);
 
 	window
