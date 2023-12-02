@@ -429,17 +429,38 @@ void gameManagerIdle(IdleEvent e)
 	string st = gameManager.getState();
 	if (st == "GameEnding")
 	{
-		window.setPage("gameOverPage");
+		window.setPage("gameWinPage");
 	}
 	else if (st == "GameOver")
 	{
-		window.setPage("gameWinPage");
+		window.setPage("gameOverPage");
 	}
 }
 
 void gameManagerKeyboard(KeyboardEvent e, string key, Point p)
 {
 	gameManager.keyboardEvent(e, key, p);
+}
+
+
+
+
+
+
+void gameOverPageKeyboard(KeyboardEvent e, string key, Point p)
+{
+	if (e == KeyboardDown)
+	{
+		window.setPage("startingPage");
+	}
+}
+
+void gameWinPageKeyboard(KeyboardEvent e, string key, Point p)
+{
+	if (e == KeyboardDown)
+	{
+		window.setPage("scoreboardPage");
+	}
 }
 
 

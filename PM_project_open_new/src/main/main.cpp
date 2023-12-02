@@ -257,15 +257,31 @@ int main(int argc, char** argv)
 	);
 
 	gameOverPage
+	.addBackground
+	(
+		"image/Page/gameOverPage.png"
+	)
 	.addCanvas
 	(
-
+		Canvas(Range(0, 0, 1600, 900), Range(0, 0, 1600, 900))
+		.addKeyboardFunc
+		(
+			gameOverPageKeyboard
+		)
 	);
 
 	gameWinPage
+	.addBackground
+	(
+		"image/Page/gameWinPage.png"
+	)
 	.addCanvas
 	(
-	
+		Canvas(Range(0, 0, 1600, 900), Range(0, 0, 1600, 900))
+		.addKeyboardFunc
+		(
+			gameWinPageKeyboard
+		)
 	);
 
 	window

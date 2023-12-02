@@ -24,4 +24,7 @@ void gameManagerDraw(Point mousePos);
 void gameManagerIdle(IdleEvent e);
 void gameManagerKeyboard(KeyboardEvent e, string key, Point p);
 
+void gameOverPageKeyboard(KeyboardEvent e, string key, Point p);
+void gameWinPageKeyboard(KeyboardEvent e, string key, Point p);
+
 void scoreBoardDraw(Point pos);
