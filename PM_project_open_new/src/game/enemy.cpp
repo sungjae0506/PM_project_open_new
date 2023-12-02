@@ -48,12 +48,19 @@ string Enemy::getName(void)
 	return name;
 }
 
+void Enemy::setImages(vector<Image> _images)
+{
+	images = _images;
+}
 
 
 void Enemy::draw(void)
 {
+	//if (getState() != "Killed")
+	//	(Image("image/bubble_bobble_enemy.png", Range(-8, -8, 8, 8)) + pos).draw();
+
 	if (getState() != "Killed")
-		(Image("image/bubble_bobble_enemy.png", Range(-8, -8, 8, 8)) + pos).draw();
+		(images[0] + pos).draw();
 
 	// test
 	//auto tmp = (hitBox + pos);

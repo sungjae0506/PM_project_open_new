@@ -39,6 +39,8 @@ public:
 	virtual void setName(string s);
 	string getName(void);
 
+	void setImages(vector<Image> _images);
+
 	virtual void draw(void);
 	virtual void move(void);
 

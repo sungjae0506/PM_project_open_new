@@ -239,6 +239,114 @@ void selectionPageKeyboard(KeyboardEvent e, string key, Point p)
 		{
 			window.setPage("gamePage");
 		}
+		if (key == "1")
+		{
+			selectionPageButton("1P");
+		}
+		if (key == "2")
+		{
+			selectionPageButton("2P");
+		}
+		if (key == "LEFT")
+		{
+			if (selectionMode == 1)
+			{
+				int cur = -1;
+				for (int i = 0; i < 3; ++i)
+				{
+					if (selectionState[i] == 1)
+					{
+						selectionState[i] = 0;
+						cur = i;
+					}
+				}
+				selectionState[(cur + 2) % 3] = 1;
+			}
+			else
+			{
+				int cur = -1;
+				for (int i = 0; i < 3; ++i)
+				{
+					if (selectionState[i] == 2)
+					{
+						selectionState[i] = 0;
+						cur = i;
+					}
+				}
+				if (cur == -1)
+				{
+					for (int i = 0; i < 3; ++i)
+					{
+						if (selectionState[i] == 0)
+						{
+							selectionState[i] = 2;
+							break;
+						}
+					}
+				}
+				else
+				{
+					for (int i = 0; i < 3; ++i)
+					{
+						if (selectionState[i] == 0 && i != cur)
+						{
+							selectionState[i] = 2;
+							break;
+						}
+					}
+				}
+			}
+		}
+		if (key == "RIGHT")
+		{
+			if (selectionMode == 1)
+			{
+				int cur = -1;
+				for (int i = 0; i < 3; ++i)
+				{
+					if (selectionState[i] == 1)
+					{
+						selectionState[i] = 0;
+						cur = i;
+					}
+				}
+				selectionState[(cur + 1) % 3] = 1;
+			}
+			else
+			{
+				int cur = -1;
+				for (int i = 0; i < 3; ++i)
+				{
+					if (selectionState[i] == 2)
+					{
+						selectionState[i] = 0;
+						cur = i;
+					}
+				}
+				if (cur == -1)
+				{
+					for (int i = 0; i < 3; ++i)
+					{
+						if (selectionState[i] == 0)
+						{
+							selectionState[i] = 2;
+							break;
+						}
+					}
+				}
+				else
+				{
+					for (int i = 0; i < 3; ++i)
+					{
+						if (selectionState[i] == 0 && i != cur)
+						{
+							selectionState[i] = 2;
+							break;
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -251,6 +359,14 @@ void selectionPageIdle(IdleEvent e)
 		selectionState[0] = 1;
 		selectionMode = 1;
 	}
+}
+
+string selectionPageText(void)
+{
+	if (selectionMode == 1)
+		return "Select 1P";
+	else
+		return "Select 2P";
 }
 
 
@@ -267,7 +383,36 @@ void gamePageIdle(IdleEvent e)
 		gameManager.readMap("stage1.json");
 		gameManager.readMap("stage2.json");
 
-		gameManager.begin(2);
+		int playerNum = 0;
+		for (auto& i : selectionState)
+		{
+			if (i != 0)
+				++playerNum;
+		}
+		gameManager.begin(playerNum);
+		for (int i = 0; i < playerNum; ++i)
+		{
+			for (int j = 0; j < selectionState.size(); ++j)
+			{
+				if (selectionState[j] == (i + 1))
+				{
+					switch (j)
+					{
+					case 0:
+						gameManager.players[i].setImages(imageManager.getImages("player1"));
+						break;
+					case 1:
+						gameManager.players[i].setImages(imageManager.getImages("player2"));
+						break;
+					case 2:
+						gameManager.players[i].setImages(imageManager.getImages("player3"));
+						break;
+					}
+				}
+			}
+		}
+		
+
 		printf("ok");
 	}
 }

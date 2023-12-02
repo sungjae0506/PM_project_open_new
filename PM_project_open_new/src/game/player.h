@@ -43,6 +43,7 @@ public:
 	virtual void setAcc(const Point& p);
 
 	virtual void setName(string s);
+	void setImages(vector<Image> _images);
 
 	virtual void draw(void);
 	virtual void move(void);

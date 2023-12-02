@@ -162,7 +162,11 @@ int main(int argc, char** argv)
 	selectionPage
 	.addText
 	(
-		Text("wow!", "#FFFFFF", "", 32.0, Range(0, 0, 320, 40))
+		Text("Select 1P", "#FFFFFF", "", 48.0, Range(660, 450, 940, 500))
+		.addTextFunc
+		(
+			selectionPageText
+		)
 	)
 	.addCanvas
 	(

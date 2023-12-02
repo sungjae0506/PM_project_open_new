@@ -17,6 +17,7 @@ void selectionPageDraw(Point pos);
 void selectionPageButton(string bt);
 void selectionPageKeyboard(KeyboardEvent e, string key, Point p);
 void selectionPageIdle(IdleEvent e);
+string selectionPageText(void);
 
 void gamePageIdle(IdleEvent e);
 void gameManagerDraw(Point mousePos);

@@ -453,18 +453,23 @@ void GameManager::idleEvent(IdleEvent e)
 			auto tempEnemyAI = EnemyAI();
 			if (tempEnemy.getName() == "enemy1")
 			{
+				tempEnemy.setImages(imageManager.getImages("enemy1"));
 				tempEnemyAI.setMode("MODE1");
 			}
 			if (tempEnemy.getName() == "enemy2")
 			{
+				tempEnemy.setImages(imageManager.getImages("enemy2"));
+				printf("wowowo");
 				tempEnemyAI.setMode("MODE2");
 			}
 			if (tempEnemy.getName() == "enemy3")
 			{
+				tempEnemy.setImages(imageManager.getImages("enemy3"));
 				tempEnemyAI.setMode("MODE3");
 			}
 			if (tempEnemy.getName() == "enemy4")
 			{
+				tempEnemy.setImages(imageManager.getImages("enemy4"));
 				tempEnemyAI.setMode("MODE4");
 			}
 			tempEnemyAI.enemyInit(tempEnemy);
