@@ -256,6 +256,18 @@ int main(int argc, char** argv)
 		Text("wow!", "#16FFFF", "", 32.0, Range(0, 0, 320, 40))
 	);
 
+	gameOverPage
+	.addCanvas
+	(
+
+	);
+
+	gameWinPage
+	.addCanvas
+	(
+	
+	);
+
 	window
 	.addPage
 	({
@@ -264,7 +276,9 @@ int main(int argc, char** argv)
 		scoreboardPage,
 		storyPage,
 		selectionPage,
-		gamePage
+		gamePage,
+		gameOverPage,
+		gameWinPage
 	});
 
 	window.mainLoop("startingPage");
