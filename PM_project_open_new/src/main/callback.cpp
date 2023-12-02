@@ -116,6 +116,36 @@ void storyPageIdle(IdleEvent e)
 	}
 }
 
+void scoreboardPageDraw(Point pos)
+{
+	glColor3f(1.0, 1.0, 1.0);
+	glBegin(GL_QUADS);
+	glVertex2f(0.0, 0.0);
+	glVertex2f(0.0, 800.0);
+	glVertex2f(700.0, 800.0);
+	glVertex2f(700.0, 0.0);
+	glEnd();
+
+	/*
+	Text("Score Board", "#000000", "", 72.0, Range(100, 710, 600, 800)).draw();
+	Text("1", "#FFD700", "", 72.0, Range(0, 576, 50, 648)).draw();
+	Text("2", "#C0C0C0", "", 72.0, Range(0, 432, 50, 504)).draw();
+	Text("3", "#16FFFF", "", 72.0, Range(0, 288, 50, 360)).draw();
+	Text("4", "#16FFFF", "", 72.0, Range(0, 144, 50, 216)).draw();
+	Text("5", "#16FFFF", "", 72.0, Range(0,   0, 50,  72)).draw();
+	Text("", "#16FFFF", "", 45.0, Range(150, 0, 600, 648))
+	.addTextFunc
+	(
+		scoreboardPageText
+	)
+	.draw();*/
+}
+
+string scoreboardPageText(void)
+{
+	return "yumin : 10000\n\nhsj   : 10000\n\nhsj   : 10000\n\nhsj   : 10000\n\nhsj   : 10000\n\n";
+}
+
 int selectionMode = 1;
 vector<int> selectionState;
 
@@ -425,15 +455,19 @@ void gameManagerDraw(Point mousePos)
 void gameManagerIdle(IdleEvent e)
 {
 	gameManager.idleEvent(e);
-
 	string st = gameManager.getState();
-	if (st == "GameEnding")
+
+	if (e == IdleRunning)
 	{
-		window.setPage("gameOverPage");
-	}
-	else if (st == "GameOver")
-	{
-		window.setPage("gameWinPage");
+		if (st == "GameEnding")
+		{
+			window.setPage("gameWinPage");
+		}
+		else if (st == "GameOver")
+		{
+			printf("gaov");
+			window.setPage("gameOverPage");
+		}
 	}
 }
 

@@ -1,6 +1,40 @@
 {
-  "1": {
-    "Name": "Hsj",
-    "Score": 99999999
-  }
+  [
+    {
+      "Name": "yumin",
+      "Score": 999999,
+      "character": [
+        "player1",
+        "player2"
+      ]
+    },
+    {
+      "Name": "hsj",
+      "Score": 999999,
+      "character": [
+        "player1"
+      ]
+    },
+    {
+      "Name": "hsj",
+      "Score": 999999,
+      "character": [
+        "player1"
+      ]
+    },
+    {
+      "Name": "hsj",
+      "Score": 999999,
+      "character": [
+        "player1"
+      ]
+    },
+    {
+      "Name": "hsj",
+      "Score": 999999,
+      "character": [
+        "player1"
+      ]
+    }
+  ]
 }
