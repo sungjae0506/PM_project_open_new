@@ -8,6 +8,7 @@
 #include "../asset/image.h"
 #include "text.h"
 #include "button.h"
+#include "input_box.h"
 using namespace std;
 
 class Page
@@ -26,6 +27,7 @@ public:
 	vector<Image> images;
 	vector<Text> texts;
 	vector<Button> buttons;
+	vector<InputBox> inputBoxes;
 	string background;
 
 	int windowWidth;
@@ -57,6 +59,9 @@ public:
 
 	Page& addButton(const Button& t);
 	Page& addButton(vector<Button> ts);
+
+	Page& addInputBox(const InputBox& ib);
+	Page& addInputBox(vector<InputBox> ibs);
 
 	Page& addBackground(string s);
 };

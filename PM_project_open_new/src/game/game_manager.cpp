@@ -83,6 +83,7 @@ void GameManager::begin(int n)
 	mainTick = 0;
 	internalTick = 0;
 	currentStage = 0;
+	score = 0;
 
 	enemies.clear();
 	enemyAI.clear();
@@ -307,6 +308,22 @@ void GameManager::move()
 	{
 		if (i.getState() != "Killed")
 			++enemyCnt;
+	}
+
+	if (enemyCnt == 0)
+	{
+		score += 5000;
+	}
+	for (auto& i : bubbles)
+	{
+		if (i.playerCollisionState == true)
+		{
+			score += 10;
+		}
+		if (i.getState() == "KillEnemy")
+		{
+			score += 1000;
+		}
 	}
 
 	for (auto &i: players)

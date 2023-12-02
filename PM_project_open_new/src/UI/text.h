@@ -7,6 +7,7 @@
 
 vector<double> stringToRGBf(string str);
 vector<int> stringToRGBi(string str);
+string RGBiToString(vector<int> rgb);
 
 class Text
 {

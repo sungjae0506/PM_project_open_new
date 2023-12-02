@@ -23,6 +23,8 @@ void Page::keyboardEvent(KeyboardEvent e, string key, Point p)
 		func(e, key, p);
 	for (auto& i : canvases)
 		i.keyboardEvent(e, key, p);
+	for (auto& i : inputBoxes)
+		i.keyboardEvent(e, key, p);
 }
 
 void Page::mouseEvent(MouseEvent e, string button, Point p)
@@ -35,6 +37,8 @@ void Page::mouseEvent(MouseEvent e, string button, Point p)
 	for (auto& i : buttons)
 		if (i.range.contain(p))
 			i.mouseEvent(e, button, p);
+	for (auto& i : inputBoxes)
+		i.mouseEvent(e, button, p);
 }
 
 void Page::idleEvent(IdleEvent e)
@@ -45,10 +49,14 @@ void Page::idleEvent(IdleEvent e)
 			func(e);
 		for (auto& i : canvases)
 			i.idleEvent(e);
+		for (auto& i : inputBoxes)
+			i.idleEvent(e);
 	}
 	else if (e == IdleEnd)
 	{
 		for (auto& i : canvases)
+			i.idleEvent(e);
+		for (auto& i : inputBoxes)
 			i.idleEvent(e);
 		for (auto func : idleFuncs)
 			func(e);
@@ -94,6 +102,14 @@ void Page::draw(Point mousePos)
 			i.draw(true);
 		else
 			i.draw();
+	}
+	for (auto& i : inputBoxes)
+	{
+		scissor = Transform(range, Range(0, 0, windowWidth, windowHeight))(i.range);
+		glScissor(scissor.point0.x, scissor.point0.y, scissor.point1.x - scissor.point0.x, scissor.point1.y - scissor.point0.y);
+		glEnable(GL_SCISSOR_TEST);
+		i.draw(mousePos);
+		glDisable(GL_SCISSOR_TEST);
 	}
 	for (auto func : drawFuncs)
 		func(mousePos);
@@ -172,6 +188,18 @@ Page& Page::addButton(vector<Button> bs)
 {
 	for (auto& b : bs)
 		buttons.push_back(b);
+	return *this;
+}
+
+Page& Page::addInputBox(const InputBox& ib)
+{
+	inputBoxes.push_back(ib);
+	return *this;
+}
+Page& Page::addInputBox(vector<InputBox> ibs)
+{
+	for (auto& ib : ibs)
+		inputBoxes.push_back(ib);
 	return *this;
 }
 

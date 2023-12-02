@@ -29,9 +29,7 @@ Page gamePage("gamePage", Range(0, 0, 1600, 900));
 
 Page gameOverPage("gameOverPage", Range(0, 0, 1600, 900));
 Page gameWinPage("gameWinPage", Range(0, 0, 1600, 900));
-
-extern string player1;
-extern string player2;
+Page nameInputPage("nameInputPage", Range(0, 0, 1600, 900));
 
 int main(int argc, char** argv)
 {
@@ -93,10 +91,6 @@ int main(int argc, char** argv)
 	(
 		"image/bubble_bobble_help.png"
 	)
-	.addText
-	(
-		Text("wow!", "#16FFFF", "", 32.0, Range(0, 0, 320, 40))
-	)
 	.addButton
 	(
 		Button("image/button2.png", "Back", "#FF0000", 36.0, Range(30, 750, 130, 850))
@@ -109,9 +103,6 @@ int main(int argc, char** argv)
 			buttonStyle
 		)
 	);
-
-	/*fstream f(path);
-	jsonData = json::parse(f);*/
 
 	scoreboardPage
 	.addBackground
@@ -267,7 +258,7 @@ int main(int argc, char** argv)
 	)
 	.addCanvas
 	(
-		Canvas(Range(250, 0, 1350, 900), Range(0, 20, 320, 280))
+		Canvas(Range(288, 0, 1312, 832), Range(0, 20, 320, 280))
 		.addDrawFunc
 		(
 			gameManagerDraw
@@ -282,9 +273,20 @@ int main(int argc, char** argv)
 		)
 	)
 	.addText
-	(
-		Text("wow!", "#16FFFF", "", 32.0, Range(0, 0, 320, 40))
-	);
+	({
+		Text("HIGHSCORE", "#FF0000", "", 48.0, Range(300, 842, 600, 890)),
+		Text("000000", "#FFFFFF", "", 48.0, Range(600, 842, 850, 890))
+		.addTextFunc
+		(
+			[]() -> string { return gameManagerText("Highscore"); }
+		),
+		Text("SCORE", "#00FF00", "", 48.0, Range(920, 842, 1100, 890)),
+		Text("000000", "#FFFFFF", "", 48.0, Range(1100, 842, 1300, 890))
+		.addTextFunc
+		(
+			[]() -> string { return gameManagerText("Score"); }
+		)
+	});
 
 	gameOverPage
 	.addBackground
@@ -314,6 +316,20 @@ int main(int argc, char** argv)
 		)
 	);
 
+	nameInputPage
+	.addBackground
+	(
+		"image/Page/bubble_bobble_scoreboard_background.png"
+	)
+	.addInputBox
+	(
+		InputBox("Name", "#000000", "#FFFFFF", 48.0, true, Range(600, 200, 1000, 250))
+		.addInputBoxFunc
+		(
+			nameInputPageInputBox
+		)
+	);
+
 	window
 	.addPage
 	({
@@ -324,7 +340,8 @@ int main(int argc, char** argv)
 		selectionPage,
 		gamePage,
 		gameOverPage,
-		gameWinPage
+		gameWinPage,
+		nameInputPage
 	});
 
 	window.mainLoop("startingPage");
