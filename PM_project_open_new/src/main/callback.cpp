@@ -599,5 +599,69 @@ string playerName;
 void nameInputPageInputBox(string str)
 {
 	playerName = str;
-	cout << playerName;
+}
+
+void nameInputPageButton(void)
+{
+	json dumpData;
+	dumpData = scoreboardData;
+	int rank = 0;
+	for (int i = 0; i < 5; ++i)
+	{
+		if (gameManager.score > scoreboardData["data"][i]["score"].get<int>())
+		{
+			rank = i;
+			break;
+		}
+	}
+	for (int i = 4; i > rank; --i)
+	{
+		dumpData["data"][i] = dumpData["data"][i - 1];
+	}
+	dumpData["data"][rank]["name"] = playerName;
+	dumpData["data"][rank]["score"] = gameManager.score;
+
+	json arr = json::array();
+
+	for (int i = 1; i <= 2; ++i)
+	{
+		for (int j = 0; j < 3; ++j)
+		{
+			if (selectionState[j] == i)
+			{
+				switch (j)
+				{
+				case 0:
+					arr.push_back("player1");
+					break;
+				case 1:
+					arr.push_back("player2");
+					break;
+				case 2:
+					arr.push_back("player3");
+					break;
+				}
+			}
+		}
+	}
+
+	dumpData["data"][rank]["character"] = arr;
+	
+
+	fstream f("scoreboard.json", ios::out | ios::trunc);
+	f << dumpData.dump(2);
+
+	window.setPage("scoreboardPage");
+}
+
+void nameInputPageKeyboard(KeyboardEvent e, string key, Point p)
+{
+	if (e == KeyboardDown)
+	{
+		cout << (int)key.c_str()[0] << endl;
+		if (key.c_str()[0] == 13)
+		{
+			nameInputPageButton();
+		}
+	}
 }
