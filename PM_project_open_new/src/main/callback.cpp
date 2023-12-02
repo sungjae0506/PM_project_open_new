@@ -425,6 +425,16 @@ void gameManagerDraw(Point mousePos)
 void gameManagerIdle(IdleEvent e)
 {
 	gameManager.idleEvent(e);
+
+	string st = gameManager.getState();
+	if (st == "GameEnding")
+	{
+		window.setPage("gameOverPage");
+	}
+	else if (st == "GameOver")
+	{
+		window.setPage("gameWinPage");
+	}
 }
 
 void gameManagerKeyboard(KeyboardEvent e, string key, Point p)
