@@ -6,6 +6,7 @@
 #include "../util/object.h"
 #include "canvas.h"
 #include "../asset/image.h"
+#include "../asset/sound_loader.h"
 #include "text.h"
 #include "button.h"
 #include "input_box.h"
@@ -22,6 +23,7 @@ public:
 	vector<void(*)(MouseEvent, string, Point)> mouseFuncs;
 	vector<void(*)(IdleEvent)> idleFuncs;
 	vector<void(*)(Point)> drawFuncs;
+	vector<void(*)(IdleEvent, int)> soundFuncs;
 
 	vector<Canvas> canvases;
 	vector<Image> images;
@@ -64,4 +66,6 @@ public:
 	Page& addInputBox(vector<InputBox> ibs);
 
 	Page& addBackground(string s);
+
+	//Page& addSound(SoundContainer s, int num);
 };

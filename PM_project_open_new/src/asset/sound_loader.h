@@ -16,14 +16,14 @@ public:
 	SoundContainer();
 	~SoundContainer();
 
-	int cnt = 0;
+
 	FMOD::System* pSystem;
-	FMOD::Sound* pSound[2];
+	FMOD::Sound* pSound;
 	FMOD::Channel* pChannel[1];
 
 
-	void playsound(int num);
+	void playsound();
 	void addsound(const char* path);
-	bool isplaying(int num);
+	bool isplaying();
 	bool soundidleupdate();
 };

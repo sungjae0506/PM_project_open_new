@@ -7,6 +7,7 @@
 #include "../game/game_manager.h"
 #include "../UI/window.h"
 #include "../asset/image_manager.h"
+#include "../asset/sound_loader.h"
 #include "../game/map_editor.h"
 using namespace std;
 
@@ -16,9 +17,7 @@ static ImageManager imageManager("image_data.json");
 extern Window window;
 int tick;
 
-Sound player_jump("sound/jump.wav", true);
-Sound GameOver("sound/gameOver.mp3", true);
-Sound GameWin("sound/gameWin.wav", true);
+
 
 void buttonStyle(Button* b)
 {
@@ -539,7 +538,13 @@ void gameOverPageKeyboard(KeyboardEvent e, string key, Point p)
 
 void gameOverPageIdle(IdleEvent e)
 {
-	GameOver.playsound();
+	SoundContainer OverSound;
+	OverSound.addsound("sound/gameOver.mp3");
+	OverSound.playsound();
+	while (1) {
+		if (!OverSound.soundidleupdate()) break;
+		if (!OverSound.isplaying()) break;
+	}
 	if (e == IdleBegin)
 	{
 		tick = 0;
@@ -571,7 +576,13 @@ void gameWinPageKeyboard(KeyboardEvent e, string key, Point p)
 
 void gameWinPageIdle(IdleEvent e)
 {
-	GameWin.playsound();
+	SoundContainer WinSound;
+	WinSound.addsound("sound/gameWin.wav");
+	WinSound.playsound();
+	while (1) {
+		if (!WinSound.soundidleupdate()) break;
+		if (!WinSound.isplaying()) break;
+	}
 	if (e == IdleBegin)
 	{
 		tick = 0;

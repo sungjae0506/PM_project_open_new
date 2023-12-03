@@ -1,4 +1,4 @@
-#include "soundloader.h"
+#include "sound_loader.h"
 
 FMOD::System* pSystem;
 
@@ -12,18 +12,17 @@ SoundContainer::~SoundContainer() {
 }
 
 void SoundContainer::addsound(const char* path) {
-    pSystem->createSound(path, FMOD_DEFAULT, NULL, &pSound[cnt]);
-    cnt++;
+    pSystem->createSound(path, FMOD_DEFAULT, NULL, &pSound);
 }
 
-void SoundContainer::playsound(int num) {
-    pSystem->playSound(pSound[num], 0, false, pChannel);
+void SoundContainer::playsound() {
+    pSystem->playSound(pSound, 0, false, pChannel);
 }
 
-bool SoundContainer::isplaying(int num) {
-    if (pChannel[num] != nullptr) { // 채널이 유효한지 확인
+bool SoundContainer::isplaying() {
+    if (pChannel != nullptr) { // 채널이 유효한지 확인
         bool play = false;
-        FMOD_RESULT result = pChannel[num]->isPlaying(&play);
+        FMOD_RESULT result = pChannel[0]->isPlaying(&play);
         if (result == FMOD_OK && play) { // 재생 중인지 확인
             return true;
         }
