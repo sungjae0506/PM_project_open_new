@@ -53,6 +53,10 @@ void InputBox::keyboardEvent(KeyboardEvent e, string key, Point p)
 				content.erase(--cursor, 1);
 			}
 		}
+		else if (key.c_str()[0] == 13)
+		{
+			clicked = false;
+		}
 		else if (key.size() == 1)
 		{
 			content.insert(cursor++, key);
@@ -91,7 +95,7 @@ void InputBox::idleEvent(IdleEvent e)
 	}
 	if (e == IdleRunning)
 	{
-		if (!clicked)
+		//if (!clicked)
 		{
 			for (auto& func : inputBoxFuncs)
 				func(content);

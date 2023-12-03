@@ -91,8 +91,6 @@
     <None Include="stage1.json" />
     <None Include="stage2.json" />
     <None Include="stage3.json" />
-    <None Include="stage4.json" />
-    <None Include="stage5.json" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

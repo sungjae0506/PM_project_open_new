@@ -266,7 +266,7 @@ void Bubble::collisionHandling(Enemy& e)
 	auto res = (e.hitBox + e.getPos()).collisionDetection(hitBox2 + pos);
 	for (auto& i : res)
 	{
-		if (i != None)
+		if (i != None || abs(e.getPos() - pos) < r2 + e.width / 2)
 		{
 			pos = e.getPos();
 			enemyCollisionState = true;

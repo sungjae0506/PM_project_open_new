@@ -34,7 +34,7 @@ public:
 	vector<bool> modeCharacterButtonState;
 	vector<bool> modeCurrentButtonState;
 
-	vector<bool> layer;
+	vector<bool> layerState;
 
 	vector<Map> maps;
 	vector<InitialSetting> initialSettings;

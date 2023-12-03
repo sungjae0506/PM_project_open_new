@@ -203,7 +203,5 @@
     <None Include="scoreboard.json" />
     <None Include="stage2.json" />
     <None Include="stage3.json" />
-    <None Include="stage4.json" />
-    <None Include="stage5.json" />
   </ItemGroup>
 </Project>

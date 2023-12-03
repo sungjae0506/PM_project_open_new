@@ -458,6 +458,7 @@ void gamePageIdle(IdleEvent e)
 
 		gameManager.readMap("stage1.json");
 		gameManager.readMap("stage2.json");
+		gameManager.readMap("stage3.json");
 
 		int playerNum = 0;
 		for (auto& i : selectionState)
@@ -834,6 +835,51 @@ void mapEditorPageCanvasMouse1(MouseEvent e, string button, Point p)
 	}
 }
 
+void mapEditorPageCanvasDraw2(Point pos)
+{
+	if (mapEditor.layerState[0])
+	{
+		mapEditor.drawMap();
+	}
+
+}
+
+void mapEditorPageCanvasMouse2(MouseEvent e, string button, Point p)
+{
+	if (e == MouseDown || e == MouseMotion)
+	{
+		int px, py, i, j;
+		px = (int)(p.x / 10);
+		py = (int)(p.y / 10);
+		i = 31 - py;
+		j = px;
+		if (i < 0)
+			i = 0;
+		if (i >= 32)
+			i = 31;
+		if (j < 0)
+			j = 0;
+		if (j >= 32)
+			j = 31;
+
+		//printf("%d %d\n", i, j);
+		switch (mapEditor.mode)
+		{
+		case MapEditor::ModeTheme:
+			if (mapEditor.modeThemeButtonState[2])
+			{
+				
+				mapEditor.maps[mapEditor.currentStage].tileVector[i][j] = 1;
+			}
+			if (mapEditor.modeThemeButtonState[5])
+			{
+				mapEditor.maps[mapEditor.currentStage].tileVector[i][j] = 0;
+			}
+			break;
+		}
+	}
+}
+
 void mapEditorPageButton(string bt)
 {
 	if (bt == "ModeTheme")
@@ -848,6 +894,19 @@ void mapEditorPageButton(string bt)
 	{
 		mapEditor.mode = MapEditor::ModeCurrent;
 	}
+
+	if (bt == "LayerTheme")
+	{
+		mapEditor.layerState[0] = 1 - mapEditor.layerState[0];
+	}
+	if (bt == "LayerCharacter")
+	{
+		mapEditor.layerState[1] = 1 - mapEditor.layerState[1];
+	}
+	if (bt == "LayerTheme")
+	{
+		mapEditor.layerState[2] = 1 - mapEditor.layerState[2];
+	}
 }
 
 void mapEditorPageIdle(IdleEvent e)
@@ -855,7 +914,6 @@ void mapEditorPageIdle(IdleEvent e)
 	if (e == IdleBegin)
 	{
 		mapEditor.clear();
-		printf("me start\n");
 	}
 }
 
@@ -882,5 +940,4 @@ void mapEditorPageInputBox3(string str)
 		mapEditor.setStage(temp);
 	else
 		mapEditor.setStage(1);
-	//printf("stage: %d\n", mapEditor.currentStage);
 }

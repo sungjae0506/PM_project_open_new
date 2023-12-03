@@ -41,6 +41,8 @@ void nameInputPageKeyboard(KeyboardEvent e, string key, Point p);
 
 void mapEditorPageCanvasDraw1(Point pos);
 void mapEditorPageCanvasMouse1(MouseEvent e, string button, Point p);
+void mapEditorPageCanvasDraw2(Point pos);
+void mapEditorPageCanvasMouse2(MouseEvent e, string button, Point p);
 void mapEditorPageButton(string bt);
 void mapEditorPageIdle(IdleEvent e);
 void mapEditorPageInputBox1(string str);

@@ -354,7 +354,8 @@ int main(int argc, char** argv)
 	);
 
 	mapEditorPage
-	.addCanvas({
+	.addCanvas
+	({
 		Canvas(Range(0, 0, 700, 300), Range(0, 0, 700, 300))
 		.addDrawFunc
 		(
@@ -365,7 +366,15 @@ int main(int argc, char** argv)
 			mapEditorPageCanvasMouse1
 		),
 		Canvas(Range(750, 50, 1550, 850), Range(0, 0, 320, 320))
-		})
+		.addDrawFunc
+		(
+			mapEditorPageCanvasDraw2
+		)
+		.addMouseFunc
+		(
+			mapEditorPageCanvasMouse2
+		)
+	})
 	.addText
 	({
 		Text("     Map name:\n  # of stages:\nWorking stage:", "#FFFFFF\n", "", 30.0, Range(50, 600, 320, 850)),

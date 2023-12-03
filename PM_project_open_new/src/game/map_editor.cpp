@@ -5,8 +5,8 @@ static ImageManager imageManager("image_data.json");
 void MapEditor::clear()
 {
 	mode = ModeTheme;
-	layer.clear();
-	layer.resize(3);
+	layerState.clear();
+	layerState.resize(3);
 
 	maps.clear();
 	maps.resize(maxStage);
