@@ -58,6 +58,7 @@
     <ClInclude Include="src\game\bubble.h" />
     <ClInclude Include="src\game\enemy.h" />
     <ClInclude Include="src\game\enemy_AI.h" />
+    <ClInclude Include="src\game\map_editor.h" />
     <ClInclude Include="src\not_used\character.h" />
     <ClInclude Include="src\game\game_const.h" />
     <ClInclude Include="src\game\game_manager.h" />

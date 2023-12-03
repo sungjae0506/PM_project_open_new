@@ -7,9 +7,11 @@
 #include "../game/game_manager.h"
 #include "../UI/window.h"
 #include "../asset/image_manager.h"
+#include "../game/map_editor.h"
 using namespace std;
 
-GameManager gameManager;
+static GameManager gameManager;
+static MapEditor mapEditor;
 static ImageManager imageManager("image_data.json");
 extern Window window;
 int tick;
@@ -676,7 +678,32 @@ void nameInputPageKeyboard(KeyboardEvent e, string key, Point p)
 
 void mapEditorPageDraw1(Point pos)
 {
+	switch (mapEditor.mode)
+	{
+	case MapEditor::ModeTheme:
+		Text("Theme/Tile", "#FFFFFF", "", 30.0, Range(50, 260, 200, 290)).draw();
 
+		Image("image/Background_2.png", Range(150, 150, 240, 250)).draw();
+		Image("image/wood_tile1.png", Range(380, 150, 470, 250)).draw();
+		Image("image/button2.png", Range(610, 150, 700, 250)).draw();
+
+		Image("image/button2.png", Range(150, 25, 240, 125)).draw();
+		Image("image/metal_tile1.png", Range(380, 25, 470, 125)).draw();
+		Image("image/button2.png", Range(610, 25, 700, 125)).draw();
+		break;
+	case MapEditor::ModeCharacter:
+		Text("Character", "#FFFFFF", "", 30.0, Range(50, 260, 200, 290)).draw();
+
+		Image("image/button2.png", Range(150, 150, 240, 250)).draw();
+		Image("image/enemy/enemy1.png", Range(380, 150, 470, 250)).draw();
+		Image("image/enemy/enemy2.png", Range(610, 150, 700, 250)).draw();
+
+		Image("image/button2.png", Range(150, 25, 240, 125)).draw();
+		Image("image/enemy/enemy3.png", Range(380, 25, 470, 125)).draw();
+		Image("image/enemy/enemy4.png", Range(610, 25, 700, 125)).draw();
+		break;
+
+	}
 }
 
 void mapEditorPageKeyboard1(KeyboardEvent e, string key, Point p)
@@ -686,5 +713,16 @@ void mapEditorPageKeyboard1(KeyboardEvent e, string key, Point p)
 
 void mapEditorPageButton(string bt)
 {
-
+	if (bt == "ModeTheme")
+	{
+		mapEditor.mode = MapEditor::ModeTheme;
+	}
+	if (bt == "ModeCharacter")
+	{
+		mapEditor.mode = MapEditor::ModeCharacter;
+	}
+	if (bt == "ModeCurrent")
+	{
+		mapEditor.mode = MapEditor::ModeCurrent;
+	}
 }

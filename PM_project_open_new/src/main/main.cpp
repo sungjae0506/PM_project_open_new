@@ -355,7 +355,7 @@ int main(int argc, char** argv)
 
 	mapEditorPage
 	.addCanvas({
-		Canvas(Range(0, 0, 700, 400), Range(0, 0, 700, 300))
+		Canvas(Range(0, 0, 700, 300), Range(0, 0, 700, 300))
 		.addDrawFunc
 		(
 			mapEditorPageDraw1
@@ -377,6 +377,15 @@ int main(int argc, char** argv)
 		})
 	.addButton
 	({
+		Button("image/button2.png", "Back", "#000000", 20.0, Range(10, 815, 85, 890))
+		.addButtonFunc
+		(
+			[]() -> void { window.setPage("startingPage"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
+		),
 		Button("image/button2.png", "Save", "#591010", 36.0, Range(350, 600, 500, 700))
 		.addButtonFunc
 		(
@@ -396,7 +405,7 @@ int main(int argc, char** argv)
 			buttonStyle
 		),
 
-		Button("image/button2.png", "Theme", "#591010", 24.0, Range(50, 450, 240, 550))
+		Button("image/button2.png", "Theme/Tile", "#591010", 24.0, Range(50, 450, 240, 550))
 		.addButtonFunc
 		(
 			[]() -> void { mapEditorPageButton("LayerTheme"); }
@@ -424,7 +433,7 @@ int main(int argc, char** argv)
 			buttonStyle
 		),
 
-		Button("image/button2.png", "Theme", "#591010", 24.0, Range(50, 300, 240, 400))
+		Button("image/button2.png", "Theme/Tile", "#591010", 24.0, Range(50, 300, 240, 400))
 		.addButtonFunc
 		(
 			[]() -> void { mapEditorPageButton("ModeTheme"); }

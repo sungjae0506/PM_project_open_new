@@ -70,25 +70,32 @@ void EnemyAI::pathfinding(Enemy& e, const vector<Player>& p, const Map &mp)
 				}
 			}
 		}
-		/*if (false) // ¶Ù¾î´Ù´Ô
+	}
+	else if (mode == "MODE2") // ¶Ù¾î´Ù´Ô
+	{
+		if (abs(e.getVel()) < EPSILON)
 		{
-			if (e.mapCollisionState[0])
+			if (e.getPos().x < 160.0)
 			{
-				e.setVel(Point(e.getVel().x, -playerHorizontalVel));
+				e.setVel(Point(playerHorizontalVel, 0));
 			}
-			if (e.mapCollisionState[1])
+			else
 			{
-				e.setVel(Point(e.getVel().x, playerHorizontalVel));
+				e.setVel(Point(-playerHorizontalVel, 0));
 			}
-			if (e.mapCollisionState[2])
-			{
-				e.setVel(Point(playerHorizontalVel, e.getVel().y));
-			}
-			if (e.mapCollisionState[3])
-			{
-				e.setVel(Point(-playerHorizontalVel, e.getVel().y));
-			}
-		}*/
+		}
+		if (e.mapCollisionState[1])
+		{
+			e.setVel(Point(e.getVel().x, playerJumpVel));
+		}
+		if (e.mapCollisionState[2])
+		{
+			e.setVel(Point(playerHorizontalVel, e.getVel().y));
+		}
+		if (e.mapCollisionState[3])
+		{
+			e.setVel(Point(-playerHorizontalVel, e.getVel().y));
+		}
 	}
 	else if (mode == "MODE3")
 	{

@@ -91,8 +91,11 @@ void InputBox::idleEvent(IdleEvent e)
 	}
 	if (e == IdleRunning)
 	{
-		for (auto& func : inputBoxFuncs)
-			func(content);
+		if (!clicked)
+		{
+			for (auto& func : inputBoxFuncs)
+				func(content);
+		}
 		++timeCnt;
 	}
 }

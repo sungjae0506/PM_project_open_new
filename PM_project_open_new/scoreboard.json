@@ -12,6 +12,13 @@
       "character": [
         "player1"
       ],
+      "name": "d",
+      "score": 16120
+    },
+    {
+      "character": [
+        "player1"
+      ],
       "name": "hsj",
       "score": 16110
     },
@@ -29,13 +36,6 @@
       ],
       "name": "hsj",
       "score": 16100
-    },
-    {
-      "character": [
-        "player3"
-      ],
-      "name": "hsj",
-      "score": 10120
     }
   ]
 }
