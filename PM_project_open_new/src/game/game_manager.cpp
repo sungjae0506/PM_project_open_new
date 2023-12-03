@@ -278,7 +278,7 @@ void GameManager::move()
 		i.pushWall = false;
 		if (i.getBubbleState() == "ShootBubble")
 		{	
-			printf("%d %d\n", bubbles.size(), bubbleResourceQueue.front());
+			//printf("%d %d\n", bubbles.size(), bubbleResourceQueue.front());
 			if (!bubbleResourceQueue.empty())
 			{
 				
@@ -440,7 +440,7 @@ void GameManager::idleEvent(IdleEvent e)
 
 	if (testClock != prevClock)
 	{
-		printf("%d Tick\n", testTick - prevTick);
+		//printf("%d Tick\n", testTick - prevTick);
 		prevClock = testClock;
 		prevTick = testTick;
 	}
@@ -506,7 +506,6 @@ void GameManager::idleEvent(IdleEvent e)
 			if (tempEnemy.getName() == "enemy2")
 			{
 				tempEnemy.setImages(imageManager.getImages("enemy2"));
-				printf("wowowo");
 				tempEnemyAI.setMode("MODE2");
 			}
 			if (tempEnemy.getName() == "enemy3")

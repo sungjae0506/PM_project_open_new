@@ -334,7 +334,6 @@ void Enemy::changeState(void)
 	{
 		if (bubblePop)
 		{
-			printf("kiilled");
 			setState("Killed");
 		}
 		else if (bubbleTimeout)

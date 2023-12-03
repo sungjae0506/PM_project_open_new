@@ -488,9 +488,6 @@ void gamePageIdle(IdleEvent e)
 				}
 			}
 		}
-		
-
-		printf("ok");
 	}
 }
 
@@ -674,7 +671,7 @@ void nameInputPageKeyboard(KeyboardEvent e, string key, Point p)
 {
 	if (e == KeyboardDown)
 	{
-		cout << (int)key.c_str()[0] << endl;
+		//cout << (int)key.c_str()[0] << endl;
 		if (key.c_str()[0] == 13)
 		{
 			nameInputPageButton();

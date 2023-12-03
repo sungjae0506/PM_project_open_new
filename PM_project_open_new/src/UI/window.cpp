@@ -381,7 +381,7 @@ void Window::setPage(string pageName)
 void Window::mainLoop(string pageName)
 {
 	setPage(pageName);
-	printf("winstart\n");
+	//printf("winstart\n");
 	glutMainLoop();
 }
 
