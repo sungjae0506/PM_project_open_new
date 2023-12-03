@@ -4,6 +4,7 @@
 #include "../game/game_manager.h"
 #include "../UI/window.h"
 #include "../asset/image_manager.h"
+#include "../asset/sound_loader.h"
 
 void buttonStyle(Button* b);
 
@@ -35,6 +36,12 @@ void gameWinPageKeyboard(KeyboardEvent e, string key, Point p);
 void gameWinPageIdle(IdleEvent e);
 
 void nameInputPageInputBox(string str);
+<<<<<<< HEAD
+
+
+
+
+=======
 void nameInputPageButton(void);
 void nameInputPageKeyboard(KeyboardEvent e, string key, Point p);
 

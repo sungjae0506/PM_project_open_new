@@ -14,6 +14,10 @@ static ImageManager imageManager("image_data.json");
 extern Window window;
 int tick;
 
+Sound player_jump("sound/jump.wav", true);
+Sound GameOver("sound/gameOver.mp3", true);
+Sound GameWin("sound/gameWin.wav", true);
+
 void buttonStyle(Button* b)
 {
 	switch (b->buttonState)
@@ -533,9 +537,11 @@ void gameOverPageKeyboard(KeyboardEvent e, string key, Point p)
 
 void gameOverPageIdle(IdleEvent e)
 {
+	GameOver.playsound();
 	if (e == IdleBegin)
 	{
 		tick = 0;
+		
 	}
 	if (e == IdleRunning)
 	{
@@ -563,9 +569,11 @@ void gameWinPageKeyboard(KeyboardEvent e, string key, Point p)
 
 void gameWinPageIdle(IdleEvent e)
 {
+	GameWin.playsound();
 	if (e == IdleBegin)
 	{
 		tick = 0;
+		
 	}
 	if (e == IdleRunning)
 	{
