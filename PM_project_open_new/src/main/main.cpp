@@ -326,7 +326,7 @@ int main(int argc, char** argv)
 	nameInputPage
 	.addBackground
 	(
-		"image/Page/bubble_bobble_scoreboard_background.png" // 수정 필요
+		"image/Page/bubble_bobble_nameinput_background.png" // 수정 필요
 	)
 	.addInputBox
 	(
