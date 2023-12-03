@@ -28,6 +28,7 @@
     <ClCompile Include="src\game\bubble.cpp" />
     <ClCompile Include="src\game\enemy.cpp" />
     <ClCompile Include="src\game\enemy_AI.cpp" />
+    <ClCompile Include="src\game\map_editor.cpp" />
     <ClCompile Include="src\not_used\character.cpp" />
     <ClCompile Include="src\game\game_manager.cpp" />
     <ClCompile Include="src\game\initial_setting.cpp" />
