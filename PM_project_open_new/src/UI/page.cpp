@@ -208,3 +208,13 @@ Page& Page::addBackground(string s)
 	background = s;
 	return *this;
 }
+
+	/*Page& Page::addSound(SoundContainer s, int num)
+{
+	s.playsound(num);
+	while (1) {
+		if (!s.soundidleupdate()) break;
+		if (!s.isplaying(num)) break;
+	}
+	return *this;
+}*/
