@@ -1,53 +1,38 @@
-#include "sound_loader.h"
+#include "soundloader.h"
 
+FMOD::System* pSystem;
 
-FMOD_SYSTEM* Sound::g_sound_system;
-
-Sound::Sound(const char* path, bool loop) {
-
-    if (loop)
-        FMOD_System_CreateSound(g_sound_system, path, FMOD_LOOP_NORMAL, 0, &m_sound);
-    else
-        FMOD_System_CreateSound(g_sound_system, path, FMOD_DEFAULT, 0, &m_sound);
-    
-
-    m_channel = nullptr;
-    m_volume = SOUND_DEFAULT;
-}
-Sound::~Sound() {
-    FMOD_Sound_Release(m_sound);
+SoundContainer::SoundContainer() {
+    FMOD::System_Create(&pSystem);
+    pSystem->init(4, FMOD_INIT_NORMAL, NULL);
 }
 
-void Sound::initsound(bool run) {
-
-    result = FMOD::System_Create(&system);
-    result = system->getVersion(&version);
-
-    result = system->init(32, FMOD_INIT_NORMAL, extradriverdata);
-    if (loop)
-        result = system->createSound(path, FMOD_LOOP_NORMAL, 0, &soundfile);
-    else
-        result = system->createSound(path, FMOD_LOOP_OFF, 0, &soundfile);
-    if (run)
-        result = system->playSound(soundfile, 0, false, &channel);
+SoundContainer::~SoundContainer() {
+    pSystem->release();
 }
 
-void Sound::updatesound() {
-    result = system->update();
+void SoundContainer::addsound(const char* path) {
+    pSystem->createSound(path, FMOD_DEFAULT, NULL, &pSound[cnt]);
+    cnt++;
 }
 
-void Sound::playsound() {
-    result = system->playSound(soundfile, 0, false, &channel);
+void SoundContainer::playsound(int num) {
+    pSystem->playSound(pSound[num], 0, false, pChannel);
 }
 
-void Sound::pausesound() {
-    result = channel->setPaused(true);
+bool SoundContainer::isplaying(int num) {
+    if (pChannel[num] != nullptr) { // 채널이 유효한지 확인
+        bool play = false;
+        FMOD_RESULT result = pChannel[num]->isPlaying(&play);
+        if (result == FMOD_OK && play) { // 재생 중인지 확인
+            return true;
+        }
+    }
+    return false;
 }
 
-void Sound::resumesound() {
-    result = channel->setPaused(false);
-}
-
-void Sound::releasesound() {
-    system->release();
+bool SoundContainer::soundidleupdate() {
+    FMOD_RESULT result = pSystem->update();
+    if (result == FMOD_OK) return true;
+    return false;
 }
