@@ -475,10 +475,10 @@ int main(int argc, char** argv)
 		)
 		,
 		InputBox("Working stage", "#000000", "#FFFFFF", 30.0, false, Range(350, 722, 700, 754))
-		//.addInputBoxFunc
-		//(
-		//	mapEditorPageInputBox3
-		//)
+		.addInputBoxFunc
+		(
+			mapEditorPageInputBox3
+		)
 	})
 	.addIdleFunc
 	(

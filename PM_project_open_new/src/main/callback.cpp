@@ -869,18 +869,21 @@ void mapEditorPageInputBox1(string str)
 
 void mapEditorPageInputBox2(string str)
 {
-	/*try
-	{
-		mapEditor.maxStage = stoi(str);
-	}
-	catch
-	{
+	int temp;
+	sscanf(str.c_str(), "%d", &temp);
+	if (1 <= temp && temp <= 100)
+		mapEditor.maxStage = temp;
+	else
 		mapEditor.maxStage = 1;
-	}*/
 }
 
 void mapEditorPageInputBox3(string str)
 {
-	mapEditor.setStage(stoi(str));
-	printf("stage: %d\n", stoi(str));
+	int temp;
+	sscanf(str.c_str(), "%d", &temp);
+	if (1 <= temp && temp <= mapEditor.maxStage)
+		mapEditor.setStage(temp);
+	else
+		mapEditor.setStage(1);
+	//printf("stage: %d\n", mapEditor.currentStage);
 }
