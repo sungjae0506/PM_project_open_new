@@ -676,39 +676,140 @@ void nameInputPageKeyboard(KeyboardEvent e, string key, Point p)
 	}
 }
 
-void mapEditorPageDraw1(Point pos)
+void mapEditorPageCanvasDraw1(Point pos)
 {
+	vector<Range> r1;
+	r1.push_back(Range(140, 150, 240, 250));
+	r1.push_back(Range(370, 150, 470, 250));
+	r1.push_back(Range(600, 150, 700, 250));
+	r1.push_back(Range(140, 25, 240, 125));
+	r1.push_back(Range(370, 25, 470, 125));
+	r1.push_back(Range(600, 25, 700, 125));
+	
+
 	switch (mapEditor.mode)
 	{
 	case MapEditor::ModeTheme:
 		Text("Theme/Tile", "#FFFFFF", "", 30.0, Range(50, 260, 200, 290)).draw();
 
-		Image("image/Background_2.png", Range(150, 150, 240, 250)).draw();
-		Image("image/wood_tile1.png", Range(380, 150, 470, 250)).draw();
-		Image("image/button2.png", Range(610, 150, 700, 250)).draw();
+		Image("image/Background_2.png", r1[0]).draw();
+		Image("image/wood_tile1.png", r1[1]).draw();
+		r1[2].draw(0.5, 0.5, 0.5);
+		Text("Add tile", "#000000", "", 16.0, Range(610, 192, 700, 208)).draw();
 
-		Image("image/button2.png", Range(150, 25, 240, 125)).draw();
-		Image("image/metal_tile1.png", Range(380, 25, 470, 125)).draw();
-		Image("image/button2.png", Range(610, 25, 700, 125)).draw();
+
+		r1[3].draw(0.5, 0.5, 0.5);
+		Text("None", "#000000", "", 16.0, Range(170, 67, 240, 83)).draw();
+		Image("image/metal_tile1.png", r1[4]).draw();
+		r1[5].draw(0.5, 0.5, 0.5);
+		Text("Del tile", "#000000", "", 16.0, Range(610, 67, 700, 83)).draw();
+
+		for (int i = 0; i < 6; ++i)
+		{
+			glLineWidth(2.0);
+			if (mapEditor.modeThemeButtonState[i])
+				r1[i].drawLine(0, 1, 1);
+		}
+
 		break;
+
 	case MapEditor::ModeCharacter:
 		Text("Character", "#FFFFFF", "", 30.0, Range(50, 260, 200, 290)).draw();
 
-		Image("image/button2.png", Range(150, 150, 240, 250)).draw();
-		Image("image/enemy/enemy1.png", Range(380, 150, 470, 250)).draw();
-		Image("image/enemy/enemy2.png", Range(610, 150, 700, 250)).draw();
+		r1[0].draw(0.5, 0.5, 0.5);
+		Text("1P", "#000000", "", 24.0, Range(175, 188, 240, 212)).draw();
+		Image("image/enemy/enemy1.png", r1[1]).draw();
+		Image("image/enemy/enemy2.png", r1[2]).draw();
 
-		Image("image/button2.png", Range(150, 25, 240, 125)).draw();
-		Image("image/enemy/enemy3.png", Range(380, 25, 470, 125)).draw();
-		Image("image/enemy/enemy4.png", Range(610, 25, 700, 125)).draw();
+		r1[3].draw(0.5, 0.5, 0.5);
+		Text("2P", "#000000", "", 24.0, Range(175, 63, 240, 87)).draw();
+		Image("image/enemy/enemy3.png", r1[4]).draw();
+		Image("image/enemy/enemy4.png", r1[5]).draw();
+
+		for (int i = 0; i < 6; ++i)
+		{
+			if (mapEditor.modeCharacterButtonState[i])
+				r1[i].drawLine(0, 1, 1);
+		}
+
 		break;
-
+	
+	case MapEditor::ModeCurrent:
+		break;
 	}
 }
 
-void mapEditorPageKeyboard1(KeyboardEvent e, string key, Point p)
+void mapEditorPageCanvasMouse1(MouseEvent e, string button, Point p)
 {
+	if (e != MouseDown)
+		return;
 
+	vector<Range> r1;
+	r1.push_back(Range(140, 150, 240, 250));
+	r1.push_back(Range(370, 150, 470, 250));
+	r1.push_back(Range(600, 150, 700, 250));
+	r1.push_back(Range(140, 25, 240, 125));
+	r1.push_back(Range(370, 25, 470, 125));
+	r1.push_back(Range(600, 25, 700, 125));
+
+	switch (mapEditor.mode)
+	{
+	case MapEditor::ModeTheme:
+		if (r1[0].contain(p))
+		{
+			mapEditor.modeThemeButtonState[0] = true;
+			mapEditor.modeThemeButtonState[3] = false;
+		}
+		if (r1[1].contain(p))
+		{
+			mapEditor.modeThemeButtonState[1] = true;
+			mapEditor.modeThemeButtonState[4] = false;
+		}
+		if (r1[2].contain(p))
+		{
+			mapEditor.modeThemeButtonState[2] = 1 - mapEditor.modeThemeButtonState[2];
+			mapEditor.modeThemeButtonState[5] = false;
+		}
+	
+		if (r1[3].contain(p))
+		{
+			mapEditor.modeThemeButtonState[0] = false;
+			mapEditor.modeThemeButtonState[3] = true;
+		}
+		if (r1[4].contain(p))
+		{
+			mapEditor.modeThemeButtonState[1] = false;
+			mapEditor.modeThemeButtonState[4] = true;
+		}
+		if (r1[5].contain(p))
+		{
+			mapEditor.modeThemeButtonState[2] = false;
+			mapEditor.modeThemeButtonState[5] = 1 - mapEditor.modeThemeButtonState[5];
+		}
+		
+		break;
+
+	case MapEditor::ModeCharacter:
+		
+		for (int i = 0; i < 6; ++i)
+		{
+			if (r1[i].contain(p))
+			{
+				mapEditor.modeCharacterButtonState[i] = 1 - mapEditor.modeCharacterButtonState[i];
+				for (int j = 0; j < 6; ++j)
+				{
+					if (j != i)
+					{
+						mapEditor.modeCharacterButtonState[j] = false;
+					}
+				}
+			}
+		}
+		break;
+
+	case MapEditor::ModeCurrent:
+		break;
+	}
 }
 
 void mapEditorPageButton(string bt)
@@ -724,5 +825,13 @@ void mapEditorPageButton(string bt)
 	if (bt == "ModeCurrent")
 	{
 		mapEditor.mode = MapEditor::ModeCurrent;
+	}
+}
+
+void mapEditorPageIdle(IdleEvent e)
+{
+	if (e == IdleBegin)
+	{
+		mapEditor.clear();
 	}
 }

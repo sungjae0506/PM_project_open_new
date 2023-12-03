@@ -27,6 +27,11 @@ public:
 	int currentStage = 0;
 
 	enum {ModeTheme, ModeCharacter, ModeCurrent} mode;
+
+	vector<bool> modeThemeButtonState;
+	vector<bool> modeCharacterButtonState;
+	vector<bool> modeCurrentButtonState;
+
 	vector<bool> layer;
 
 	vector<Map> maps;

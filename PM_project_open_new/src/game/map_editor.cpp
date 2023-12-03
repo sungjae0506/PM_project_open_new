@@ -14,6 +14,17 @@ void MapEditor::clear()
 	initialSettings.clear();
 	initialSettings.resize(maxStage);
 
+	modeThemeButtonState.clear();
+	modeThemeButtonState.resize(6);
+	modeThemeButtonState[0] = true;
+	modeThemeButtonState[1] = true;
+
+
+	modeCharacterButtonState.clear();
+	modeCharacterButtonState.resize(6);
+
+	modeCurrentButtonState.clear();
+	modeCurrentButtonState.resize(5);
 
 }
 

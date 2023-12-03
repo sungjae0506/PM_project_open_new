@@ -358,11 +358,11 @@ int main(int argc, char** argv)
 		Canvas(Range(0, 0, 700, 300), Range(0, 0, 700, 300))
 		.addDrawFunc
 		(
-			mapEditorPageDraw1
+			mapEditorPageCanvasDraw1
 		)
-		.addKeyboardFunc
+		.addMouseFunc
 		(
-			mapEditorPageKeyboard1
+			mapEditorPageCanvasMouse1
 		),
 		Canvas(Range(750, 50, 1550, 850), Range(0, 0, 320, 320))
 		})
@@ -466,7 +466,11 @@ int main(int argc, char** argv)
 		InputBox("Map name", "#000000", "#FFFFFF", 30.0, false, Range(350, 820, 700, 850)),
 		InputBox("# of stages", "#000000", "#FFFFFF", 30.0, false, Range(350, 772, 700, 802)),
 		InputBox("Working stage", "#000000", "#FFFFFF", 30.0, false, Range(350, 722, 700, 754))
-	});
+	})
+	.addIdleFunc
+	(
+		mapEditorPageIdle
+	);
 
 
 	window
