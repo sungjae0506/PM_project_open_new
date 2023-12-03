@@ -536,19 +536,16 @@ void gameOverPageKeyboard(KeyboardEvent e, string key, Point p)
 	}
 }
 
+SoundContainer OverSound;
+
 void gameOverPageIdle(IdleEvent e)
 {
-	SoundContainer OverSound;
-	OverSound.addsound("sound/gameOver.mp3");
-	OverSound.playsound();
-	while (1) {
-		if (!OverSound.soundidleupdate()) break;
-		if (!OverSound.isplaying()) break;
-	}
+
 	if (e == IdleBegin)
 	{
+		OverSound.addsound("sound/gameOver.mp3");
+		OverSound.playsound();
 		tick = 0;
-		
 	}
 	if (e == IdleRunning)
 	{
