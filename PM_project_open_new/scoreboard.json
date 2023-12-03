@@ -2,38 +2,40 @@
   "data": [
     {
       "character": [
+        "player2",
         "player3"
       ],
       "name": "hsj",
-      "score": 10120
+      "score": 16380
     },
     {
       "character": [
         "player1"
       ],
       "name": "hsj",
-      "score": 8060
+      "score": 16110
     },
     {
       "character": [
+        "player1",
         "player2"
       ],
       "name": "hsj",
-      "score": 7090
+      "score": 16110
     },
     {
       "character": [
-        "player2"
-      ],
-      "name": "ddd",
-      "score": 1010
-    },
-    {
-      "character": [
-        "player2"
+        "player1"
       ],
       "name": "hsj",
-      "score": 1010
+      "score": 16100
+    },
+    {
+      "character": [
+        "player3"
+      ],
+      "name": "hsj",
+      "score": 10120
     }
   ]
 }

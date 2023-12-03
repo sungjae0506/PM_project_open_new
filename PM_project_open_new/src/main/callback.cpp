@@ -24,7 +24,7 @@ void buttonStyle(Button* b)
 		break;
 	case b->OnButton:
 	case b->Clicked:
-		Image("image/button2_pushed.png", b->buttonImage.range).draw(); //일반화..?는 일단 제끼고 구현만 해놓음 ㅋㅋㅋㅋㅋㅋ ㅇㅋ
+		Image("image/button2_pushed.png", b->buttonImage.range).draw();
 		(b->buttonText + Point(0, -10)).draw();
 		break;
 	}
@@ -664,4 +664,19 @@ void nameInputPageKeyboard(KeyboardEvent e, string key, Point p)
 			nameInputPageButton();
 		}
 	}
+}
+
+void mapEditorPageDraw1(Point pos)
+{
+
+}
+
+void mapEditorPageKeyboard1(KeyboardEvent e, string key, Point p)
+{
+
+}
+
+void mapEditorPageButton(string bt)
+{
+
 }

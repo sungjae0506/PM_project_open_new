@@ -37,3 +37,7 @@ void gameWinPageIdle(IdleEvent e);
 void nameInputPageInputBox(string str);
 void nameInputPageButton(void);
 void nameInputPageKeyboard(KeyboardEvent e, string key, Point p);
+
+void mapEditorPageDraw1(Point pos);
+void mapEditorPageKeyboard1(KeyboardEvent e, string key, Point p);
+void mapEditorPageButton(string bt);

@@ -31,6 +31,9 @@ Page gameOverPage("gameOverPage", Range(0, 0, 1600, 900));
 Page gameWinPage("gameWinPage", Range(0, 0, 1600, 900));
 Page nameInputPage("nameInputPage", Range(0, 0, 1600, 900));
 
+Page mapEditorPage("mapEditorPage", Range(0, 0, 1600, 900));
+Page mapSelectionPage("mapSelectionPage", Range(0, 0, 1600, 900));
+
 int main(int argc, char** argv)
 {
 
@@ -70,10 +73,10 @@ int main(int argc, char** argv)
 		(
 			buttonStyle
 		),
-		Button("image/button2.png", "Custom", "#591010", 36.0, Range(850, 150, 1150, 250))
+		Button("image/button2.png", "Custom", "#591010", 36.0, Range(850, 150, 1150, 250)) // 임시 수정
 		.addButtonFunc
 		(
-			[]() -> void { window.setPage("customPage"); }
+			[]() -> void { window.setPage("mapEditorPage"); }
 		)
 		.addStyleFunc
 		(
@@ -350,6 +353,113 @@ int main(int argc, char** argv)
 		nameInputPageKeyboard
 	);
 
+	mapEditorPage
+	.addCanvas({
+		Canvas(Range(0, 0, 700, 400), Range(0, 0, 700, 300))
+		.addDrawFunc
+		(
+			mapEditorPageDraw1
+		)
+		.addKeyboardFunc
+		(
+			mapEditorPageKeyboard1
+		),
+		Canvas(Range(750, 50, 1550, 850), Range(0, 0, 320, 320))
+		})
+	.addText
+	({
+		Text("     Map name:\n  # of stages:\nWorking stage:", "#FFFFFF\n", "", 30.0, Range(50, 600, 320, 850)),
+
+		Text("Layer:", "#FFFFFF\n", "", 30.0, Range(50, 560, 200, 590)),
+
+		Text("Mode:", "#FFFFFF\n", "", 30.0, Range(50, 410, 150, 440))
+
+		})
+	.addButton
+	({
+		Button("image/button2.png", "Save", "#591010", 36.0, Range(350, 600, 500, 700))
+		.addButtonFunc
+		(
+			[]() -> void { mapEditorPageButton("Save"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
+		),
+		Button("image/button2.png", "Play", "#591010", 36.0, Range(550, 600, 700, 700))
+		.addButtonFunc
+		(
+			[]() -> void { mapEditorPageButton("Play"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
+		),
+
+		Button("image/button2.png", "Theme", "#591010", 36.0, Range(50, 450, 240, 550))
+		.addButtonFunc
+		(
+			[]() -> void { mapEditorPageButton("LayerTheme"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
+		),
+		Button("image/button2.png", "Character", "#591010", 24.0, Range(280, 450, 470, 550))
+		.addButtonFunc
+		(
+			[]() -> void { mapEditorPageButton("LayerCharacter"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
+		),
+		Button("image/button2.png", "Current", "#591010", 24.0, Range(510, 450, 700, 550))
+		.addButtonFunc
+		(
+			[]() -> void { mapEditorPageButton("LayerCurrent"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
+		),
+
+		Button("image/button2.png", "Theme", "#591010", 36.0, Range(50, 300, 240, 400))
+		.addButtonFunc
+		(
+			[]() -> void { mapEditorPageButton("ModeTheme"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
+		),
+		Button("image/button2.png", "Character", "#591010", 24.0, Range(280, 300, 470, 400))
+		.addButtonFunc
+		(
+			[]() -> void { mapEditorPageButton("ModeCharacter"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
+		),
+		Button("image/button2.png", "Current", "#591010", 24.0, Range(510, 300, 700, 400))
+		.addButtonFunc
+		(
+			[]() -> void { mapEditorPageButton("ModeCurrent"); }
+		)
+		.addStyleFunc
+		(
+			buttonStyle
+		)
+		})
+	.addInputBox
+	({
+		InputBox("Map name", "#000000", "#FFFFFF", 30.0, false, Range(350, 820, 700, 850)),
+		InputBox("# of stages", "#000000", "#FFFFFF", 30.0, false, Range(350, 772, 700, 802)),
+		InputBox("Working stage", "#000000", "#FFFFFF", 30.0, false, Range(350, 722, 700, 754))
+	});
+
+
 	window
 	.addPage
 	({
@@ -357,12 +467,16 @@ int main(int argc, char** argv)
 		helpPage,
 		scoreboardPage,
 		storyPage,
+		customPage,
 		selectionPage,
 		gamePage,
 		gameOverPage,
 		gameWinPage,
-		nameInputPage
+		nameInputPage,
+		mapEditorPage
 	});
+
+	
 
 	window.mainLoop("startingPage");
 
