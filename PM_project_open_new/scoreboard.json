@@ -1,41 +1,39 @@
 {
-  "data":[
+  "data": [
     {
-      "name": "abcdefghij",
-      "score": 10,
-      "character": [
-        "player1",
-        "player2"
-      ]
-    },
-    {
-      "name": "ABCDEFGHIJ",
-      "score": 0,
-      "character": [
-        "player1"
-      ]
-    },
-    {
-      "name": "1234567890",
-      "score": 0,
-      "character": [
-        "player3",
-        "player1"
-      ]
-    },
-    {
-      "name": "!@#$%^&*()",
-      "score": 0,
-      "character": [
-        "player1"
-      ]
-    },
-    {
-      "name": "abCDefGHij",
-      "score": 0,
       "character": [
         "player3"
-      ]
+      ],
+      "name": "hsj",
+      "score": 10120
+    },
+    {
+      "character": [
+        "player1"
+      ],
+      "name": "hsj",
+      "score": 8060
+    },
+    {
+      "character": [
+        "player2"
+      ],
+      "name": "hsj",
+      "score": 7090
+    },
+    {
+      "character": [
+        "player2"
+      ],
+      "name": "ddd",
+      "score": 1010
+    },
+    {
+      "character": [
+        "player2"
+      ],
+      "name": "hsj",
+      "score": 1010
     }
   ]
 }

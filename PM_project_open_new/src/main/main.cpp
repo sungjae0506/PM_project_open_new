@@ -154,10 +154,6 @@ int main(int argc, char** argv)
 
 
 	storyPage
-	.addText
-	(
-		Text("wow!", "#16FFFF", "", 32.0, Range(0, 0, 320, 40))
-	)
 	.addCanvas
 	(
 		Canvas(Range(0, 0, 1600, 900), Range(0, 0, 1600, 900))
@@ -327,15 +323,31 @@ int main(int argc, char** argv)
 	nameInputPage
 	.addBackground
 	(
-		"image/Page/bubble_bobble_scoreboard_background.png"
+		"image/Page/bubble_bobble_scoreboard_background.png" // 수정 필요
 	)
 	.addInputBox
 	(
-		InputBox("Name", "#000000", "#FFFFFF", 72.0, true, Range(550, 200, 1050, 272))
+		InputBox("Name", "#000000", "#FFFFFF", 72.0, true, Range(400, 200, 900, 272))
 		.addInputBoxFunc
 		(
 			nameInputPageInputBox
 		)
+	)
+	.addButton
+	(
+		Button("image/button2.png", "Enter", "#591010", 36.0, Range(950, 200, 1200, 300))
+		.addButtonFunc
+		(
+			nameInputPageButton
+		)
+		.addStyleFunc
+		(
+			buttonStyle
+		)
+	)
+	.addKeyboardFunc
+	(
+		nameInputPageKeyboard
 	);
 
 	window
