@@ -396,7 +396,7 @@ int main(int argc, char** argv)
 			buttonStyle
 		),
 
-		Button("image/button2.png", "Theme", "#591010", 36.0, Range(50, 450, 240, 550))
+		Button("image/button2.png", "Theme", "#591010", 24.0, Range(50, 450, 240, 550))
 		.addButtonFunc
 		(
 			[]() -> void { mapEditorPageButton("LayerTheme"); }
@@ -424,7 +424,7 @@ int main(int argc, char** argv)
 			buttonStyle
 		),
 
-		Button("image/button2.png", "Theme", "#591010", 36.0, Range(50, 300, 240, 400))
+		Button("image/button2.png", "Theme", "#591010", 24.0, Range(50, 300, 240, 400))
 		.addButtonFunc
 		(
 			[]() -> void { mapEditorPageButton("ModeTheme"); }

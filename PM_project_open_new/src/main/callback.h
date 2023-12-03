@@ -36,12 +36,6 @@ void gameWinPageKeyboard(KeyboardEvent e, string key, Point p);
 void gameWinPageIdle(IdleEvent e);
 
 void nameInputPageInputBox(string str);
-<<<<<<< HEAD
-
-
-
-
-=======
 void nameInputPageButton(void);
 void nameInputPageKeyboard(KeyboardEvent e, string key, Point p);
 
