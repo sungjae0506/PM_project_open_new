@@ -1,5 +1,6 @@
 #pragma once
 #include "object.h"
+#include <GL/freeglut.h>
 
 class Range
 {
@@ -17,6 +18,8 @@ public:
 	Range& operator+=(const Point& r);
 	bool contain(const Point& p);
 	bool contain(const Range& r);
+	void draw(double r, double g, double b, double a = 1.0);
+	void drawLine(double r, double g, double b, double a = 1.0);
 };
 
 class Transform

@@ -65,6 +65,28 @@ bool Range::contain(const Range& r)
 	return contain(r.point0) && contain(r.point1);
 }
 
+void Range::draw(double r, double g, double b, double a)
+{
+	glColor4f(r, g, b, a);
+	glBegin(GL_QUADS);
+	glVertex2f(point0.x, point0.y);
+	glVertex2f(point1.x, point0.y);
+	glVertex2f(point1.x, point1.y);
+	glVertex2f(point0.x, point1.y);
+	glEnd();
+}
+
+void Range::drawLine(double r, double g, double b, double a)
+{
+	glColor4f(r, g, b, a);
+	glBegin(GL_LINE_LOOP);
+	glVertex2f(point0.x, point0.y);
+	glVertex2f(point1.x, point0.y);
+	glVertex2f(point1.x, point1.y);
+	glVertex2f(point0.x, point1.y);
+	glEnd();
+}
+
 
 Transform::Transform()
 {
