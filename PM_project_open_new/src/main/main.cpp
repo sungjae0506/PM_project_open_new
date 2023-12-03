@@ -89,7 +89,7 @@ int main(int argc, char** argv)
 	helpPage
 	.addBackground
 	(
-		"image/bubble_bobble_help.png"
+		"image/Page/bubble_bobble_help.png"
 	)
 	.addButton
 	(

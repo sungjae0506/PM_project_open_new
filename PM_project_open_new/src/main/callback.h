@@ -44,4 +44,4 @@ void nameInputPageInputBox(string str);
 =======
 void nameInputPageButton(void);
 void nameInputPageKeyboard(KeyboardEvent e, string key, Point p);
->>>>>>> a3b66ff527df82e324cb976b0bfc3b3b385f9ae4
+//>>>>>>> a3b66ff527df82e324cb976b0bfc3b3b385f9ae4
