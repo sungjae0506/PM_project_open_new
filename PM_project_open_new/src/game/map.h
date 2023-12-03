@@ -17,6 +17,8 @@ public:
 	vector<vector<bool>> tileVector;
 	vector<vector<char>> bubbleCurrentVector;
 	
+	string tileStr;
+	string backgroundStr;
 	vector<Image> tile;
 	vector<Image> background;
 	Lines platform;

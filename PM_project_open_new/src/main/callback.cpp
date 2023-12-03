@@ -13,7 +13,7 @@ using namespace std;
 
 static GameManager gameManager;
 static MapEditor mapEditor;
-static ImageManager imageManager("image_data.json");
+ImageManager imageManager("image_data.json");
 extern Window window;
 int tick;
 
@@ -536,16 +536,16 @@ void gameOverPageKeyboard(KeyboardEvent e, string key, Point p)
 	}
 }
 
-
 SoundContainer OverSound;
 
 void gameOverPageIdle(IdleEvent e)
 {
+
 	if (e == IdleBegin)
 	{
-		tick = 0;
 		OverSound.addsound("sound/gameOver.mp3");
 		OverSound.playsound();
+		tick = 0;
 	}
 	if (e == IdleRunning)
 	{
@@ -791,6 +791,23 @@ void mapEditorPageCanvasMouse1(MouseEvent e, string button, Point p)
 			mapEditor.modeThemeButtonState[2] = false;
 			mapEditor.modeThemeButtonState[5] = 1 - mapEditor.modeThemeButtonState[5];
 		}
+
+		if (mapEditor.modeThemeButtonState[0])
+		{
+			mapEditor.maps[mapEditor.currentStage].backgroundStr = "game_background";
+		}
+		if (mapEditor.modeThemeButtonState[1])
+		{
+			mapEditor.maps[mapEditor.currentStage].tileStr = "wood";
+		}
+		if (mapEditor.modeThemeButtonState[3])
+		{
+			mapEditor.maps[mapEditor.currentStage].backgroundStr = "";
+		}
+		if (mapEditor.modeThemeButtonState[4])
+		{
+			mapEditor.maps[mapEditor.currentStage].tileStr = "metal";
+		}
 		
 		break;
 
@@ -838,5 +855,29 @@ void mapEditorPageIdle(IdleEvent e)
 	if (e == IdleBegin)
 	{
 		mapEditor.clear();
+		printf("me start\n");
 	}
+}
+
+void mapEditorPageInputBox1(string str)
+{
+	mapEditor.mapName = str;
+}
+
+void mapEditorPageInputBox2(string str)
+{
+	/*try
+	{
+		mapEditor.maxStage = stoi(str);
+	}
+	catch
+	{
+		mapEditor.maxStage = 1;
+	}*/
+}
+
+void mapEditorPageInputBox3(string str)
+{
+	mapEditor.setStage(stoi(str));
+	printf("stage: %d\n", stoi(str));
 }

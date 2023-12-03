@@ -22,6 +22,8 @@ using json = nlohmann::json;
 class MapEditor
 {
 public:
+	string mapName;
+
 	int maxStage = 100;
 
 	int currentStage = 0;
@@ -38,6 +40,7 @@ public:
 	vector<InitialSetting> initialSettings;
 
 	void clear();
+	void setStage(int s);
 	
 	void drawEntity(void);
 	void drawMap();

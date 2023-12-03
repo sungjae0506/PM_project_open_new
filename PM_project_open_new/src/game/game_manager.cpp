@@ -625,8 +625,13 @@ void GameManager::readMap(string path)
 
 	tempMap.tileVector = tempTile;
 	tempMap.bubbleCurrentVector = tempBubbleCurrent;
-	tempMap.setTile(imageManager.getImages(themeData["tile"].get<string>()));
-	tempMap.setBackground(imageManager.getImages(themeData["background"].get<string>()));
+	tempMap.tileStr = themeData["tile"].get<string>();
+	tempMap.setTile(imageManager.getImages(tempMap.tileStr));
+	tempMap.backgroundStr = themeData["background"].get<string>();
+	if (tempMap.backgroundStr != "")
+		tempMap.setBackground(imageManager.getImages(tempMap.backgroundStr));
+	else
+		tempMap.background.clear();
 	
 	Range r(0, 0, 320, 320);
 	tempMap.platform = vectorToLines(tempTile, r);

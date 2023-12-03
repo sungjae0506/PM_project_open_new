@@ -11,6 +11,12 @@ void MapEditor::clear()
 	maps.clear();
 	maps.resize(maxStage);
 
+	for (int i = 0; i < maxStage; ++i)
+	{
+		maps[i].backgroundStr = "game_background";
+		maps[i].tileStr = "wood";
+	}
+
 	initialSettings.clear();
 	initialSettings.resize(maxStage);
 
@@ -28,6 +34,40 @@ void MapEditor::clear()
 
 }
 
+void MapEditor::setStage(int s)
+{
+	if (s != currentStage)
+	{
+		currentStage = s;
+		for (int i = 0; i < 6; ++i)
+		{
+			modeThemeButtonState[i] = 0;
+			modeCharacterButtonState[i] = 0;
+		}
+		for (int i = 0; i < 5; ++i)
+		{
+			modeCharacterButtonState[i] = 0;
+		}
+		if (maps[s].backgroundStr == "game_background")
+		{
+			modeThemeButtonState[0] = true;
+		}
+		else
+		{
+			modeThemeButtonState[3] = true;
+		}
+		if (maps[s].tileStr == "wood")
+		{
+			modeThemeButtonState[1] = true;
+		}
+		else
+		{
+			modeThemeButtonState[4] = true;
+		}
+
+	}
+}
+
 // //////////////////////////////////////////////////////////////
 
 void MapEditor::drawEntity(void)
@@ -37,6 +77,12 @@ void MapEditor::drawEntity(void)
 
 void MapEditor::drawMap()
 {
+	if (maps[currentStage].backgroundStr != "")
+		maps[currentStage].setBackground(imageManager.getImages(maps[currentStage].backgroundStr));
+	else
+		maps[currentStage].background.clear();
+	maps[currentStage].setTile(imageManager.getImages(maps[currentStage].tileStr));
+
 	maps[currentStage].draw();
 }
 

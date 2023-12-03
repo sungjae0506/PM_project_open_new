@@ -43,3 +43,6 @@ void mapEditorPageCanvasDraw1(Point pos);
 void mapEditorPageCanvasMouse1(MouseEvent e, string button, Point p);
 void mapEditorPageButton(string bt);
 void mapEditorPageIdle(IdleEvent e);
+void mapEditorPageInputBox1(string str);
+void mapEditorPageInputBox2(string str);
+void mapEditorPageInputBox3(string str);
