@@ -217,10 +217,6 @@ void Player::updateKeyboardState(void)
 	if (keyboardState[0] == true && (mapCollisionState[1] == true || onBubble) && vel.y < EPSILON)
 	{
 		vel = Point(vel.x, playerJumpVel);
-	}
-
-	if (keyboardState[0] == true)
-	{
 		jumpSound.addsound("sound/jump.wav");
 		jumpSound.playsound();
 	}
