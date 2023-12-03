@@ -92,7 +92,7 @@ int main(int argc, char** argv)
 	helpPage
 	.addBackground
 	(
-		"image/Page/bubble_bobble_help.png"
+		"image/Page/Helppage_final.png"
 	)
 	.addButton
 	(
@@ -230,7 +230,7 @@ int main(int argc, char** argv)
 		(
 			buttonStyle
 		),
-		Button("image/button2.png", "Next", "#FF0000", 36.0, Range(950, 50, 1150, 150))
+		Button("image/button2.png", "Next", "#00FF00", 36.0, Range(950, 50, 1150, 150))
 		.addButtonFunc
 		(
 			[]() -> void { window.setPage("gamePage"); }
@@ -463,9 +463,22 @@ int main(int argc, char** argv)
 		})
 	.addInputBox
 	({
-		InputBox("Map name", "#000000", "#FFFFFF", 30.0, false, Range(350, 820, 700, 850)),
-		InputBox("# of stages", "#000000", "#FFFFFF", 30.0, false, Range(350, 772, 700, 802)),
+		InputBox("Map name", "#000000", "#FFFFFF", 30.0, false, Range(350, 820, 700, 850))
+		.addInputBoxFunc
+		(
+			mapEditorPageInputBox1
+		),
+		InputBox("# of stages", "#000000", "#FFFFFF", 30.0, false, Range(350, 772, 700, 802))
+		.addInputBoxFunc
+		(
+			mapEditorPageInputBox2
+		)
+		,
 		InputBox("Working stage", "#000000", "#FFFFFF", 30.0, false, Range(350, 722, 700, 754))
+		//.addInputBoxFunc
+		//(
+		//	mapEditorPageInputBox3
+		//)
 	})
 	.addIdleFunc
 	(
