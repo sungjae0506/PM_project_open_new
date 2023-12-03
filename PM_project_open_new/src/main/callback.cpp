@@ -536,19 +536,16 @@ void gameOverPageKeyboard(KeyboardEvent e, string key, Point p)
 	}
 }
 
+
+SoundContainer OverSound;
+
 void gameOverPageIdle(IdleEvent e)
 {
-	SoundContainer OverSound;
-	OverSound.addsound("sound/gameOver.mp3");
-	OverSound.playsound();
-	while (1) {
-		if (!OverSound.soundidleupdate()) break;
-		if (!OverSound.isplaying()) break;
-	}
 	if (e == IdleBegin)
 	{
 		tick = 0;
-		
+		OverSound.addsound("sound/gameOver.mp3");
+		OverSound.playsound();
 	}
 	if (e == IdleRunning)
 	{
@@ -574,19 +571,16 @@ void gameWinPageKeyboard(KeyboardEvent e, string key, Point p)
 	}
 }
 
+
+SoundContainer WinSound;
+
 void gameWinPageIdle(IdleEvent e)
 {
-	SoundContainer WinSound;
-	WinSound.addsound("sound/gameWin.wav");
-	WinSound.playsound();
-	while (1) {
-		if (!WinSound.soundidleupdate()) break;
-		if (!WinSound.isplaying()) break;
-	}
 	if (e == IdleBegin)
 	{
 		tick = 0;
-		
+		WinSound.addsound("sound/gameWin.wav");
+		WinSound.playsound();
 	}
 	if (e == IdleRunning)
 	{
