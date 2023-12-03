@@ -18,7 +18,7 @@ public:
 	FMOD::Channel* channel;
 
 	FMOD::Sound* soundfile;
-
+	
 	void initsound(bool run);
 	void updatesound();
 	void playsound();
